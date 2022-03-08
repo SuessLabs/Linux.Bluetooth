@@ -1,28 +1,29 @@
-# DotNet-BlueZ
-A quick and dirty library for BlueZ's D-Bus APIs. Primary focus is Bluetooth Low Energy.
+# Plugin-BlueZ
+
+A .NET BluetoothLE library for BlueZ's D-Bus APIs based on the works of [DotNetBlueZ](https://www.nuget.org/packages/HashtagChris.DotNetBlueZ/).
 
 [![DotNetBlueZ NuGet Badge](https://buildstats.info/nuget/HashtagChris.DotNetBlueZ?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/HashtagChris.DotNetBlueZ/)
 
 Uses [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access D-Bus. Tmds.DBus.Tool was used to generate the D-Bus object interfaces. D-Bus is the preferred interface for Bluetooth in userspace. The [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf) presentation says "Use D-Bus API (documentation in [doc/]((https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc))) whenever possible".
 
-# Requirements
+## Requirements
 
 * Linux
 * A recent release of BlueZ. This package was tested with BlueZ 5.50. You can check which version you're using with `bluetoothd -v`.
 
-# Installation
+## Installation
 
 ```bash
 dotnet add package HashtagChris.DotNetBlueZ
 ```
 
-# Events
+## Events
 
 C# events are available for several properties. Events are useful for properly handling disconnects and reconnects.
 
-# Usage
+## Usage
 
-## Get a Bluetooth adapter
+### Get a Bluetooth adapter
 
 ```C#
 using HashtagChris.DotNetBlueZ;
@@ -47,7 +48,7 @@ await adapter.StartDiscoveryAsync();
 await adapter.StopDiscoveryAsync();
 ```
 
-## Get Devices
+### Get Devices
 
 `adapter.DeviceFound` (above) will be called immediately for existing devices, and as new devices show up during scanning; `eventArgs.IsStateChange` can be used to distinguish between existing and new devices. Alternatively you can can use `GetDevicesAsync`:
 
@@ -55,7 +56,7 @@ await adapter.StopDiscoveryAsync();
 IReadOnlyList<Device> devices = await adapter.GetDevicesAsync();
 ```
 
-## Connect to a Device
+### Connect to a Device
 
 ```C#
 device.Connected += device_ConnectedAsync;
@@ -76,7 +77,7 @@ await device.WaitForPropertyValueAsync("ServicesResolved", value: true, timeout)
 
 ```
 
-## Retrieve a GATT Service and Characteristic
+### Retrieve a GATT Service and Characteristic
 
 Prerequisite: You must be connected to a device and services must be resolved. You may need to pair with the device in order to use some services.
 
@@ -90,7 +91,7 @@ IGattService1 service = await device.GetServiceAsync(serviceUUID);
 IGattCharacteristic1 characteristic = await service.GetCharacteristicAsync(characteristicUUID);
 ```
 
-## Read a GATT Characteristic value
+### Read a GATT Characteristic value
 
 ```C#
 byte[] value = await characteristic.ReadValueAsync(timeout);
@@ -98,7 +99,7 @@ byte[] value = await characteristic.ReadValueAsync(timeout);
 string modelName = Encoding.UTF8.GetString(value);
 ```
 
-## Subscribe to GATT Characteristic Notifications
+### Subscribe to GATT Characteristic Notifications
 
 ```C#
 characteristic.Value += characteristic_Value;
@@ -117,21 +118,21 @@ private static async Task characteristic_Value(GattCharacteristic characteristic
     Console.Error.WriteLine(ex);
   }
 }
-
 ```
 
-# Tips
+## Tips
 
 It may be necessary to pair with a device for a GATT service to be visible or for reading GATT characteristics to work. To pair, one option is to run `bluetoothctl` (or `sudo bluetoothctl`)
 and then run `default agent` and `agent on` within `bluetoothctl`. Watch `bluetoothctl` for pairing requests.
 
 See [Ubuntu's Introduction to Pairing](https://core.docs.ubuntu.com/en/stacks/bluetooth/bluez/docs/reference/pairing/introduction).
 
-# Contributing
+## Contributing
 
 See [Contributing](./github/CONTRIBUTING.md).
 
-# Reference
+## Reference
 
+* [DotNetBlueZ](https://www.nuget.org/packages/HashtagChris.DotNetBlueZ/)
 * [BlueZ D-Bus API docs](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
 * [Install BlueZ on the Raspberry PI](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/overview)

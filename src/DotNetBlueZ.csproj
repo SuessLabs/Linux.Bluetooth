@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>HashtagChris.DotNetBlueZ</RootNamespace>
+    <RootNamespace>Plugin.DotNetBlueZ</RootNamespace>
   </PropertyGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
-    <PackageId>HashtagChris.DotNetBlueZ</PackageId>
+    <PackageId>Plugin.DotNetBlueZ</PackageId>
     <Version>1.3.1</Version>
     <Authors>Chris Sidi</Authors>
     <Title>Quick and dirty library for BlueZ's D-Bus APIs</Title>
     <Description>A quick and dirty library for BlueZ's D-Bus APIs. Focus is on Bluetooth Low Energy APIs.</Description>
     <PackageTags>BlueZ;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE</PackageTags>
-    <RepositoryUrl>https://github.com/hashtagchris/DotNet-BlueZ</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Plugin/DotNet-BlueZ</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>

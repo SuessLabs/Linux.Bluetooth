@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Tmds.DBus;
 
 [assembly: InternalsVisibleTo(Tmds.DBus.Connection.DynamicAssemblyName)]
-namespace HashtagChris.DotNetBlueZ
+namespace Plugin.DotNetBlueZ
 {
     [DBusInterface("org.freedesktop.DBus.ObjectManager")]
     public interface IObjectManager : IDBusObject
@@ -365,15 +365,8 @@ namespace HashtagChris.DotNetBlueZ
         private string _Address = default (string);
         public string Address
         {
-            get
-            {
-                return _Address;
-            }
-
-            set
-            {
-                _Address = (value);
-            }
+            get => _Address;
+            set => _Address = (value);
         }
 
         private string _AddressType = default (string);

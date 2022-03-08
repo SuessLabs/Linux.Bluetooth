@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using HashtagChris.DotNetBlueZ;
-using HashtagChris.DotNetBlueZ.Extensions;
+using Plugin.DotNetBlueZ;
+using Plugin.DotNetBlueZ.Extensions;
 
 namespace Scan
 {

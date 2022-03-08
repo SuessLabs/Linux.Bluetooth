@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HashtagChris.DotNetBlueZ;
-using HashtagChris.DotNetBlueZ.Extensions;
+using Plugin.DotNetBlueZ;
+using Plugin.DotNetBlueZ.Extensions;
 
 // An event-driven example that subscribes to one GATT characteristic and prints the value on updates.
 namespace subscribeToCharacteristic
@@ -29,7 +29,7 @@ namespace subscribeToCharacteristic
         Console.WriteLine("Usage: subscribeToCharacteristic <deviceAddress>|<deviceNameSubstring> [adapterName] [serviceUUID characteristicUUID]");
         Console.WriteLine(@"Examples:
   subscribeToCharacteristic phone
-  subscribeToCharacteristic 8C:8E:F2:AB:73:76 hci0 CAFE CFFE (see https://github.com/hashtagchris/early-iOS-BluetoothLowEnergy-tests/tree/master/myFirstPeripheral)");
+  subscribeToCharacteristic 8C:8E:F2:AB:73:76 hci0 CAFE CFFE (see https://github.com/Plugin/early-iOS-BluetoothLowEnergy-tests/tree/master/myFirstPeripheral)");
         Console.WriteLine();
         Console.WriteLine($"Default service:        {DefaultServiceUUID}");
         Console.WriteLine($"Default characteristic: {DefaultCharacteristicUUID}");
