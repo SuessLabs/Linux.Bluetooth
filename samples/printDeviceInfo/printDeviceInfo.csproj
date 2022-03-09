@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DotNetBlueZ.csproj" />
+    <ProjectReference Include="..\..\src\Plugin.BlueZ.csproj" />
   </ItemGroup>
 
 </Project>

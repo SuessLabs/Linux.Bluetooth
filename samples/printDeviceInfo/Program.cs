@@ -37,6 +37,14 @@ class Program
       {
         throw new Exception("No Bluetooth adapters found.");
       }
+      else
+      {
+        foreach (var a in adapters)
+        {
+          var name = a.GetNameAsync();
+          Console.WriteLine($"  - Adapter: '{name}' - '{a.ObjectPath.ToString()}'");
+        }
+      }
 
       adapter = adapters.First();
     }

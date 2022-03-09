@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DotNetBlueZ.csproj" />
+    <ProjectReference Include="..\..\src\Plugin.BlueZ.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

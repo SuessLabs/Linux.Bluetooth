@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32210.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetBlueZ", "src\DotNetBlueZ.csproj", "{F49DA616-D4A0-424F-86F6-0DE73CA01B93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.BlueZ", "src\Plugin.BlueZ.csproj", "{F49DA616-D4A0-424F-86F6-0DE73CA01B93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{8DCF476D-3F5A-4228-BE63-B7D6D9E5F629}"
 EndProject
