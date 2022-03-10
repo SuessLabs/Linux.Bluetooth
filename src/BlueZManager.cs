@@ -36,16 +36,20 @@ namespace Plugin.DotNetBlueZ
     public static string NormalizeUUID(string uuid)
     {
       // TODO: Improve this validation.
-      if (uuid.Length == 4) {
+      if (uuid.Length == 4)
+      {
         return $"0000{uuid}-0000-1000-8000-00805f9b34fb".ToLowerInvariant();
       }
-      else if (uuid.Length == 8) {
+      else if (uuid.Length == 8)
+      {
         return $"{uuid}-0000-1000-8000-00805f9b34fb".ToLowerInvariant();
       }
-      else if (uuid.Length == 36) {
+      else if (uuid.Length == 36)
+      {
         return uuid.ToLowerInvariant();
       }
-      else {
+      else
+      {
         throw new ArgumentException($"'{uuid}' isn't a valid 16, 32 or 128 bit UUID.");
       }
     }

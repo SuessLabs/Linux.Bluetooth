@@ -16,11 +16,13 @@
     <RepositoryUrl>https://github.com/Plugin/DotNet-BlueZ</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Tmds.DBus" Version="0.10.1" />
-    <DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.10.1" />
+    <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.10.1" />-->
   </ItemGroup>
 
 </Project>

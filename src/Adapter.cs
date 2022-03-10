@@ -1,7 +1,7 @@
+using Plugin.DotNetBlueZ.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Plugin.DotNetBlueZ.Extensions;
 using Tmds.DBus;
 
 namespace Plugin.DotNetBlueZ
@@ -169,6 +169,7 @@ namespace Plugin.DotNetBlueZ
             {
               PoweredOff?.Invoke(this, new BlueZEventArgs());
             }
+
             break;
         }
       }
