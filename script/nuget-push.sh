@@ -2,7 +2,7 @@
 
 # Usage:
 # 0. Create an API key at https://www.nuget.org/account/apikeys and store it in ~/nuget.org.key
-# 1. Increment the package version number in src/DotNetBlueZ.csproj
+# 1. Increment the package version number in src/Plugin.BlueZ.csproj
 # 2. Run `dotnet build src` or `dotnet pack src`
 # 3. Run this script, which will publish the latest nuget package.
 

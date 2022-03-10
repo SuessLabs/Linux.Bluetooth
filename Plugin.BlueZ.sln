@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "scan", "samples\scan\scan.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "subscribeToCharacteristic", "samples\subscribeToCharacteristic\subscribeToCharacteristic.csproj", "{52EADF18-B84E-401D-A48C-4397F45CB3A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetBlueZTest1", "manualTests\DotNetBlueZTest1\DotNetBlueZTest1.csproj", "{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueZTest1", "manualTests\BlueZTest1\BlueZTest1.csproj", "{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
