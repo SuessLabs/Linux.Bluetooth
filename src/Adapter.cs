@@ -1,10 +1,10 @@
-using Plugin.DotNetBlueZ.Extensions;
+using Plugin.BlueZ.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
-namespace Plugin.DotNetBlueZ
+namespace Plugin.BlueZ
 {
   public delegate Task DeviceChangeEventHandlerAsync(Adapter sender, DeviceFoundEventArgs eventArgs);
 

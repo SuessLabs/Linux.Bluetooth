@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Tmds.DBus;
 
 [assembly: InternalsVisibleTo(Tmds.DBus.Connection.DynamicAssemblyName)]
-namespace Plugin.DotNetBlueZ
+namespace Plugin.BlueZ
 {
     [DBusInterface("org.freedesktop.DBus.ObjectManager")]
     public interface IObjectManager : IDBusObject

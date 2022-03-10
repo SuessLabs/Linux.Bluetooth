@@ -1,4 +1,4 @@
-﻿namespace Plugin.DotNetBlueZ
+﻿namespace Plugin.BlueZ
 {
   public static class BluezConstants
   {

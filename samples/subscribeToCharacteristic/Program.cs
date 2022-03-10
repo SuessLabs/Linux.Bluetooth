@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.DotNetBlueZ;
-using Plugin.DotNetBlueZ.Extensions;
+using Plugin.BlueZ;
+using Plugin.BlueZ.Extensions;
 
 // An event-driven example that subscribes to one GATT characteristic and prints the value on updates.
 namespace subscribeToCharacteristic

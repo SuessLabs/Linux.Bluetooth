@@ -1,6 +1,6 @@
 using System;
 
-namespace Plugin.DotNetBlueZ
+namespace Plugin.BlueZ
 {
   public class BlueZEventArgs : EventArgs
   {

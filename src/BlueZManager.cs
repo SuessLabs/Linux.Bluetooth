@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
-namespace Plugin.DotNetBlueZ
+namespace Plugin.BlueZ
 {
   public static class BlueZManager
   {

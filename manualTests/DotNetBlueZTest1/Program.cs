@@ -1,16 +1,16 @@
-﻿using Plugin.DotNetBlueZ;
-using Plugin.DotNetBlueZ.Extensions;
+﻿using Plugin.BlueZ;
+using Plugin.BlueZ.Extensions;
 using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNetBlueZTest1
+namespace BlueZTest1
 {
   internal class Program
   {
     private const string DefaultAdapterName = "hci0";
-    private static TimeSpan timeout = TimeSpan.FromSeconds(15);
+    private static TimeSpan _timeout = TimeSpan.FromSeconds(15);
 
     private static async Task Main(string[] args)
     {
@@ -70,11 +70,11 @@ namespace DotNetBlueZTest1
       {
         Console.WriteLine("Connecting...");
         await device.ConnectAsync();
-        await device.WaitForPropertyValueAsync("Connected", value: true, timeout);
+        await device.WaitForPropertyValueAsync("Connected", value: true, _timeout);
         Console.WriteLine("Connected.");
 
         Console.WriteLine("Waiting for services to resolve...");
-        await device.WaitForPropertyValueAsync("ServicesResolved", value: true, timeout);
+        await device.WaitForPropertyValueAsync("ServicesResolved", value: true, _timeout);
 
         var servicesUUIDs = await device.GetUUIDsAsync();
         Console.WriteLine($"Device offers {servicesUUIDs.Length} service(s).");
@@ -92,8 +92,8 @@ namespace DotNetBlueZTest1
         var manufacturerCharacteristic = await service.GetCharacteristicAsync(GattConstants.ManufacturerNameCharacteristicUUID);
 
         Console.WriteLine("Reading Device Info characteristic values...");
-        var modelNameBytes = await modelNameCharacteristic.ReadValueAsync(timeout);
-        var manufacturerBytes = await manufacturerCharacteristic.ReadValueAsync(timeout);
+        var modelNameBytes = await modelNameCharacteristic.ReadValueAsync(_timeout);
+        var manufacturerBytes = await manufacturerCharacteristic.ReadValueAsync(_timeout);
 
         Console.WriteLine($"Model name: {Encoding.UTF8.GetString(modelNameBytes)}");
         Console.WriteLine($"Manufacturer: {Encoding.UTF8.GetString(manufacturerBytes)}");

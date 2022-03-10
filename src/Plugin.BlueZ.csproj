@@ -2,18 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Plugin.DotNetBlueZ</RootNamespace>
+    <RootNamespace>Plugin.BlueZ</RootNamespace>
   </PropertyGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
-    <PackageId>Plugin.DotNetBlueZ</PackageId>
-    <Version>1.4.0</Version>
+    <PackageId>Plugin.BlueZ</PackageId>
+    <Version>1.4.1</Version>
     <Authors>Damian Suess, Chris Sidi</Authors>
     <Title>BluetoothLE library for BlueZ via Linux D-Bus</Title>
     <Description>BluetoothLE library for BlueZ via Linux D-Bus.</Description>
     <PackageTags>BlueZ;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE</PackageTags>
-    <RepositoryUrl>https://github.com/Plugin/DotNet-BlueZ</RepositoryUrl>
+    <RepositoryUrl>https://github.com/SuessLabs/Plugin.BlueZ</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
