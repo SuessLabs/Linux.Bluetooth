@@ -14,7 +14,7 @@
     <Description>BluetoothLE library for BlueZ via Linux D-Bus.</Description>
     <PackageTags>BlueZ;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE</PackageTags>
     <RepositoryUrl>https://github.com/SuessLabs/Plugin.BlueZ</RepositoryUrl>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
