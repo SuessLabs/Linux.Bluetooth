@@ -51,7 +51,7 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class Adapter1Properties
     {
-        private string _Address = default (string);
+        private string _Address = default(string);
         public string Address
         {
             get
@@ -65,7 +65,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _AddressType = default (string);
+        private string _AddressType = default(string);
         public string AddressType
         {
             get
@@ -79,7 +79,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _Name = default (string);
+        private string _Name = default(string);
         public string Name
         {
             get
@@ -93,7 +93,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _Alias = default (string);
+        private string _Alias = default(string);
         public string Alias
         {
             get
@@ -107,7 +107,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private uint _Class = default (uint);
+        private uint _Class = default(uint);
         public uint Class
         {
             get
@@ -121,7 +121,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Powered = default (bool);
+        private bool _Powered = default(bool);
         public bool Powered
         {
             get
@@ -135,7 +135,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Discoverable = default (bool);
+        private bool _Discoverable = default(bool);
         public bool Discoverable
         {
             get
@@ -149,7 +149,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private uint _DiscoverableTimeout = default (uint);
+        private uint _DiscoverableTimeout = default(uint);
         public uint DiscoverableTimeout
         {
             get
@@ -163,7 +163,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Pairable = default (bool);
+        private bool _Pairable = default(bool);
         public bool Pairable
         {
             get
@@ -177,7 +177,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private uint _PairableTimeout = default (uint);
+        private uint _PairableTimeout = default(uint);
         public uint PairableTimeout
         {
             get
@@ -191,7 +191,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Discovering = default (bool);
+        private bool _Discovering = default(bool);
         public bool Discovering
         {
             get
@@ -205,7 +205,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string[] _UUIDs = default (string[]);
+        private string[] _UUIDs = default(string[]);
         public string[] UUIDs
         {
             get
@@ -219,7 +219,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _Modalias = default (string);
+        private string _Modalias = default(string);
         public string Modalias
         {
             get
@@ -278,7 +278,7 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class LEAdvertisingManager1Properties
     {
-        private byte _ActiveInstances = default (byte);
+        private byte _ActiveInstances = default(byte);
         public byte ActiveInstances
         {
             get
@@ -292,7 +292,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private byte _SupportedInstances = default (byte);
+        private byte _SupportedInstances = default(byte);
         public byte SupportedInstances
         {
             get
@@ -306,7 +306,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string[] _SupportedIncludes = default (string[]);
+        private string[] _SupportedIncludes = default(string[]);
         public string[] SupportedIncludes
         {
             get
@@ -362,14 +362,14 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class Device1Properties
     {
-        private string _Address = default (string);
+        private string _Address = default(string);
         public string Address
         {
             get => _Address;
             set => _Address = (value);
         }
 
-        private string _AddressType = default (string);
+        private string _AddressType = default(string);
         public string AddressType
         {
             get
@@ -383,7 +383,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _Name = default (string);
+        private string _Name = default(string);
         public string Name
         {
             get
@@ -397,7 +397,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _Alias = default (string);
+        private string _Alias = default(string);
         public string Alias
         {
             get
@@ -411,7 +411,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private uint _Class = default (uint);
+        private uint _Class = default(uint);
         public uint Class
         {
             get
@@ -425,7 +425,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private ushort _Appearance = default (ushort);
+        private ushort _Appearance = default(ushort);
         public ushort Appearance
         {
             get
@@ -439,7 +439,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _Icon = default (string);
+        private string _Icon = default(string);
         public string Icon
         {
             get
@@ -453,7 +453,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Paired = default (bool);
+        private bool _Paired = default(bool);
         public bool Paired
         {
             get
@@ -467,7 +467,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Trusted = default (bool);
+        private bool _Trusted = default(bool);
         public bool Trusted
         {
             get
@@ -481,7 +481,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Blocked = default (bool);
+        private bool _Blocked = default(bool);
         public bool Blocked
         {
             get
@@ -495,7 +495,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _LegacyPairing = default (bool);
+        private bool _LegacyPairing = default(bool);
         public bool LegacyPairing
         {
             get
@@ -509,7 +509,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private short _RSSI = default (short);
+        private short _RSSI = default(short);
         public short RSSI
         {
             get
@@ -523,7 +523,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Connected = default (bool);
+        private bool _Connected = default(bool);
         public bool Connected
         {
             get
@@ -537,7 +537,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string[] _UUIDs = default (string[]);
+        private string[] _UUIDs = default(string[]);
         public string[] UUIDs
         {
             get
@@ -551,7 +551,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string _Modalias = default (string);
+        private string _Modalias = default(string);
         public string Modalias
         {
             get
@@ -565,7 +565,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private ObjectPath _Adapter = default (ObjectPath);
+        private ObjectPath _Adapter = default(ObjectPath);
         public ObjectPath Adapter
         {
             get
@@ -579,7 +579,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private IDictionary<ushort, object> _ManufacturerData = default (IDictionary<ushort, object>);
+        private IDictionary<ushort, object> _ManufacturerData = default(IDictionary<ushort, object>);
         public IDictionary<ushort, object> ManufacturerData
         {
             get
@@ -593,7 +593,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private IDictionary<string, object> _ServiceData = default (IDictionary<string, object>);
+        private IDictionary<string, object> _ServiceData = default(IDictionary<string, object>);
         public IDictionary<string, object> ServiceData
         {
             get
@@ -607,7 +607,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private short _TxPower = default (short);
+        private short _TxPower = default(short);
         public short TxPower
         {
             get
@@ -621,7 +621,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _ServicesResolved = default (bool);
+        private bool _ServicesResolved = default(bool);
         public bool ServicesResolved
         {
             get
@@ -675,7 +675,7 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class Battery1Properties
     {
-        private byte _Percentage = default (byte);
+        private byte _Percentage = default(byte);
         public byte Percentage
         {
             get
@@ -707,7 +707,7 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class GattService1Properties
     {
-        private string _UUID = default (string);
+        private string _UUID = default(string);
         public string UUID
         {
             get
@@ -721,7 +721,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private ObjectPath _Device = default (ObjectPath);
+        private ObjectPath _Device = default(ObjectPath);
         public ObjectPath Device
         {
             get
@@ -735,7 +735,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Primary = default (bool);
+        private bool _Primary = default(bool);
         public bool Primary
         {
             get
@@ -749,7 +749,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private ObjectPath[] _Includes = default (ObjectPath[]);
+        private ObjectPath[] _Includes = default(ObjectPath[]);
         public ObjectPath[] Includes
         {
             get
@@ -790,7 +790,7 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class GattCharacteristic1Properties
     {
-        private string _UUID = default (string);
+        private string _UUID = default(string);
         public string UUID
         {
             get
@@ -804,7 +804,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private ObjectPath _Service = default (ObjectPath);
+        private ObjectPath _Service = default(ObjectPath);
         public ObjectPath Service
         {
             get
@@ -818,7 +818,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private byte[] _Value = default (byte[]);
+        private byte[] _Value = default(byte[]);
         public byte[] Value
         {
             get
@@ -832,7 +832,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _Notifying = default (bool);
+        private bool _Notifying = default(bool);
         public bool Notifying
         {
             get
@@ -846,7 +846,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private string[] _Flags = default (string[]);
+        private string[] _Flags = default(string[]);
         public string[] Flags
         {
             get
@@ -860,7 +860,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _WriteAcquired = default (bool);
+        private bool _WriteAcquired = default(bool);
         public bool WriteAcquired
         {
             get
@@ -874,7 +874,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private bool _NotifyAcquired = default (bool);
+        private bool _NotifyAcquired = default(bool);
         public bool NotifyAcquired
         {
             get
@@ -914,7 +914,7 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class GattDescriptor1Properties
     {
-        private string _UUID = default (string);
+        private string _UUID = default(string);
         public string UUID
         {
             get
@@ -928,7 +928,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private ObjectPath _Characteristic = default (ObjectPath);
+        private ObjectPath _Characteristic = default(ObjectPath);
         public ObjectPath Characteristic
         {
             get
@@ -942,7 +942,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private byte[] _Value = default (byte[]);
+        private byte[] _Value = default(byte[]);
         public byte[] Value
         {
             get
@@ -985,7 +985,7 @@ namespace Plugin.BlueZ
     [Dictionary]
     public class MediaControl1Properties
     {
-        private bool _Connected = default (bool);
+        private bool _Connected = default(bool);
         public bool Connected
         {
             get
@@ -999,7 +999,7 @@ namespace Plugin.BlueZ
             }
         }
 
-        private ObjectPath _Player = default (ObjectPath);
+        private ObjectPath _Player = default(ObjectPath);
         public ObjectPath Player
         {
             get

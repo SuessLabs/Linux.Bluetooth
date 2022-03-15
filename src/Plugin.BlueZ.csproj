@@ -8,16 +8,17 @@
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Plugin.BlueZ</PackageId>
-    <Version>1.4.1</Version>
-    <Authors>Damian Suess, Chris Sidi</Authors>
+    <Version>1.5.0</Version>
+    <Authors>Xeno Innovations</Authors>
     <Title>BluetoothLE library for BlueZ via Linux D-Bus</Title>
     <Description>BluetoothLE library for BlueZ via Linux D-Bus.</Description>
     <PackageTags>BlueZ;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE</PackageTags>
     <RepositoryUrl>https://github.com/SuessLabs/Plugin.BlueZ</RepositoryUrl>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <BaseOutputPath>..\output</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
