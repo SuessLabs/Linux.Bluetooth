@@ -46,6 +46,7 @@ namespace Scan
                 string deviceDescription = await GetDeviceDescriptionAsync(device);
                 Console.WriteLine(deviceDescription);
             }
+
             Console.WriteLine($"{devices.Count} device(s) found ahead of scan.");
 
             Console.WriteLine();
@@ -65,6 +66,7 @@ namespace Scan
                 await Task.Delay(TimeSpan.FromSeconds(scanSeconds));
                 await adapter.StopDiscoveryAsync();
             }
+
             Console.WriteLine($"Scan complete. {newDevices} new device(s) found.");
         }
 
