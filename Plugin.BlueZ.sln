@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "subscribeToCharacteristic",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueZTest1", "src\Plugin.BlueZ.ManualTest\BlueZTest1.csproj", "{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.DbusService", "src\Test.DbusService\Test.DbusService.csproj", "{CA3D094B-0763-43EE-89A9-2E72FE398ED2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA3D094B-0763-43EE-89A9-2E72FE398ED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA3D094B-0763-43EE-89A9-2E72FE398ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA3D094B-0763-43EE-89A9-2E72FE398ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA3D094B-0763-43EE-89A9-2E72FE398ED2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{4DEE7F2D-F820-4C59-AF48-77F66B14170E} = {8DCF476D-3F5A-4228-BE63-B7D6D9E5F629}
 		{52EADF18-B84E-401D-A48C-4397F45CB3A3} = {8DCF476D-3F5A-4228-BE63-B7D6D9E5F629}
 		{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422} = {5052ABFA-8EB7-4E54-B851-7203081BFB65}
+		{CA3D094B-0763-43EE-89A9-2E72FE398ED2} = {5052ABFA-8EB7-4E54-B851-7203081BFB65}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00669A67-D800-45CB-8AF3-2B4EB823A37C}
