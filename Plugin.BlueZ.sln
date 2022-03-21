@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "scan", "samples\scan\scan.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "subscribeToCharacteristic", "samples\subscribeToCharacteristic\subscribeToCharacteristic.csproj", "{52EADF18-B84E-401D-A48C-4397F45CB3A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueZTest1", "src\Plugin.BlueZ.ManualTest\BlueZTest1.csproj", "{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.BlueZ.ManualTest", "src\Plugin.BlueZ.ManualTest\Plugin.BlueZ.ManualTest.csproj", "{DA1BDB4E-CA5D-44D2-B9FD-B77AB9858422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.BlueZ.Tests", "src\Plugin.BlueZ.Tests\Plugin.BlueZ.Tests.csproj", "{936088A7-5002-4BD1-A1E9-643CB04ACB8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.BlueZ.Tests", "src\Plugin.BlueZ.Tests\Plugin.BlueZ.Tests.csproj", "{936088A7-5002-4BD1-A1E9-643CB04ACB8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
