@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlueZTest1
+namespace Plugin.BlueZ.ManualTest
 {
   internal class Program
   {
@@ -55,15 +55,12 @@ namespace BlueZTest1
       {
         Console.WriteLine($"Connect to {deviceDescription}? yes/[no]?");
         string response = Console.ReadLine();
+
         if (response.Length == 0 || response.ToLowerInvariant().StartsWith("n"))
-        {
           return;
-        }
 
         if (response.ToLowerInvariant().StartsWith("y"))
-        {
           break;
-        }
       }
 
       try
@@ -99,7 +96,11 @@ namespace BlueZTest1
         Console.WriteLine($"Manufacturer: {Encoding.UTF8.GetString(manufacturerBytes)}");
 
         // Test walking back up to the adapter...
-        var adapterName = await (await (await (await modelNameCharacteristic.GetServiceAsync()).GetDeviceAsync()).GetAdapterAsync()).GetAliasAsync();
+        var adapterName = await (await (await (await modelNameCharacteristic
+          .GetServiceAsync())
+          .GetDeviceAsync())
+          .GetAdapterAsync())
+          .GetAliasAsync();
 
         Console.WriteLine($"Adapter name: {adapterName}");
       }

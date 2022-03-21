@@ -16,10 +16,9 @@ namespace subscribeToCharacteristic
     private const string DefaultServiceUUID = GattConstants.ANCServiceUUID;
     private const string DefaultCharacteristicUUID = GattConstants.ANCSNotificationSourceUUID;
 
-    private static string s_deviceFilter;
-    private static string s_serviceUUID;
-    private static string s_characteristicUUID;
-
+    private static string _deviceFilter;
+    private static string _serviceUUID;
+    private static string _characteristicUUID;
     private static TimeSpan timeout = TimeSpan.FromSeconds(15);
 
     private static async Task Main(string[] args)
@@ -36,7 +35,7 @@ namespace subscribeToCharacteristic
         return;
       }
 
-      s_deviceFilter = args[0];
+      _deviceFilter = args[0];
 
       Adapter adapter;
       if (args.Length > 1)
@@ -54,11 +53,11 @@ namespace subscribeToCharacteristic
         adapter = adapters.First();
       }
 
-      s_serviceUUID = BlueZManager.NormalizeUUID(args.Length > 3
+      _serviceUUID = BlueZManager.NormalizeUUID(args.Length > 3
         ? args[2]
         : DefaultServiceUUID);
 
-      s_characteristicUUID = BlueZManager.NormalizeUUID(args.Length > 3
+      _characteristicUUID = BlueZManager.NormalizeUUID(args.Length > 3
         ? args[3]
         : DefaultCharacteristicUUID);
 
@@ -79,13 +78,9 @@ namespace subscribeToCharacteristic
       try
       {
         if (e.IsStateChange)
-        {
           Console.WriteLine("Bluetooth adapter powered on.");
-        }
         else
-        {
           Console.WriteLine("Bluetooth adapter already powered on.");
-        }
 
         Console.WriteLine("Starting scan...");
         await adapter.StartDiscoveryAsync();
@@ -104,18 +99,14 @@ namespace subscribeToCharacteristic
 
         var deviceDescription = await GetDeviceDescriptionAsync(device);
         if (e.IsStateChange)
-        {
           Console.WriteLine($"Found: [NEW] {deviceDescription}");
-        }
         else
-        {
           Console.WriteLine($"Found: {deviceDescription}");
-        }
 
         var deviceAddress = await device.GetAddressAsync();
         var deviceName = await device.GetAliasAsync();
-        if (deviceAddress.Equals(s_deviceFilter, StringComparison.OrdinalIgnoreCase)
-            || deviceName.Contains(s_deviceFilter, StringComparison.OrdinalIgnoreCase))
+        if (deviceAddress.Equals(_deviceFilter, StringComparison.OrdinalIgnoreCase)
+            || deviceName.Contains(_deviceFilter, StringComparison.OrdinalIgnoreCase))
         {
           Console.WriteLine("Stopping scan....");
           try
@@ -147,13 +138,9 @@ namespace subscribeToCharacteristic
       try
       {
         if (e.IsStateChange)
-        {
           Console.WriteLine($"Connected to {await device.GetAddressAsync()}");
-        }
         else
-        {
           Console.WriteLine($"Already connected to {await device.GetAddressAsync()}");
-        }
       }
       catch (Exception ex)
       {
@@ -183,13 +170,9 @@ namespace subscribeToCharacteristic
       try
       {
         if (e.IsStateChange)
-        {
           Console.WriteLine($"Services resolved for {await device.GetAddressAsync()}");
-        }
         else
-        {
           Console.WriteLine($"Services already resolved for {await device.GetAddressAsync()}");
-        }
 
         var servicesUUIDs = await device.GetUUIDsAsync();
         Console.WriteLine($"Device offers {servicesUUIDs.Length} service(s).");
@@ -198,17 +181,17 @@ namespace subscribeToCharacteristic
         //   Console.WriteLine(uuid);
         // }
 
-        var service = await device.GetServiceAsync(s_serviceUUID);
+        var service = await device.GetServiceAsync(_serviceUUID);
         if (service == null)
         {
-          Console.WriteLine($"Service UUID {s_serviceUUID} not found. Do you need to pair first?");
+          Console.WriteLine($"Service UUID {_serviceUUID} not found. Do you need to pair first?");
           return;
         }
 
-        var characteristic = await service.GetCharacteristicAsync(s_characteristicUUID);
+        var characteristic = await service.GetCharacteristicAsync(_characteristicUUID);
         if (characteristic == null)
         {
-          Console.WriteLine($"Characteristic UUID {s_characteristicUUID} not found within service {s_serviceUUID}.");
+          Console.WriteLine($"Characteristic UUID {_characteristicUUID} not found within service {_serviceUUID}.");
           return;
         }
 
@@ -230,7 +213,7 @@ namespace subscribeToCharacteristic
           return;
         }
 
-        PrintCharacteristicValue(s_characteristicUUID, value);
+        PrintCharacteristicValue(_characteristicUUID, value);
       }
       catch (Exception ex)
       {
@@ -284,9 +267,7 @@ namespace subscribeToCharacteristic
     private static void PrintAncsDescription(byte[] value)
     {
       if (value.Length < 8)
-      {
         throw new ArgumentException("8 bytes are required for ANCS notifications.");
-      }
 
       var eventIds = new string[] { "added", "modified", "removed" };
       var categoryIds = new string[] { "Other", "IncomingCall", "MissedCall", "Voicemail", "Social", "Schedule", "Email", "News", "Health & Fitness", "Business & Finance", "Location", "Entertainment" };
@@ -300,9 +281,7 @@ namespace subscribeToCharacteristic
     private static DateTime ReadCurrentTime(byte[] value)
     {
       if (value.Length < 7)
-      {
         throw new ArgumentException("7+ bytes are required for the current date time.");
-      }
 
       // https://github.com/sputnikdev/bluetooth-gatt-parser/blob/master/src/main/resources/gatt/characteristic/org.bluetooth.characteristic.date_time.xml
       var year = value[0] + 256 * value[1];
