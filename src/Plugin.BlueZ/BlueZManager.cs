@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +8,14 @@ namespace Plugin.BlueZ
 {
   public static class BlueZManager
   {
-    public static async Task<Adapter> GetAdapterAsync(string adapterName)
+    /// <summary>Get Bluetooth Adapter object based on name.</summary>
+    /// <param name="adapterName">Adapter Name.</param>
+    /// <param name="fullName">False allows shortened adapter name ('hci0'). True, for full name ('/org/bluez/hci0').</param>
+    /// <returns>Adapter object</returns>
+    /// <exception cref="Exception"></exception>
+    public static async Task<Adapter> GetAdapterAsync(string adapterName, bool fullName = false)
     {
-      var adapterObjectPath = $"/org/bluez/{adapterName}";
+      var adapterObjectPath = !fullName ? $"/org/bluez/{adapterName}" : adapterName;
       var adapter = Connection.System.CreateProxy<IAdapter1>(BluezConstants.DbusService, adapterObjectPath);
 
       try

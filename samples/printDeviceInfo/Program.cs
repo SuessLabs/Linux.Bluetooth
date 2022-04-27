@@ -19,7 +19,15 @@ class Program
     if (args.Length < 1)
     {
       Console.WriteLine("Usage: PrintDeviceInfo <deviceAddress> [adapterName]");
-      Console.WriteLine("Example: PrintDeviceInfo AA:BB:CC:11:22:33 hci1");
+      Console.WriteLine("Example: PrintDeviceInfo AA:BB:CC:11:22:33 hci0");
+      Console.WriteLine("Adapters:");
+
+      var tmp = await BlueZManager.GetAdaptersAsync();
+      foreach (var a in tmp)
+      {
+        Console.WriteLine($"- {a.Name}");
+      }
+
       return;
     }
 
@@ -28,7 +36,9 @@ class Program
     IAdapter1 adapter;
     if (args.Length > 1)
     {
-      adapter = await BlueZManager.GetAdapterAsync(args[1]);
+      // FALSE: 'hci0', TRUE: '/org/bluez/hci0'
+      var fullName = args[1].Contains("/org/bluez/");
+      adapter = await BlueZManager.GetAdapterAsync(args[1], fullName);
     }
     else
     {
@@ -64,7 +74,8 @@ class Program
     Console.WriteLine("Connecting...");
     await device.ConnectAsync();
     await device.WaitForPropertyValueAsync("Connected", value: true, timeout);
-    Console.WriteLine("Connected.");
+    var deviceObjPath = device.ObjectPath.ToString();
+    Console.WriteLine($"Connected ({deviceObjPath}).");
 
     Console.WriteLine("Waiting for services to resolve...");
     await device.WaitForPropertyValueAsync("ServicesResolved", value: true, timeout);
