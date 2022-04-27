@@ -15,11 +15,11 @@ namespace Plugin.BlueZ
   /// </summary>
   public class Adapter : IAdapter1, IDisposable
   {
-    private IAdapter1 m_proxy;
-    private IDisposable m_interfacesWatcher;
-    private IDisposable m_propertyWatcher;
-    private DeviceChangeEventHandlerAsync m_deviceFound;
-    private AdapterEventHandlerAsync m_poweredOn;
+    private IAdapter1 _proxy;
+    private IDisposable _interfacesWatcher;
+    private IDisposable _propertyWatcher;
+    private DeviceChangeEventHandlerAsync _deviceFound;
+    private AdapterEventHandlerAsync _poweredOn;
 
     ~Adapter()
     {
@@ -30,20 +30,20 @@ namespace Plugin.BlueZ
     {
       var adapter = new Adapter
       {
-        m_proxy = proxy,
+        _proxy = proxy,
       };
 
       var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
-      adapter.m_interfacesWatcher = await objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
-      adapter.m_propertyWatcher = await proxy.WatchPropertiesAsync(adapter.OnPropertyChanges);
+      adapter._interfacesWatcher = await objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
+      adapter._propertyWatcher = await proxy.WatchPropertiesAsync(adapter.OnPropertyChanges);
 
       return adapter;
     }
 
     public void Dispose()
     {
-      m_interfacesWatcher?.Dispose();
-      m_interfacesWatcher = null;
+      _interfacesWatcher?.Dispose();
+      _interfacesWatcher = null;
 
       GC.SuppressFinalize(this);
     }
@@ -52,12 +52,12 @@ namespace Plugin.BlueZ
     {
       add
       {
-        m_deviceFound += value;
+        _deviceFound += value;
         FireEventForExistingDevicesAsync();
       }
       remove
       {
-        m_deviceFound -= value;
+        _deviceFound -= value;
       }
     }
 
@@ -65,22 +65,22 @@ namespace Plugin.BlueZ
     {
       add
       {
-        m_poweredOn += value;
-        FireEventIfPropertyAlreadyTrueAsync(m_poweredOn, "Powered");
+        _poweredOn += value;
+        FireEventIfPropertyAlreadyTrueAsync(_poweredOn, "Powered");
       }
       remove
       {
-        m_poweredOn -= value;
+        _poweredOn -= value;
       }
     }
 
     public event AdapterEventHandlerAsync PoweredOff;
 
-    public ObjectPath ObjectPath => m_proxy.ObjectPath;
+    public ObjectPath ObjectPath => _proxy.ObjectPath;
 
     public Task<Adapter1Properties> GetAllAsync()
     {
-      return m_proxy.GetAllAsync();
+      return _proxy.GetAllAsync();
     }
 
     /// <summary>Name of Adapter (i.e. "/org/bluez/hci0").</summary>
@@ -88,19 +88,19 @@ namespace Plugin.BlueZ
 
     public Task<T> GetAsync<T>(string prop)
     {
-      return m_proxy.GetAsync<T>(prop);
+      return _proxy.GetAsync<T>(prop);
     }
 
     /// <summary>Return available filters that can be given to SetDiscoveryFilter.</summary>
     /// <returns>String of filters.</returns>
     public Task<string[]> GetDiscoveryFiltersAsync()
     {
-      return m_proxy.GetDiscoveryFiltersAsync();
+      return _proxy.GetDiscoveryFiltersAsync();
     }
 
     public Task RemoveDeviceAsync(ObjectPath Device)
     {
-      return m_proxy.RemoveDeviceAsync(Device);
+      return _proxy.RemoveDeviceAsync(Device);
     }
 
     /// <summary>Set Property Value Async.</summary>
@@ -109,7 +109,7 @@ namespace Plugin.BlueZ
     /// <returns></returns>
     public Task SetAsync(string prop, object val)
     {
-      return m_proxy.SetAsync(prop, val);
+      return _proxy.SetAsync(prop, val);
     }
 
     /// <summary>
@@ -117,25 +117,25 @@ namespace Plugin.BlueZ
     /// caller. When this method is called with no filter
     /// parameter, filter is removed.
     /// </summary>
-    /// <param name="Properties">Filter parameters. Ref: <see cref="https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/adapter-api.txt"/>.</param>
+    /// <param name="properties">Filter parameters. Ref: <see cref="https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/adapter-api.txt"/>.</param>
     /// <returns></returns>
-    public Task SetDiscoveryFilterAsync(IDictionary<string, object> Properties)
+    public Task SetDiscoveryFilterAsync(IDictionary<string, object> properties)
     {
-      return m_proxy.SetDiscoveryFilterAsync(Properties);
+      return _proxy.SetDiscoveryFilterAsync(properties);
     }
 
     /// <summary>Scan for devices nearby.</summary>
     /// <returns>Task.</returns>
     public Task StartDiscoveryAsync()
     {
-      return m_proxy.StartDiscoveryAsync();
+      return _proxy.StartDiscoveryAsync();
     }
 
     /// <summary>Stop scanning for devices nearby.</summary>
     /// <returns>Task.</returns>
     public Task StopDiscoveryAsync()
     {
-      return m_proxy.StopDiscoveryAsync();
+      return _proxy.StopDiscoveryAsync();
     }
 
     /// <summary>Watch for property updates.</summary>
@@ -143,7 +143,7 @@ namespace Plugin.BlueZ
     /// <returns>Disposable task.</returns>
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
-      return m_proxy.WatchPropertiesAsync(handler);
+      return _proxy.WatchPropertiesAsync(handler);
     }
 
     private async void FireEventForExistingDevicesAsync()
@@ -151,7 +151,7 @@ namespace Plugin.BlueZ
       var devices = await this.GetDevicesAsync();
       foreach (var device in devices)
       {
-        m_deviceFound?.Invoke(this, new DeviceFoundEventArgs(device, isStateChange: false));
+        _deviceFound?.Invoke(this, new DeviceFoundEventArgs(device, isStateChange: false));
       }
     }
 
@@ -162,7 +162,7 @@ namespace Plugin.BlueZ
         var device = Connection.System.CreateProxy<IDevice1>(BluezConstants.DbusService, args.objectPath);
 
         var dev = await Device.CreateAsync(device);
-        m_deviceFound?.Invoke(this, new DeviceFoundEventArgs(dev));
+        _deviceFound?.Invoke(this, new DeviceFoundEventArgs(dev));
       }
     }
 
@@ -170,7 +170,7 @@ namespace Plugin.BlueZ
     {
       try
       {
-        var value = await m_proxy.GetAsync<bool>(prop);
+        var value = await _proxy.GetAsync<bool>(prop);
         if (value)
         {
           // TODO: Suppress duplicate event from OnPropertyChanges.
@@ -192,7 +192,7 @@ namespace Plugin.BlueZ
           case "Powered":
             if (true.Equals(pair.Value))
             {
-              m_poweredOn?.Invoke(this, new BlueZEventArgs());
+              _poweredOn?.Invoke(this, new BlueZEventArgs());
             }
             else
             {

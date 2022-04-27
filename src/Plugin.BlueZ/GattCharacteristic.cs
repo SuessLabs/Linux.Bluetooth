@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tmds.DBus;
@@ -12,6 +12,11 @@ namespace Plugin.BlueZ
   /// </summary>
   public class GattCharacteristic : IGattCharacteristic1, IDisposable
   {
+    private IGattCharacteristic1 _proxy;
+    private IDisposable _propertyWatcher;
+
+    private event GattCharacteristicEventHandlerAsync _onValue;
+
     ~GattCharacteristic()
     {
       Dispose();
@@ -21,18 +26,18 @@ namespace Plugin.BlueZ
     {
       var characteristic = new GattCharacteristic
       {
-        m_proxy = proxy,
+        _proxy = proxy,
       };
 
-      characteristic.m_propertyWatcher = await proxy.WatchPropertiesAsync(characteristic.OnPropertyChanges);
+      characteristic._propertyWatcher = await proxy.WatchPropertiesAsync(characteristic.OnPropertyChanges);
 
       return characteristic;
     }
 
     public void Dispose()
     {
-      m_propertyWatcher?.Dispose();
-      m_propertyWatcher = null;
+      _propertyWatcher?.Dispose();
+      _propertyWatcher = null;
 
       GC.SuppressFinalize(this);
     }
@@ -41,74 +46,74 @@ namespace Plugin.BlueZ
     {
       add
       {
-        m_value += value;
+        _onValue += value;
 
         // Subscribe here instead of CreateAsync, because not all GATT characteristics are notifable.
         Subscribe();
       }
       remove
       {
-        m_value -= value;
+        _onValue -= value;
       }
     }
 
-    public ObjectPath ObjectPath => m_proxy.ObjectPath;
+    public ObjectPath ObjectPath => _proxy.ObjectPath;
 
     public Task<byte[]> ReadValueAsync(IDictionary<string, object> Options)
     {
-      return m_proxy.ReadValueAsync(Options);
+      return _proxy.ReadValueAsync(Options);
     }
 
     public Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options)
     {
-      return m_proxy.WriteValueAsync(Value, Options);
+      return _proxy.WriteValueAsync(Value, Options);
     }
 
     public Task<(CloseSafeHandle fd, ushort mtu)> AcquireWriteAsync(IDictionary<string, object> Options)
     {
-      return m_proxy.AcquireWriteAsync(Options);
+      return _proxy.AcquireWriteAsync(Options);
     }
 
     public Task<(CloseSafeHandle fd, ushort mtu)> AcquireNotifyAsync(IDictionary<string, object> Options)
     {
-      return m_proxy.AcquireNotifyAsync(Options);
+      return _proxy.AcquireNotifyAsync(Options);
     }
 
     public Task StartNotifyAsync()
     {
-      return m_proxy.StartNotifyAsync();
+      return _proxy.StartNotifyAsync();
     }
 
     public Task StopNotifyAsync()
     {
-      return m_proxy.StopNotifyAsync();
+      return _proxy.StopNotifyAsync();
     }
 
     public Task<T> GetAsync<T>(string prop)
     {
-      return m_proxy.GetAsync<T>(prop);
+      return _proxy.GetAsync<T>(prop);
     }
 
     public Task<GattCharacteristic1Properties> GetAllAsync()
     {
-      return m_proxy.GetAllAsync();
+      return _proxy.GetAllAsync();
     }
 
     public Task SetAsync(string prop, object val)
     {
-      return m_proxy.SetAsync(prop, val);
+      return _proxy.SetAsync(prop, val);
     }
 
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
-      return m_proxy.WatchPropertiesAsync(handler);
+      return _proxy.WatchPropertiesAsync(handler);
     }
 
     private async void Subscribe()
     {
       try
       {
-        await m_proxy.StartNotifyAsync();
+        await _proxy.StartNotifyAsync();
 
         // Is there a way to check if a characteristic supports Read?
         // // Reading the current value will trigger OnPropertyChanges.
@@ -129,14 +134,10 @@ namespace Plugin.BlueZ
         switch (pair.Key)
         {
           case "Value":
-            m_value?.Invoke(this, new GattCharacteristicValueEventArgs((byte[])pair.Value));
+            _onValue?.Invoke(this, new GattCharacteristicValueEventArgs((byte[])pair.Value));
             break;
         }
       }
     }
-
-    private IGattCharacteristic1 m_proxy;
-    private IDisposable m_propertyWatcher;
-    private event GattCharacteristicEventHandlerAsync m_value;
   }
 }

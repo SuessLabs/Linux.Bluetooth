@@ -140,6 +140,24 @@ and then run `default agent` and `agent on` within `bluetoothctl`. Watch `blueto
 
 See [Ubuntu's Introduction to Pairing](https://core.docs.ubuntu.com/en/stacks/bluetooth/bluez/docs/reference/pairing/introduction).
 
+### BluetoothCtl Helper
+
+From command line, use `bluetoothctl` or Bluetooth Manager to scan and retrieve device UUIDs and Services to assist with debugging.."
+
+```bash
+$ bluetoothctl
+
+; Scan for devices
+scan on
+
+; Stop Scanning
+scan off
+
+; List known devices
+devices
+```
+
+
 ## Contributing
 
 See [Contributing](./github/CONTRIBUTING.md).
