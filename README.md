@@ -8,7 +8,12 @@ Uses [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access D-Bus. Tmds.DBus.T
 
 A huge special thanks to the maintainers of Tmds.DBus and DotNetBlueZ.
 
-## Supported Distrobutions
+## Requirements
+
+* Linux
+* A recent release of BlueZ. This package was tested with BlueZ 5.50. You can check which version you're using with `bluetoothd -v`.
+
+### Supported Distrobutions
 
 Plugin.BlueZ aims to support Linux Distrobutions where both .NET and BlueZ is supported. Officially, this NuGet package has only been tested on Ubuntu 20.04.
 
@@ -22,22 +27,15 @@ List of [BlueZ supported](http://www.bluez.org/about/) distros:
 * Gentoo Linux
 * Chrome OS
 
-## Requirements
-
-* Linux
-* A recent release of BlueZ. This package was tested with BlueZ 5.50. You can check which version you're using with `bluetoothd -v`.
-
 ## Installation
 
 ```bash
 dotnet add package Plugin.BlueZ
 ```
 
-## Events
+## Usage
 
 C# events are available for several properties. Events are useful for properly handling disconnects and reconnects.
-
-## Usage
 
 ### Get a Bluetooth adapter
 
@@ -148,6 +146,9 @@ See [Contributing](./github/CONTRIBUTING.md).
 
 ## Reference
 
+* **BlueZ API**:
+  * [HEAD](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
+  * [v5.53](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc?h=5.53) - _i.e. Ubuntu v20.04 LTS_
+* [BlueZ Official Site](http://www.bluez.org/)
 * [DotNetBlueZ](https://www.nuget.org/packages/HashtagChris.DotNetBlueZ/)
-* [BlueZ D-Bus API docs](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
 * [Install BlueZ on the Raspberry PI](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/overview)
