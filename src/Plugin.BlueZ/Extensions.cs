@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +39,7 @@ namespace Plugin.BlueZ.Extensions
       {
         return await Device.CreateAsync(dev);
       }
+
       return null;
     }
 
