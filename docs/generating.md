@@ -1,12 +1,70 @@
 # Generating with Tmds.DBus
 
-## Install the Tool
+Generating interfaces with Tmds.DBus v0.10.1.
 
-There's got to be a better way than making a dummy project and performing `dotnet restore`
+Skip ahead to the **Generate Interfaces** section, if you already have it installed.
 
-## Listing Services
+## Install Tmds.DBus.Tool
 
-To list services normally you would execute
+### .NET Prerequisites
+
+The following actions were tested against [Ubuntu v20.04 LTS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-). Please note, NET Core 3.1 or NET 6 is required for this step.
+
+Verify that .NET 3.1 or 6.0 is installed.
+
+```
+$ dotnet --list-sdk
+```
+
+If the required SDK it's not installed, continue. Referenced by [Install the SDK - Ubuntu v20.04 LTS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-)
+
+```
+$ sudo apt-get update; \
+  sudo apt-get install -y apt-transport-https && \
+  sudo apt-get update && \
+  sudo apt-get install -y dotnet-sdk-3.1
+```
+
+After installation, validate it again.
+```
+$ dotnet --list-sdk
+```
+
+### Download Tmds.DBus.Tool
+
+Open a new console application (_create project space_)
+
+```
+$ dotnet new console -o GenBluez
+$ cd GenBluez
+```
+
+Add a reference to `Tmds.DBus` in the `GenBluez.csproj`
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Tmds.DBus" Version="0.10.1" />
+  </ItemGroup>
+</Project>
+```
+
+Restore dependencies
+
+```
+$ dotnet restore
+$ dotnet tool install -g Tmds.DBus.Tool
+```
+
+## Validation
+
+### Listing Services
+
+To list services normally you would execute. Note, if you get an `Unhandled exception`, continue to the next step.
 
 ```bash
 dotnet dbus list service
@@ -18,16 +76,20 @@ However, BlueZ is a system service, which is referenced in `/usr/share/dbus-1/sy
 dotnet dbus list services --bus system
 ```
 
-## BlueZ Service
+### Validate Existance of BlueZ Service
 
 To get moving on listing the objects and generating code for BlueZ over DBus, perform the following:
 
 ```bash
 $ dotnet dbus list services --bus system | grep bluez
+
+OUTPUT:
 org.bluez
 ```
 
 In the results you will find, `org.bluez` if you have it installed (_Raspberr PI 4B does_).
+
+## Generate Interfaces
 
 ### Get the Objects
 
@@ -35,6 +97,8 @@ To obtain the objects of `org.bluez` input the following and you should get simi
 
 ```bash
 $ dotnet dbus list objects --bus system --service org.bluez
+
+OUTPUT:
 / : org.freedesktop.DBus.ObjectManager
 /org/bluez : org.bluez.AgentManager1 org.bluez.HealthManager1 org.bluez.ProfileManager1
 /org/bluez/hci0 : org.bluez.Adapter1 org.bluez.GattManager1 org.bluez.LEAdvertisingManager1 org.bluez.Media1 org.bluez.NetworkServer1
