@@ -8,7 +8,7 @@ Uses [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access D-Bus. Tmds.DBus.T
 
 A huge special thanks to the maintainers of Tmds.DBus and DotNetBlueZ.
 
-### Supported Distrobutions
+## Supported Distrobutions
 
 Plugin.BlueZ aims to support Linux Distrobutions where both .NET and BlueZ is supported. Officially, this NuGet package has only been tested on Ubuntu 20.04.
 

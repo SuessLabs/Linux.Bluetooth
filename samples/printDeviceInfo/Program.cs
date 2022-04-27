@@ -71,6 +71,13 @@ class Program
 
     var servicesUUID = await device.GetUUIDsAsync();
     Console.WriteLine($"Device offers {servicesUUID.Length} service(s).");
+    if (servicesUUID is not null)
+    {
+      foreach (var svc in servicesUUID)
+      {
+        Console.WriteLine($"- Uuid: {svc}");
+      }
+    }
 
     var deviceInfoServiceFound = servicesUUID.Any(uuid => String.Equals(uuid, GattConstants.DeviceInformationServiceUUID, StringComparison.OrdinalIgnoreCase));
     if (!deviceInfoServiceFound)
