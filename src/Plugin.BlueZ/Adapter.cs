@@ -1,7 +1,7 @@
-using Plugin.BlueZ.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Plugin.BlueZ.Extensions;
 using Tmds.DBus;
 
 namespace Plugin.BlueZ
@@ -15,6 +15,12 @@ namespace Plugin.BlueZ
   /// </summary>
   public class Adapter : IAdapter1, IDisposable
   {
+    private IAdapter1 m_proxy;
+    private IDisposable m_interfacesWatcher;
+    private IDisposable m_propertyWatcher;
+    private DeviceChangeEventHandlerAsync m_deviceFound;
+    private AdapterEventHandlerAsync m_poweredOn;
+
     ~Adapter()
     {
       Dispose();
@@ -28,7 +34,7 @@ namespace Plugin.BlueZ
       };
 
       var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
-      adapter.m_interfacesWatcher = await objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAdded);
+      adapter.m_interfacesWatcher = await objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
       adapter.m_propertyWatcher = await proxy.WatchPropertiesAsync(adapter.OnPropertyChanges);
 
       return adapter;
@@ -77,11 +83,16 @@ namespace Plugin.BlueZ
       return m_proxy.GetAllAsync();
     }
 
+    /// <summary>Name of Adapter (i.e. "/org/bluez/hci0").</summary>
+    public string Name => ObjectPath.ToString();
+
     public Task<T> GetAsync<T>(string prop)
     {
       return m_proxy.GetAsync<T>(prop);
     }
 
+    /// <summary>Return available filters that can be given to SetDiscoveryFilter.</summary>
+    /// <returns>String of filters.</returns>
     public Task<string[]> GetDiscoveryFiltersAsync()
     {
       return m_proxy.GetDiscoveryFiltersAsync();
@@ -92,26 +103,44 @@ namespace Plugin.BlueZ
       return m_proxy.RemoveDeviceAsync(Device);
     }
 
+    /// <summary>Set Property Value Async.</summary>
+    /// <param name="prop"></param>
+    /// <param name="val"></param>
+    /// <returns></returns>
     public Task SetAsync(string prop, object val)
     {
       return m_proxy.SetAsync(prop, val);
     }
 
+    /// <summary>
+    /// This method sets the device discovery filter for the
+    /// caller. When this method is called with no filter
+    /// parameter, filter is removed.
+    /// </summary>
+    /// <param name="Properties">Filter parameters. Ref: <see cref="https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/adapter-api.txt"/>.</param>
+    /// <returns></returns>
     public Task SetDiscoveryFilterAsync(IDictionary<string, object> Properties)
     {
       return m_proxy.SetDiscoveryFilterAsync(Properties);
     }
 
+    /// <summary>Scan for devices nearby.</summary>
+    /// <returns>Task.</returns>
     public Task StartDiscoveryAsync()
     {
       return m_proxy.StartDiscoveryAsync();
     }
 
+    /// <summary>Stop scanning for devices nearby.</summary>
+    /// <returns>Task.</returns>
     public Task StopDiscoveryAsync()
     {
       return m_proxy.StopDiscoveryAsync();
     }
 
+    /// <summary>Watch for property updates.</summary>
+    /// <param name="handler">Handler with argument of <seealso cref="PropertyChanges"/>.</param>
+    /// <returns>Disposable task.</returns>
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
       return m_proxy.WatchPropertiesAsync(handler);
@@ -126,7 +155,7 @@ namespace Plugin.BlueZ
       }
     }
 
-    private async void OnDeviceAdded((ObjectPath objectPath, IDictionary<string, IDictionary<string, object>> interfaces) args)
+    private async void OnDeviceAddedAsync((ObjectPath objectPath, IDictionary<string, IDictionary<string, object>> interfaces) args)
     {
       if (BlueZManager.IsMatch(BluezConstants.DeviceInterface, args.objectPath, args.interfaces, this))
       {
@@ -174,11 +203,5 @@ namespace Plugin.BlueZ
         }
       }
     }
-
-    private IAdapter1 m_proxy;
-    private IDisposable m_interfacesWatcher;
-    private IDisposable m_propertyWatcher;
-    private DeviceChangeEventHandlerAsync m_deviceFound;
-    private AdapterEventHandlerAsync m_poweredOn;
   }
 }
