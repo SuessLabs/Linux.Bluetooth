@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
@@ -85,6 +85,21 @@ namespace Plugin.BlueZ
       return _proxy.ConnectAsync();
     }
 
+    /// <summary>
+    ///   This method connects a specific profile of this
+    ///   device.The UUID provided is the remote service
+    ///   UUID for the profile.
+    /// </summary>
+    /// <remarks>
+    ///   Possible errors:
+    ///       org.bluez.Error.Failed
+    ///       org.bluez.Error.InProgress
+    ///       org.bluez.Error.InvalidArguments
+    ///       org.bluez.Error.NotAvailable
+    ///       org.bluez.Error.NotReady
+    /// </remarks>
+    /// <param name="UUID"></param>
+    /// <returns></returns>
     public Task ConnectProfileAsync(string UUID)
     {
       return _proxy.ConnectProfileAsync(UUID);
