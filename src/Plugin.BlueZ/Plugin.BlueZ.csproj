@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tmds.DBus" Version="0.10.1" />
+    <PackageReference Include="Tmds.DBus" Version="0.11.0" />
     <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.10.1" />-->
   </ItemGroup>
 
