@@ -207,6 +207,8 @@ namespace Plugin.BlueZ
     }
 
     private string[] _UUIDs = default(string[]);
+
+    /// <summary>List of 128-bit UUIDs that represents the available local services.</summary>
     public string[] UUIDs
     {
       get
@@ -221,6 +223,7 @@ namespace Plugin.BlueZ
     }
 
     private string _Modalias = default(string);
+    /// <summary>Local device ID information in mod alias format used by the kernal and udev.</summary>
     public string Modalias
     {
       get

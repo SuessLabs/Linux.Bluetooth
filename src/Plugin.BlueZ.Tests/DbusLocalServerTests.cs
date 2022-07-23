@@ -1,30 +1,13 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Plugin.BlueZ.Tests.Services;
 using Tmds.DBus;
 
 namespace Plugin.BlueZ.Tests
 {
-  [DBusInterface("tmds.myservice")]
-  public interface IMyService : IDBusObject
-  {
-    Task<string> SendCommandAsync(string message);
-  }
-
-  public class MyService : IMyService
-  {
-    public static readonly ObjectPath Path = new ObjectPath("/tmds/myservice");
-
-    public ObjectPath ObjectPath { get => Path; }
-
-    public Task<string> SendCommandAsync(string command)
-    {
-      return Task.FromResult($"Hello {command}!");
-    }
-  }
-
   [TestClass]
-  public class DbusSimulatorTests
+  public class DbusLocalServerTests
   {
     [TestMethod]
     public async Task SimulateDbusServerTestAsync()

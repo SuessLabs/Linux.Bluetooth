@@ -9,6 +9,9 @@ namespace Plugin.BlueZ
   /// <summary>
   /// Adds events to IDevice1.
   /// </summary>
+  /// <remarks>
+  ///   Reference: https://github.com/bluez/bluez/blob/master/doc/device-api.txt
+  /// </remarks>
   public class Device : IDevice1, IDisposable
   {
     private const string DeviceConnected = "Connected";
@@ -144,8 +147,8 @@ namespace Plugin.BlueZ
       return _proxy.DisconnectProfileAsync(uuid);
     }
 
-    /// <summary>Get all properties.</summary>
-    /// <returns></returns>
+    /// <summary>Gets all properties for connected device.</summary>
+    /// <returns>BlueZ <seealso cref="Device1Properties"/>.</returns>
     public Task<Device1Properties> GetAllAsync()
     {
       return _proxy.GetAllAsync();
@@ -157,6 +160,7 @@ namespace Plugin.BlueZ
     }
 
     /// <summary>Gets all properties for device.</summary>
+    /// <returns><seealso cref="DeviceProperties"/> object.</returns>
     public async Task<DeviceProperties> GetPropertiesAsync()
     {
       var p = await _proxy.GetAllAsync();
