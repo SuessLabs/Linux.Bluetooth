@@ -10,9 +10,10 @@ namespace Plugin.BlueZ
 
   public delegate Task AdapterEventHandlerAsync(Adapter sender, BlueZEventArgs eventArgs);
 
-  /// <summary>
-  /// Add events to IAdapter1.
-  /// </summary>
+  /// <summary>Add events to IAdapter1.</summary>
+  /// <remarks>
+  ///   Reference: https://github.com/bluez/bluez/blob/master/doc/adapter-api.txt
+  /// </remarks>
   public class Adapter : IAdapter1, IDisposable
   {
     private IAdapter1 _proxy;
@@ -76,6 +77,7 @@ namespace Plugin.BlueZ
 
     public event AdapterEventHandlerAsync PoweredOff;
 
+    /// <summary>See also, Name, property.</summary>
     public ObjectPath ObjectPath => _proxy.ObjectPath;
 
     public Task<Adapter1Properties> GetAllAsync()
@@ -83,9 +85,20 @@ namespace Plugin.BlueZ
       return _proxy.GetAllAsync();
     }
 
+    public async Task<AdapterProperties> GetPropertiesAsync()
+    {
+
+    }
+
     /// <summary>Name of Adapter (i.e. "/org/bluez/hci0").</summary>
+    /// <remarks>This is a custom property to easily translate the name.</remarks>
     public string Name => ObjectPath.ToString();
 
+    /// <summary>Gets a property of the BlueZ Adapter object.</summary>
+    /// <remarks>See, <seealso cref="Adapter1Extensions"/> for references.</remarks>
+    /// <typeparam name="T">Type of property.</typeparam>
+    /// <param name="prop">Name of the property.</param>
+    /// <returns></returns>
     public Task<T> GetAsync<T>(string prop)
     {
       return _proxy.GetAsync<T>(prop);

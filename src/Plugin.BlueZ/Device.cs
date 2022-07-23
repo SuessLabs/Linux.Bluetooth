@@ -9,6 +9,9 @@ namespace Plugin.BlueZ
   /// <summary>
   /// Adds events to IDevice1.
   /// </summary>
+  /// <remarks>
+  ///   Reference: https://github.com/bluez/bluez/blob/master/doc/device-api.txt
+  /// </remarks>
   public class Device : IDevice1, IDisposable
   {
     private const string DeviceConnected = "Connected";

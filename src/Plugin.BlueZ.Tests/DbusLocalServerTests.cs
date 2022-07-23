@@ -7,7 +7,7 @@ using Tmds.DBus;
 namespace Plugin.BlueZ.Tests
 {
   [TestClass]
-  public class DbusSimulatorTests
+  public class DbusLocalServerTests
   {
     [TestMethod]
     public async Task SimulateDbusServerTestAsync()
