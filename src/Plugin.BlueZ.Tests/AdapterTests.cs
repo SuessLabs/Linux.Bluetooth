@@ -24,11 +24,11 @@ namespace Plugin.BlueZ.Tests
 
         using (var client = new Connection(boundAddress))
         {
-          await client.Cre
+          /// await client.CreateProxy()
         }
 
 
-        // Client
+        // Previous Client Example
         ////using (var client = new Connection(boundAddress))
         ////{
         ////  await client.ConnectAsync();

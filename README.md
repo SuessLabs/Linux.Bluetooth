@@ -1,12 +1,19 @@
-# Plugin.BlueZ
+# Linux Bluetooth with Plugin.BlueZ
 
 A .NET BluetoothLE library for Linux using BlueZ's D-Bus APIs.
 
 [![Plugin.BlueZ NuGet Badge](https://buildstats.info/nuget/Plugin.BlueZ?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Plugin.BlueZ/)
 
-Uses [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access D-Bus. Tmds.DBus.Tool was used to generate the D-Bus object interfaces. D-Bus is the preferred interface for Bluetooth in userspace. The [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf) presentation says "Use D-Bus API (documentation in [doc/]((https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc))) whenever possible".
+The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux's D-Bus, the preferred interface for Bluetooth in userspace. According to the presentation, [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf), _"Use D-Bus API (documentation in [doc/]((https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc))) whenever possible"_.
 
 A huge special thanks to the maintainers of Tmds.DBus and DotNetBlueZ.
+
+Name Change Candidates:
+
+* Linux.BlueZ
+* Linux.Bluetooth
+* Linux.Dbus.BlueZ
+* Linux.Dbus.Bluetooth
 
 ## Requirements
 
@@ -157,6 +164,9 @@ scan off
 devices
 ```
 
+## Generating
+
+Tmds.DBus.Tool is used to generate the D-Bus object interfaces.
 
 ## Contributing
 

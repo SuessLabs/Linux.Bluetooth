@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-
-namespace Plugin.BlueZ
+﻿namespace Plugin.BlueZ
 {
   /// <summary>Wrapper for Adapter1Properties.</summary>
   public class AdapterProperties
@@ -84,7 +81,6 @@ namespace Plugin.BlueZ
     ///   value then the system will set this value back to
     ///   false after the timer expired.
     ///
-    ///
     ///   In case the adapter is switched off, setting this
     ///   value will fail.
     ///
@@ -97,6 +93,15 @@ namespace Plugin.BlueZ
     /// <remarks>Read-write.</remarks>
     public bool Discoverable { get; set; } = default(bool);
 
+    /// <summary>
+    ///   The discoverable timeout in seconds.A value of zero
+    ///   means that the timeout is disabled and it will stay in
+    ///   discoverable/limited mode forever.
+    ///   
+    ///   The default value for the discoverable timeout should
+    ///   be 180 seconds(3 minutes).
+    /// </summary>
+    /// <remarks>Read-only.</remarks>
     public uint DiscoverableTimeout { get; set; } = default(uint);
 
     /// <summary>
@@ -149,6 +154,7 @@ namespace Plugin.BlueZ
     /////// <summary>
     ///////   List of 128-bit UUIDs that represents the experimental features currently enabled.
     /////// </summary>
+    /////// <remarks>readonly, optional</remarks>
     //// public string[] ExperimentalFeatures { get; set; }
   }
 }

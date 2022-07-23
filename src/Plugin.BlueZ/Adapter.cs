@@ -87,7 +87,24 @@ namespace Plugin.BlueZ
 
     public async Task<AdapterProperties> GetPropertiesAsync()
     {
+      var p = await _proxy.GetAllAsync();
 
+      return new AdapterProperties
+      {
+        Address = p.Address,
+        AddressType = p.AddressType,
+        Name = p.Name,
+        Alias = p.Alias,
+        Class = p.Class,
+        Powered = p.Powered,
+        Discoverable = p.Discoverable,
+        DiscoverableTimeout = p.DiscoverableTimeout,
+        Discovering = p.Discovering,
+        Pairable = p.Pairable,
+        PairableTimeout = p.PairableTimeout,
+        UUIDs = p.UUIDs,
+        Modalias = p.Modalias,
+      };
     }
 
     /// <summary>Name of Adapter (i.e. "/org/bluez/hci0").</summary>
@@ -104,7 +121,11 @@ namespace Plugin.BlueZ
       return _proxy.GetAsync<T>(prop);
     }
 
-    /// <summary>Return available filters that can be given to SetDiscoveryFilter.</summary>
+    /// <summary>
+    ///   Return available filters that can be given to SetDiscoveryFilter.
+    ///
+    ///   Possible errors: None.
+    /// </summary>
     /// <returns>String of filters.</returns>
     public Task<string[]> GetDiscoveryFiltersAsync()
     {

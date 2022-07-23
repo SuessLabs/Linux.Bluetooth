@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,10 +50,17 @@ namespace Plugin.BlueZ.Tests.Services
       return _adapterProperties;
     }
 
+    /// <summary>
+    ///  Get Bluetooth property.
+    /// </summary>
+    /// <typeparam name="T">Data type.</typeparam>
+    /// <param name="prop">Property name.</param>
+    /// <returns>Value of the property.</returns>
+    /// <exception cref="NotImplementedException"></exception>
     public Task<T> GetAsync<T>(string prop)
     {
-
-
+      // Needs tested:
+      //// return Helpers.GetPropertyValue(_adapterProperties, prop);
       throw new NotImplementedException();
     }
 
