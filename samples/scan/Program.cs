@@ -1,0 +1,94 @@
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Plugin.BlueZ;
+using Plugin.BlueZ.Extensions;
+
+namespace Scan
+{
+  /// <summary>
+  ///   GATT Client - Scan for devices
+  ///
+  /// Usage: dotnet scan.dll [SecondsToScan] [adapterName]
+  /// Usage: dotnet scan.dll -h    Help menu
+  ///
+  /// </summary>
+  /// <param name="args">(optional) SecondsToScan, (optional) AdapterName</param>
+  /// <returns>Task.</returns>
+  public class Program
+  {
+    static TimeSpan timeout = TimeSpan.FromSeconds(15);
+
+    static async Task Main(string[] args)
+    {
+      if (
+        args.Length < 1 || args.Length > 2 ||
+        args[0].ToLowerInvariant() == "-h" ||
+        !int.TryParse(args[0], out int scanSeconds))
+      {
+        Console.WriteLine("Usage: scan <SecondsToScan> <adapterName>");
+        Console.WriteLine("Example: scan 10 hci0");
+        return;
+      }
+
+      IAdapter1 adapter;
+      if (args.Length > 1)
+      {
+        adapter = await BlueZManager.GetAdapterAsync(args[1]);
+      }
+      else
+      {
+        var adapters = await BlueZManager.GetAdaptersAsync();
+        if (adapters.Count == 0)
+        {
+          throw new Exception("No Bluetooth adapters found.");
+        }
+
+        adapter = adapters.First();
+      }
+
+      var adapterPath = adapter.ObjectPath.ToString();
+      var adapterName = adapterPath.Substring(adapterPath.LastIndexOf("/") + 1);
+      Console.WriteLine($"Using Bluetooth adapter {adapterName}");
+      Console.WriteLine($"Adapter's full path:    {adapterPath}");
+
+      // Print out the devices we already know about.
+      Console.WriteLine();
+      Console.WriteLine("Getting known devices...");
+      var devices = await adapter.GetDevicesAsync();
+      foreach (var device in devices)
+      {
+        string deviceDescription = await GetDeviceDescriptionAsync(device);
+        Console.WriteLine($" - {deviceDescription}");
+      }
+
+      Console.WriteLine($"Found {devices.Count} paired device(s).");
+      Console.WriteLine();
+
+      // Scan for more devices.
+      Console.WriteLine($"Scanning for {scanSeconds} seconds...");
+
+      int newDevices = 0;
+      using (await adapter.WatchDevicesAddedAsync(async device =>
+      {
+        newDevices++;
+        // Write a message when we detect new devices during the scan.
+        string deviceDescription = await GetDeviceDescriptionAsync(device);
+        Console.WriteLine($"[NEW] {deviceDescription}");
+      }))
+      {
+        await adapter.StartDiscoveryAsync();
+        await Task.Delay(TimeSpan.FromSeconds(scanSeconds));
+        await adapter.StopDiscoveryAsync();
+      }
+
+      Console.WriteLine($"Scan complete. {newDevices} new device(s) found.");
+    }
+
+    private static async Task<string> GetDeviceDescriptionAsync(IDevice1 device)
+    {
+      var deviceProperties = await device.GetAllAsync();
+      return $"{deviceProperties.Alias} (Address: {deviceProperties.Address}, RSSI: {deviceProperties.RSSI})";
+    }
+  }
+}

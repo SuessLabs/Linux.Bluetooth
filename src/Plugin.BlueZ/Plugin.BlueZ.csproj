@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Plugin.BlueZ</RootNamespace>
+  </PropertyGroup>
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <PackageId>Plugin.BlueZ</PackageId>
+    <Version>5.64.0</Version>
+    <Authors>Xeno Innovations</Authors>
+    <Title>Plugin.BlueZ Linux Bluetooth LE library</Title>
+    <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
+    <PackageTags>BlueZ;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE</PackageTags>
+    <RepositoryUrl>https://github.com/SuessLabs/Plugin.BlueZ</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <BaseOutputPath>..\..\output</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tmds.DBus" Version="0.11.0" />
+    <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.10.1" />-->
+  </ItemGroup>
+
+</Project>
