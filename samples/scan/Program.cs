@@ -63,10 +63,9 @@ namespace Scan
       }
 
       Console.WriteLine($"Found {devices.Count} paired device(s).");
+      Console.WriteLine();
 
       // Scan for more devices.
-
-      Console.WriteLine();
       Console.WriteLine($"Scanning for {scanSeconds} seconds...");
 
       int newDevices = 0;
