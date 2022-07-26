@@ -2,7 +2,6 @@
 
 .NET Bluetooth LE library for Linux using BlueZ's D-Bus APIs, formally known as, Linux.Bluetooth.
 
-
 [![Linux.Bluetooth NuGet Badge](https://buildstats.info/nuget/Linux.Bluetooth?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Linux.Bluetooth/)
 
 The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux's D-Bus, the preferred interface for Bluetooth in userspace.
@@ -154,10 +153,6 @@ scan off
 ; List known devices
 devices
 ```
-
-## Generating
-
-Tmds.DBus.Tool is used to generate the D-Bus object interfaces.
 
 ## Contributing
 

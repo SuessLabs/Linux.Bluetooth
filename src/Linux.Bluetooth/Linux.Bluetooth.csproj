@@ -14,11 +14,14 @@
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
     <PackageTags>BlueZ;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE</PackageTags>
     <RepositoryUrl>https://github.com/SuessLabs/Linux.Bluetooth</RepositoryUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <BaseOutputPath>..\..\output</BaseOutputPath>
+    <Copyright>Copyright 2022 Xeno Innovations, Inc.</Copyright>
+    <PackageProjectUrl>https://github.com/SuessLabs/Linux.Bluetooth</PackageProjectUrl>
+    <PackageReleaseNotes>Rebranded from Plugin.BlueZ to Linux.Bluetooth</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
