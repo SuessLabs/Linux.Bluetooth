@@ -1,19 +1,11 @@
-# Linux Bluetooth with Plugin.BlueZ
+# Linux Bluetooth with Linux.Bluetooth
 
-A .NET BluetoothLE library for Linux using BlueZ's D-Bus APIs.
+.NET Bluetooth LE library for Linux using BlueZ's D-Bus APIs, formally known as, Linux.Bluetooth.
 
-[![Plugin.BlueZ NuGet Badge](https://buildstats.info/nuget/Plugin.BlueZ?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Plugin.BlueZ/)
+
+[![Linux.Bluetooth NuGet Badge](https://buildstats.info/nuget/Linux.Bluetooth?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Linux.Bluetooth/)
 
 The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux's D-Bus, the preferred interface for Bluetooth in userspace.
-
-A huge special thanks to the maintainers of Tmds.DBus.
-
-Name Change Candidates:
-
-* Linux.BlueZ
-* Linux.Bluetooth
-* Linux.Dbus.BlueZ
-* Linux.Dbus.Bluetooth
 
 ## Requirements
 
@@ -22,7 +14,7 @@ Name Change Candidates:
 
 ### Supported Distributions
 
-Plugin.BlueZ aims to support Linux Distributions where both .NET and BlueZ is supported. Officially, this NuGet package has only been tested on Ubuntu 20.04.
+Linux.Bluetooth aims to support Linux Distributions where both .NET and BlueZ is supported. Officially, this NuGet package has only been tested on Ubuntu 20.04.
 
 List of [BlueZ supported](http://www.bluez.org/about/) distros:
 
@@ -37,7 +29,7 @@ List of [BlueZ supported](http://www.bluez.org/about/) distros:
 ## Installation
 
 ```bash
-dotnet add package Plugin.BlueZ
+dotnet add package Linux.Bluetooth
 ```
 
 ## Usage
@@ -47,7 +39,7 @@ C# events are available for several properties. Events are useful for properly h
 ### Get a Bluetooth adapter
 
 ```C#
-using Plugin.BlueZ;
+using Linux.Bluetooth;
 ...
 IAdapter1 adapter = (await BlueZManager.GetAdaptersAsync()).FirstOrDefault();
 ```
