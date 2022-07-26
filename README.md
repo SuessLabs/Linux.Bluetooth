@@ -1,6 +1,10 @@
-# Linux Bluetooth with Linux.Bluetooth
+# Linux Bluetooth Library for .NET
 
-.NET Bluetooth LE library for Linux using BlueZ's D-Bus APIs, formally known as, Linux.Bluetooth.
+> ## Announcement
+>
+> _The next generation of the [Plugin.BlueZ](https://github.com/SuessLabs/Plugin.BlueZ) library!_
+
+The Linux.Bluetooth library for .NET gives developers the ability to quickly standup and interface with Linux's BLE radio with very little effort. There's no need to recall the laborious D-Bus API calls, we handle that for you.
 
 [![Linux.Bluetooth NuGet Badge](https://buildstats.info/nuget/Linux.Bluetooth?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Linux.Bluetooth/)
 
@@ -9,11 +13,12 @@ The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux
 ## Requirements
 
 * Linux
-* A recent release of BlueZ. This package was tested with BlueZ 5.50. You can check which version you're using with `bluetoothd -v`.
+
+This project has been validated against, BlueZ v5.50 and above. You can check which version you're using with, `bluetoothd -v`.
 
 ### Supported Distributions
 
-Linux.Bluetooth aims to support Linux Distributions where both .NET and BlueZ is supported. Officially, this NuGet package has only been tested on Ubuntu 20.04.
+Linux.Bluetooth aims to support Linux Distributions where both .NET and BlueZ is supported. Officially, this NuGet package has been tested against Ubuntu 20.04 LTS.
 
 List of [BlueZ supported](http://www.bluez.org/about/) distros:
 
