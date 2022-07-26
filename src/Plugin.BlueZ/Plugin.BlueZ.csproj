@@ -8,10 +8,10 @@
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Plugin.BlueZ</PackageId>
-    <Version>5.53.1</Version>
+    <Version>5.64.0</Version>
     <Authors>Xeno Innovations</Authors>
-    <Title>BluetoothLE library for BlueZ via Linux D-Bus</Title>
-    <Description>BluetoothLE library for BlueZ via Linux D-Bus.</Description>
+    <Title>Plugin.BlueZ Linux Bluetooth LE library</Title>
+    <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
     <PackageTags>BlueZ;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE</PackageTags>
     <RepositoryUrl>https://github.com/SuessLabs/Plugin.BlueZ</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

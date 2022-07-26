@@ -4,9 +4,9 @@ A .NET BluetoothLE library for Linux using BlueZ's D-Bus APIs.
 
 [![Plugin.BlueZ NuGet Badge](https://buildstats.info/nuget/Plugin.BlueZ?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Plugin.BlueZ/)
 
-The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux's D-Bus, the preferred interface for Bluetooth in userspace. According to the presentation, [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf), _"Use D-Bus API (documentation in [doc/]((https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc))) whenever possible"_.
+The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux's D-Bus, the preferred interface for Bluetooth in userspace.
 
-A huge special thanks to the maintainers of Tmds.DBus and DotNetBlueZ.
+A huge special thanks to the maintainers of Tmds.DBus.
 
 Name Change Candidates:
 
@@ -20,9 +20,9 @@ Name Change Candidates:
 * Linux
 * A recent release of BlueZ. This package was tested with BlueZ 5.50. You can check which version you're using with `bluetoothd -v`.
 
-### Supported Distrobutions
+### Supported Distributions
 
-Plugin.BlueZ aims to support Linux Distrobutions where both .NET and BlueZ is supported. Officially, this NuGet package has only been tested on Ubuntu 20.04.
+Plugin.BlueZ aims to support Linux Distributions where both .NET and BlueZ is supported. Officially, this NuGet package has only been tested on Ubuntu 20.04.
 
 List of [BlueZ supported](http://www.bluez.org/about/) distros:
 
@@ -86,7 +86,7 @@ device.ServicesResolved += device_ServicesResolvedAsync;
 await device.ConnectAsync();
 ```
 
-Alternatively you can wait for "Connected" and "ServicesResolved" to equal true:
+Alternatively, you can wait for "Connected" and "ServicesResolved" to equal true:
 
 ```C#
 TimeSpan timeout = TimeSpan.FromSeconds(15);
@@ -94,7 +94,6 @@ TimeSpan timeout = TimeSpan.FromSeconds(15);
 await device.ConnectAsync();
 await device.WaitForPropertyValueAsync("Connected", value: true, timeout);
 await device.WaitForPropertyValueAsync("ServicesResolved", value: true, timeout);
-
 ```
 
 ### Retrieve a GATT Service and Characteristic
@@ -174,9 +173,9 @@ See [Contributing](./github/CONTRIBUTING.md).
 
 ## Reference
 
+* [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf)
 * **BlueZ API**:
   * [HEAD](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
   * [v5.53](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc?h=5.53) - _i.e. Ubuntu v20.04 LTS_
 * [BlueZ Official Site](http://www.bluez.org/)
-* [DotNetBlueZ](https://www.nuget.org/packages/HashtagChris.DotNetBlueZ/)
 * [Install BlueZ on the Raspberry PI](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/overview)
