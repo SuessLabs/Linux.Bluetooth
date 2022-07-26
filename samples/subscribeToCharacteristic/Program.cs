@@ -254,7 +254,7 @@ namespace subscribeToCharacteristic
           var stringValue = Encoding.UTF8.GetString(value);
           Console.WriteLine($"[{DateTime.Now}] Characteristic value (UTF-8): \"{stringValue}\"");
         }
-        catch (Exception) {}
+        catch (Exception) { }
       }
     }
 

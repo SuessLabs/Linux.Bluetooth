@@ -3,19 +3,20 @@ using System.Threading.Tasks;
 
 namespace Plugin.BlueZ.ManualTest
 {
-  internal class Program
+  /// <summary>
+  ///   GATT Client - Scan for devices
+  ///
+  /// Usage: dotnet Plugin.BlueZ.ManualTest.dll <SecondsToScan> [adapterName]
+  /// Usage: dotnet Plugin.BlueZ.ManualTest.dll -h    Help menu
+  ///
+  /// </summary>
+  /// <param name="args">(optional) SecondsToScan, (optional) AdapterName</param>
+  /// <returns>Task.</returns>
+  public class Program
   {
     private const string DefaultAdapterName = "hci0";
     private static TimeSpan _timeout = TimeSpan.FromSeconds(15);
 
-    /// <summary>
-    ///   GATT Client - Scan for devices
-    ///
-    /// Usage: BlueZTest1 <ScanForSeconds> [adapterName]
-    ///
-    /// </summary>
-    /// <param name="args">ScanForSeconds, (optional) AdapterName</param>
-    /// <returns>Task.</returns>
     private static async Task Main(string[] args)
     {
       int scanSeconds;
@@ -26,11 +27,13 @@ namespace Plugin.BlueZ.ManualTest
         scanSeconds = 10;
         adapterName = DefaultAdapterName;
       }
-      else if (args.Length < 1 || args.Length > 2 ||
+      else if (
+        args.Length < 1 || args.Length > 2 ||
+        args[0].ToLowerInvariant() == "-h" ||
         !int.TryParse(args[0], out scanSeconds))
       {
-        Console.WriteLine("Usage: BlueZTest1 <SecondsToScan> [adapterName]");
-        Console.WriteLine("Example: BlueZTest1 15 hci0");
+        Console.WriteLine("Usage: Plugin.BlueZ.ManualTest <SecondsToScan> [adapterName]");
+        Console.WriteLine("Example: BlueZTest1 5 hci0");
         return;
       }
       else

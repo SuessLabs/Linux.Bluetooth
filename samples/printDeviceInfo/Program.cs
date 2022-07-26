@@ -105,23 +105,23 @@ class Program
     int characteristicsFound = 0;
     if (modelNameCharacteristic != null)
     {
-        characteristicsFound++;
-        Console.WriteLine("Reading model name characteristic...");
-        var modelNameBytes = await modelNameCharacteristic.ReadValueAsync(timeout);
-        Console.WriteLine($"Model name: {Encoding.UTF8.GetString(modelNameBytes)}");
+      characteristicsFound++;
+      Console.WriteLine("Reading model name characteristic...");
+      var modelNameBytes = await modelNameCharacteristic.ReadValueAsync(timeout);
+      Console.WriteLine($"Model name: {Encoding.UTF8.GetString(modelNameBytes)}");
     }
 
     if (manufacturerCharacteristic != null)
     {
-        characteristicsFound++;
-        Console.WriteLine("Reading manufacturer characteristic...");
-        var manufacturerBytes = await manufacturerCharacteristic.ReadValueAsync(timeout);
-        Console.WriteLine($"Manufacturer: {Encoding.UTF8.GetString(manufacturerBytes)}");
+      characteristicsFound++;
+      Console.WriteLine("Reading manufacturer characteristic...");
+      var manufacturerBytes = await manufacturerCharacteristic.ReadValueAsync(timeout);
+      Console.WriteLine($"Manufacturer: {Encoding.UTF8.GetString(manufacturerBytes)}");
     }
 
     if (characteristicsFound == 0)
     {
-        Console.WriteLine("Model name and manufacturer characteristics not found.");
+      Console.WriteLine("Model name and manufacturer characteristics not found.");
     }
 
     await device.DisconnectAsync();
