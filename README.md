@@ -178,5 +178,4 @@ See [Contributing](./github/CONTRIBUTING.md).
   * [HEAD](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
   * [v5.53](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc?h=5.53) - _i.e. Ubuntu v20.04 LTS_
 * [BlueZ Official Site](http://www.bluez.org/)
-* [DotNetBlueZ](https://www.nuget.org/packages/HashtagChris.DotNetBlueZ/)
 * [Install BlueZ on the Raspberry PI](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/overview)

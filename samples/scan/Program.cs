@@ -50,20 +50,23 @@ namespace Scan
       var adapterPath = adapter.ObjectPath.ToString();
       var adapterName = adapterPath.Substring(adapterPath.LastIndexOf("/") + 1);
       Console.WriteLine($"Using Bluetooth adapter {adapterName}");
+      Console.WriteLine($"Adapter's full path:    {adapterPath}");
 
       // Print out the devices we already know about.
+      Console.WriteLine();
+      Console.WriteLine("Getting known devices...");
       var devices = await adapter.GetDevicesAsync();
       foreach (var device in devices)
       {
         string deviceDescription = await GetDeviceDescriptionAsync(device);
-        Console.WriteLine(deviceDescription);
+        Console.WriteLine($" - {deviceDescription}");
       }
 
-      Console.WriteLine($"{devices.Count} device(s) found ahead of scan.");
-
-      Console.WriteLine();
+      Console.WriteLine($"Found {devices.Count} paired device(s).");
 
       // Scan for more devices.
+
+      Console.WriteLine();
       Console.WriteLine($"Scanning for {scanSeconds} seconds...");
 
       int newDevices = 0;
