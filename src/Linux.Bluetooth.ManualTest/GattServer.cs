@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plugin.BlueZ.ManualTest
+namespace Linux.Bluetooth.ManualTest
 {
   /// <summary>Gatt Server - COMING SOON.</summary>
   /// <remarks>

@@ -1,6 +1,6 @@
 using System;
 
-namespace Plugin.BlueZ
+namespace Linux.Bluetooth
 {
   public class BlueZEventArgs : EventArgs
   {

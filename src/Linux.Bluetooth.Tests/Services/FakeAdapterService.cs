@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
-namespace Plugin.BlueZ.Tests.Services
+namespace Linux.Bluetooth.Tests.Services
 {
   public class FakeAdapterService : IAdapter1
   {

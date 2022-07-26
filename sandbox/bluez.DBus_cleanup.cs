@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Tmds.DBus;
 
 [assembly: InternalsVisibleTo(Tmds.DBus.Connection.DynamicAssemblyName)]
-namespace Plugin.BlueZ
+namespace Linux.Bluetooth
 {
     [DBusInterface("org.freedesktop.DBus.ObjectManager")]
     public interface IObjectManager : IDBusObject

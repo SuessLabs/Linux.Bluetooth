@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Tmds.DBus;
 
-namespace Plugin.BlueZ.Tests.Services
+namespace Linux.Bluetooth.Tests.Services
 {
   public class MyService : IMyService
   {

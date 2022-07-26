@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
-namespace Plugin.BlueZ
+namespace Linux.Bluetooth
 {
   public static class BlueZManager
   {

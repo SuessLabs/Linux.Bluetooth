@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Plugin.BlueZ.ManualTest
+namespace Linux.Bluetooth.ManualTest
 {
   /// <summary>
   ///   GATT Client - Scan for devices
   ///
-  /// Usage: dotnet Plugin.BlueZ.ManualTest.dll <SecondsToScan> [adapterName]
-  /// Usage: dotnet Plugin.BlueZ.ManualTest.dll -h    Help menu
+  /// Usage: dotnet Linux.Bluetooth.ManualTest.dll <SecondsToScan> [adapterName]
+  /// Usage: dotnet Linux.Bluetooth.ManualTest.dll -h    Help menu
   ///
   /// </summary>
   /// <param name="args">(optional) SecondsToScan, (optional) AdapterName</param>
@@ -32,7 +32,7 @@ namespace Plugin.BlueZ.ManualTest
         args[0].ToLowerInvariant() == "-h" ||
         !int.TryParse(args[0], out scanSeconds))
       {
-        Console.WriteLine("Usage: Plugin.BlueZ.ManualTest <SecondsToScan> [adapterName]");
+        Console.WriteLine("Usage: Linux.Bluetooth.ManualTest <SecondsToScan> [adapterName]");
         Console.WriteLine("Example: BlueZTest1 5 hci0");
         return;
       }

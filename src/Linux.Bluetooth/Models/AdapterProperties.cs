@@ -1,4 +1,4 @@
-﻿namespace Plugin.BlueZ
+﻿namespace Linux.Bluetooth
 {
   /// <summary>Wrapper for Adapter1Properties.</summary>
   public class AdapterProperties

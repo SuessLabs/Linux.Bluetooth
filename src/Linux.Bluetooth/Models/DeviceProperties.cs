@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Plugin.BlueZ
+namespace Linux.Bluetooth
 {
   public class DeviceProperties
   {

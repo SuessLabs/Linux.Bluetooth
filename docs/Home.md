@@ -1,11 +1,11 @@
-Welcome to the Plugin.BlueZ wiki!
+Welcome to the Linux.Bluetooth wiki!
 
 ## Usage Samples
 
 ### Get a Bluetooth adapter
 
 ```C#
-using Plugin.BlueZ;
+using Linux.Bluetooth;
 ...
 
 // Get first adapter (useful for single BLE adapter system)

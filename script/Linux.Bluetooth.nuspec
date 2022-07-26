@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>Plugin.BlueZ</id>
+    <id>Linux.Bluetooth</id>
     <version>5.64.0</version>
-    <title>Plugin.BlueZ Linux Bluetooth LE library</title>
-    <description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</description>
+    <title>Linux Bluetooth Library for .NET</title>
+    <description>Linux Bluetooth and Bluetooth LE library for .NET.</description>
     <tags>BlueZ net-core netstandard Linux Bluetooth BluetoothLowEnergy BLE BluetoothLE SuessLabs Suess</tags>
     <authors>Xeno Innovations</authors>
     <license type="expression">Apache-2.0</license>
     <licenseUrl>https://licenses.nuget.org/Apache-2.0</licenseUrl>
-    <repository url="https://github.com/SuessLabs/Plugin.BlueZ" />
+    <repository url="https://github.com/SuessLabs/Linux.Bluetooth" />
     <dependencies>
       <group targetFramework=".NETStandard2.0">
         <dependency id="Tmds.DBus" version="0.11.0" exclude="Build,Analyzers" />

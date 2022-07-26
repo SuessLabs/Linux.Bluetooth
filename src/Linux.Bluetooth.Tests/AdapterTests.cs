@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Plugin.BlueZ.Tests.Services;
+using Linux.Bluetooth.Tests.Services;
 using Tmds.DBus;
-using Plugin.BlueZ;
+using Linux.Bluetooth;
 
-namespace Plugin.BlueZ.Tests
+namespace Linux.Bluetooth.Tests
 {
   [TestClass]
   public class AdapterTests

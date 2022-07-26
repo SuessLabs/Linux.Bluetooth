@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Plugin.BlueZ.Extensions;
+using Linux.Bluetooth.Extensions;
 using Tmds.DBus;
 
-namespace Plugin.BlueZ
+namespace Linux.Bluetooth
 {
   public delegate Task DeviceChangeEventHandlerAsync(Adapter sender, DeviceFoundEventArgs eventArgs);
 

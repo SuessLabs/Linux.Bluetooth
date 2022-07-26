@@ -1,4 +1,4 @@
-﻿namespace Plugin.BlueZ
+﻿namespace Linux.Bluetooth
 {
   public static class BluezConstants
   {

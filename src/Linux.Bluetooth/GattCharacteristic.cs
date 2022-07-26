@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
-namespace Plugin.BlueZ
+namespace Linux.Bluetooth
 {
   public delegate Task GattCharacteristicEventHandlerAsync(GattCharacteristic sender, GattCharacteristicValueEventArgs eventArgs);
 

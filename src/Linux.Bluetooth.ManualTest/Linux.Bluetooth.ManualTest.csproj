@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plugin.BlueZ\Plugin.BlueZ.csproj" />
+    <ProjectReference Include="..\Linux.Bluetooth\Linux.Bluetooth.csproj" />
   </ItemGroup>
 
 </Project>

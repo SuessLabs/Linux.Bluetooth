@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Plugin.BlueZ.Tests
+namespace Linux.Bluetooth.Tests
 {
   /// <summary>Helpers</summary>
   /// <remarks>

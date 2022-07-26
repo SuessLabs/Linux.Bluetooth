@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.BlueZ.Extensions;
+using Linux.Bluetooth.Extensions;
 
-namespace Plugin.BlueZ.ManualTest
+namespace Linux.Bluetooth.ManualTest
 {
   public class GattClient
   {
