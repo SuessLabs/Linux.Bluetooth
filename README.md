@@ -8,6 +8,8 @@ The Linux.Bluetooth library for .NET gives developers the ability to quickly sta
 
 [![Linux.Bluetooth NuGet Badge](https://buildstats.info/nuget/Linux.Bluetooth?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Linux.Bluetooth/)
 
+![Debugging Image](https://github.com/SuessLabs/Linux.Bluetooth/blob/master/docs/Adapter%20-%20ObjectPath%20Contents.png)
+
 The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux's D-Bus, the preferred interface for Bluetooth in userspace.
 
 Check out the SuessLabs article on using [Plugin.BlueZ](https://suesslabs.com/csharp/net-and-linux-bluetooth/)
