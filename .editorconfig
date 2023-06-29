@@ -1,5 +1,6 @@
-# Copyright 2022 Xeno Innovations, Inc.
+# Copyright 2023 Xeno Innovations, Inc.
 # https://github.com/xenoinc/CodeDevOps
+# Revision: 6.2
 #
 # This EditorConfig file provides consistant coding styles and formatting
 # structures for your team's projects while preserving your personal defaults.
@@ -17,13 +18,13 @@
 # 3   2017-07-31 - Basic
 #
 # References:
-#   - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options
-#   - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/
+# - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options
+# - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/
 #   - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/formatting-rules
 #   - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/language-rules
 #   - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/naming-rules
-#   - https://github.com/dotnet/roslyn/blob/main/.editorconfig
-#   - https://github.com/microsoft/microsoft-ui-xaml/blob/master/.editorconfig
+# - https://github.com/dotnet/roslyn/blob/main/.editorconfig
+# - https://github.com/microsoft/microsoft-ui-xaml/blob/master/.editorconfig
 #
 
 # Top-most EditorConfig file
@@ -34,10 +35,22 @@ root = true
 end_of_line = crlf
 indent_style = space
 
+[*.{cs,csx}]
+indent_style = space
+indent_size = 2
+tab_width = 2
+charset = utf-8-bom
+trim_trailing_whitespace = true
+insert_final_newline = true
+
 [*.{c,cpp,h}]
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
+
+cpp_indent_case_contents = true
+cpp_indent_case_contents_when_block = true
+cpp_indent_case_labels = true
 
 [*.sql]
 indent_style = space
@@ -100,15 +113,8 @@ indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# C# Files
+# C# Ruleset
 [*.{cs,csx}]
-indent_style = space
-indent_size = 2
-tab_width = 2
-charset = utf-8-bom
-trim_trailing_whitespace = true
-insert_final_newline = true
-
 # Indentation preferences
 csharp_indent_block_contents = true
 csharp_indent_braces = false
@@ -380,3 +386,9 @@ dotnet_diagnostic.SA1636.severity = none
 
 # Default severity for analyzer diagnostics with category 'StyleCop.CSharp.SpacingRules' SA1028: Code should not contain trailing whitespace
 dotnet_analyzer_diagnostic.category-StyleCop.CSharp.SpacingRules.severity = error
+
+# VSSpell001: Spell Check
+dotnet_diagnostic.VSSpell001.severity = none
+
+# VSSpell002: Ignore Word
+dotnet_diagnostic.VSSpell002.severity = none

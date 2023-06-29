@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Linux.Bluetooth</RootNamespace>
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <!-- NuGet -->
