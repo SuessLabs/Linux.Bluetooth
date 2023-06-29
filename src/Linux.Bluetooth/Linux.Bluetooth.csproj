@@ -8,7 +8,7 @@
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Linux.Bluetooth</PackageId>
-    <Version>5.64.0</Version>
+    <Version>5.65.0</Version>
     <Authors>Xeno Innovations</Authors>
     <Title>Linux.Bluetooth Linux Bluetooth LE library</Title>
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
@@ -19,13 +19,13 @@
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <BaseOutputPath>..\..\output</BaseOutputPath>
-    <Copyright>Copyright 2022 Xeno Innovations, Inc.</Copyright>
+    <Copyright>Copyright 2023 Xeno Innovations, Inc.</Copyright>
     <PackageProjectUrl>https://github.com/SuessLabs/Linux.Bluetooth</PackageProjectUrl>
-    <PackageReleaseNotes>Rebranded from Plugin.BlueZ to Linux.Bluetooth</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgraded DBus support.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tmds.DBus" Version="0.11.0" />
+    <PackageReference Include="Tmds.DBus" Version="0.15.0" />
     <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.10.1" />-->
   </ItemGroup>
 

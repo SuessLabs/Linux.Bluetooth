@@ -1,4 +1,4 @@
-Welcome to the Linux.Bluetooth wiki!
+# Welcome to the Linux.Bluetooth wiki!
 
 ## Usage Samples
 

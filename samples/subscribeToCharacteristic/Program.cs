@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Linux.Bluetooth;
+using Linux.Bluetooth.Constants;
 using Linux.Bluetooth.Extensions;
 
 // An event-driven example that subscribes to one GATT characteristic and prints the value on updates.

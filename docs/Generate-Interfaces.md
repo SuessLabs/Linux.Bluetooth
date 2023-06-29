@@ -12,31 +12,32 @@ The following actions were tested against [Ubuntu v20.04 LTS](https://docs.micro
 
 Verify that .NET 3.1 or 6.0 is installed.
 
-```
-$ dotnet --list-sdk
+```sh
+dotnet --list-sdk
 ```
 
 If the required SDK it's not installed, continue. Referenced by [Install the SDK - Ubuntu v20.04 LTS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-)
 
-```
-$ sudo apt-get update; \
-  sudo apt-get install -y apt-transport-https && \
-  sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-3.1
+```sh
+sudo apt-get update; \
+sudo apt-get install -y apt-transport-https && \
+sudo apt-get update && \
+sudo apt-get install -y dotnet-sdk-3.1
 ```
 
 After installation, validate it again.
-```
-$ dotnet --list-sdk
+
+```sh
+dotnet --list-sdk
 ```
 
 ### Download Tmds.DBus.Tool
 
 Open a new console application (_create project space_)
 
-```
-$ dotnet new console -o GenBluez
-$ cd GenBluez
+```sh
+dotnet new console -o GenBluez
+cd GenBluez
 ```
 
 Add a reference to `Tmds.DBus` in the `GenBluez.csproj`
@@ -55,9 +56,9 @@ Add a reference to `Tmds.DBus` in the `GenBluez.csproj`
 
 Restore dependencies
 
-```
-$ dotnet restore
-$ dotnet tool install -g Tmds.DBus.Tool
+```sh
+dotnet restore
+dotnet tool install -g Tmds.DBus.Tool
 ```
 
 ## Validation
@@ -66,7 +67,7 @@ $ dotnet tool install -g Tmds.DBus.Tool
 
 To list services normally you would execute. Note, if you get an `Unhandled exception`, continue to the next step.
 
-```bash
+```sh
 dotnet dbus list service
 ```
 
@@ -81,7 +82,7 @@ dotnet dbus list services --bus system
 To get moving on listing the objects and generating code for BlueZ over DBus, perform the following:
 
 ```bash
-$ dotnet dbus list services --bus system | grep bluez
+dotnet dbus list services --bus system | grep bluez
 
 OUTPUT:
 org.bluez
@@ -96,9 +97,12 @@ In the results you will find, `org.bluez` if you have it installed (_Raspberr PI
 To obtain the objects of `org.bluez` input the following and you should get similar results.
 
 ```bash
-$ dotnet dbus list objects --bus system --service org.bluez
+dotnet dbus list objects --bus system --service org.bluez
+```
 
-OUTPUT:
+**OUTPUT:**
+
+```txt
 / : org.freedesktop.DBus.ObjectManager
 /org/bluez : org.bluez.AgentManager1 org.bluez.HealthManager1 org.bluez.ProfileManager1
 /org/bluez/hci0 : org.bluez.Adapter1 org.bluez.GattManager1 org.bluez.LEAdvertisingManager1 org.bluez.Media1 org.bluez.NetworkServer1
@@ -107,6 +111,6 @@ OUTPUT:
 ### Generating Code
 
 ```bash
-$ dotnet dbus codegen --bus system --service org.bluez
+dotnet dbus codegen --bus system --service org.bluez
 Generated: /home/.../bluez.DBus.cs
 ```

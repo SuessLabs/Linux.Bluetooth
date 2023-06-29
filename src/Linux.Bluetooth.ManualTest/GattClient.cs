@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Linux.Bluetooth.Constants;
 using Linux.Bluetooth.Extensions;
 
 namespace Linux.Bluetooth.ManualTest
