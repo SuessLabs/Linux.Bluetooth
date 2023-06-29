@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Linux.Bluetooth;
+using Linux.Bluetooth.Constants;
 using Linux.Bluetooth.Extensions;
 
 class Program
