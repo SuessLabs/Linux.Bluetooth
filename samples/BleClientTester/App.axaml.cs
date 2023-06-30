@@ -24,6 +24,7 @@ public partial class App : PrismApplication
   protected override void RegisterTypes(IContainerRegistry containerRegistry)
   {
     // Services
+    containerRegistry.RegisterSingleton<ILogService, LogService>();
     containerRegistry.RegisterSingleton<IBluetoothLeService, BluetoothLeService>();
 
     // Views

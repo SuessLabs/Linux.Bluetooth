@@ -35,7 +35,7 @@ namespace Linux.Bluetooth
 
     //// public ObjectPath Adapter { get; set; }
 
-    public IDictionary<string, object>? ServiceData { get; set; };
+    public IDictionary<string, object>? ServiceData { get; set; }
 
     public bool ServicesResolved { get; set; }
 

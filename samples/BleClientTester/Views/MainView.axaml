@@ -8,6 +8,24 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
+  <UserControl.Styles>
+    <Style Selector="Button.cmdBtn">
+      <Setter Property="Height" Value="40" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="StackPanel.SubPanel">
+      <Setter Property="Margin" Value="5" />
+      <Setter Property="Spacing" Value="5" />
+    </Style>
+    <Style Selector="Border.ControlBorder">
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Background" Value="GhostWhite" />
+      <Setter Property="BorderBrush" Value="Gainsboro" />
+      <Setter Property="CornerRadius" Value="3,3" />
+      <Setter Property="Margin" Value="5" />
+    </Style>
+  </UserControl.Styles>
+
   <StackPanel>
     <Button Content="Scan" Command="{Binding CmdScan}" />
   </StackPanel>

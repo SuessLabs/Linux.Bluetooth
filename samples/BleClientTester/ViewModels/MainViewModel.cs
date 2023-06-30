@@ -1,11 +1,15 @@
-﻿using Prism.Commands;
+﻿using BleClientTester.Services;
+using Prism.Commands;
 
 namespace BleClientTester.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-  public MainViewModel()
+  private readonly IBluetoothLeService _ble;
+
+  public MainViewModel(IBluetoothLeService ble)
   {
+    _ble = ble;
   }
 
   public DelegateCommand CmdScan => new(() =>
