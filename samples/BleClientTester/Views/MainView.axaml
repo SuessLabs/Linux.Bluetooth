@@ -186,21 +186,13 @@
               <Button Command="{Binding CmdDeviceWriteInfo}" Content="Send String" />
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-              <Label VerticalAlignment="Center"
-                     Content="Calibration:"
-                     FontWeight="Bold" />
-              <Button Command="{Binding CmdDeviceCalibration}" Content="Calibrate Device" />
-              <Button Command="{Binding CmdClearCache}" Content="CLEAR" />
-            </StackPanel>
-
-            <Label Grid.Row="3" Content="Input to Device:" />
+            <Label Grid.Row="2" Content="Input to Device:" />
             <TextBox Text="{Binding BleTextMessage}"
-                     Grid.Row="4"
+                     Grid.Row="3"
                      Margin="5" />
 
-            <Label Grid.Row="5" Content="Received Characteristic Messages:" />
-            <Grid Grid.Row="6"
+            <Label Grid.Row="4" Content="Received Characteristic Messages:" />
+            <Grid Grid.Row="5"
                   Margin="10"
                   HorizontalAlignment="Stretch"
                   ColumnDefinitions="*,*">

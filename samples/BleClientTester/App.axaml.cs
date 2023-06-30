@@ -5,6 +5,7 @@ using BleClientTester.ViewModels;
 using BleClientTester.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Regions;
 
 namespace BleClientTester;
 
@@ -33,5 +34,12 @@ public partial class App : PrismApplication
 
     // Dialogs
     // containerRegistry.RegisterDialog<MessageBoxView, MessageBoxViewModel>();
+  }
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    var regionManager = Container.Resolve<IRegionManager>();
+    regionManager.RegisterViewWithRegion(Constants.ContentRegion, typeof(MainView));
   }
 }
