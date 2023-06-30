@@ -11,11 +11,6 @@ namespace BleClientTester.ViewModels;
 
 public class BleDevice : BindableBase, IDisposable
 {
-  public static string BasicServiceUuid => "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-  public static string BasicCharacteristicRxUuid => "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
-  public static string BasicCharacteristicTxUuid => "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-  public static string BasicCharacteristicNotifyUuid => "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
-
   private string _name = string.Empty;
   private Device? _nativeDevice = null;
   private string _rssi = string.Empty;
@@ -158,14 +153,14 @@ public class BleDevice : BindableBase, IDisposable
   public async Task<string> ReadAsync(string serviceUuid, string characteristicUuid)
   {
     byte[] bytes = await ReadBytesAsync(serviceUuid, characteristicUuid);
-    return Converter.StringFromBytes(bytes);
+    return Helper.StringFromBytes(bytes);
   }
 
   /// <summary>Read Characteristic using default Service and Characteristic UUIDs.</summary>
   /// <returns>Data returned from device.</returns>
   public async Task<string> ReadAsync()
   {
-    return await ReadAsync(BasicServiceUuid, BasicCharacteristicRxUuid);
+    return await ReadAsync(Constants.BasicServiceUuid, Constants.BasicCharacteristicRxUuid);
   }
 
   /// <summary>Read bytes from GATT Characteristic.</summary>
@@ -233,7 +228,7 @@ public class BleDevice : BindableBase, IDisposable
   /// <returns>True on success.</returns>
   public async Task<bool> WriteAsync(string serviceUuid, string characteristicUuid, string data)
   {
-    var bytes = Converter.StringToBytes(data);
+    var bytes = Helper.StringToBytes(data);
     return await WriteAsync(serviceUuid, characteristicUuid, bytes);
   }
 
@@ -244,7 +239,7 @@ public class BleDevice : BindableBase, IDisposable
   {
     // TODO: Check if we're connected
     // TODO: Allow custom Service/Characteristic UUIDs
-    return await WriteAsync(BasicServiceUuid, BasicCharacteristicTxUuid, data);
+    return await WriteAsync(Constants.BasicServiceUuid, Constants.BasicCharacteristicTxUuid, data);
   }
 
   private async Task Device_OnConnectAsync(Device device, BlueZEventArgs eventArgs)

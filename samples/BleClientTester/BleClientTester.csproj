@@ -11,6 +11,8 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Authors>Damian Suess</Authors>
     <Copyright>Copyright 2023 Xeno Innovations, Inc.</Copyright>
+    <BaseOutputPath>..\..\output\samples</BaseOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

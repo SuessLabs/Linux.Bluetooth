@@ -572,7 +572,7 @@ public class BluetoothLeService : IBluetoothLeService
       }
       else
       {
-        var strValue = Converter.StringFromBytes(bytes);
+        var strValue = Helper.StringFromBytes(bytes);
 
         OnDeviceNotification?.Invoke(strValue);
       }

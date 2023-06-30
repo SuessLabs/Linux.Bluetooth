@@ -1,7 +1,9 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:BleClientTester.Converters;assembly=BleClientTester"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
              xmlns:vm="clr-namespace:BleClientTester.ViewModels"
              x:Class="BleClientTester.Views.MainView"
              x:DataType="vm:MainViewModel"
@@ -26,7 +28,216 @@
     </Style>
   </UserControl.Styles>
 
-  <StackPanel>
-    <Button Content="Scan" Command="{Binding CmdScan}" />
-  </StackPanel>
+  <UserControl.Resources>
+    <converter:BoolStringConverter x:Key="BooleanToStringConverter"
+                                   FalseValue="No"
+                                   TrueValue="Yes" />
+    <converter:InverseBoolConverter x:Key="InverseBoolConverter" />
+  </UserControl.Resources>
+
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Top" Spacing="5">
+      <Grid Background="LightGray" ColumnDefinitions="Auto, *">
+        <TextBlock Text="{Binding Title}"
+                   Grid.Column="1"
+                   Margin="5"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold" />
+      </Grid>
+    </StackPanel>
+    <ScrollViewer Margin="5">
+      <Grid RowDefinitions="Auto,Auto">
+
+        <!-- Adapter and Devices List -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+          <!-- Adapter List -->
+          <StackPanel Grid.Column="0">
+            <Label Content="BLE Adapter" FontWeight="Bold" />
+            <Border Classes="ControlBorder">
+              <StackPanel Classes="SubPanel">
+
+                <StackPanel Orientation="Horizontal">
+                  <Button Command="{Binding CmdAdapterInit}" Content="Adapter Init" />
+                  <Button Command="{Binding CmdAdapterRefresh}" Content="Refresh" />
+                  <Button Command="{Binding CmdAdapterOn}" Content="On" />
+                  <Button Command="{Binding CmdAdapterOff}" Content="Off" />
+                </StackPanel>
+
+                <!-- x:DataType="sys:string" -->
+                <ListBox x:DataType="vm:MainViewModel"
+                         FontFamily="Consolas"
+                         FontSize="-1"
+                         ItemsSource="{Binding BleAdapters}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"
+                         SelectedIndex="{Binding BleAdapterSelected}"
+                         SelectionMode="Single">
+                  <!-- Margin="2" -->
+                  <ListBox.DataTemplates>
+                    <DataTemplate x:DataType="vm:MainViewModel">
+                      <TextBlock Text="{Binding .}"
+                                 FontSize="10"
+                                 TextWrapping="NoWrap" />
+                    </DataTemplate>
+                  </ListBox.DataTemplates>
+                </ListBox>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+
+          <!-- Device List -->
+          <StackPanel Grid.Column="1">
+            <Label Content="Devices" FontWeight="Bold" />
+            <Border Classes="ControlBorder">
+              <StackPanel Classes="SubPanel">
+
+                <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+
+                  <!-- Device Filter -->
+                  <Grid Margin="0" ColumnDefinitions="Auto,*">
+                    <Grid.Styles>
+                      <Style Selector="Label">
+                        <Setter Property="Margin" Value="5 0" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                      </Style>
+                    </Grid.Styles>
+
+                    <Label Grid.Column="0" Content="Filter:" />
+                    <TextBox Text="{Binding BleDeviceScanFilter}"
+                             Grid.Column="1"
+                             HorizontalAlignment="Stretch" />
+                  </Grid>
+
+                  <!-- Device Scan/Conenction -->
+                  <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding CmdAdapterDeviceScanOn}" Content="Scan" />
+                    <Button Command="{Binding CmdAdapterDeviceScanOff}" Content="Stop" />
+                    <Button Command="{Binding CmdDeviceConnect}" Content="Connect" />
+                    <Button Command="{Binding CmdDeviceDisconnect}" Content="Disconnect" />
+                    <!--<Button Command="{Binding CmdForceNav}" Content="NAV" />-->
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
+                    <Label Content="IsScanning: " />
+                    <Label Content="{Binding BleAdapterIsScanning, Converter={StaticResource BooleanToStringConverter}}" FontWeight="Bold" />
+
+                    <Label Content="IsConnected:" />
+                    <Label Content="{Binding BleDeviceIsConnected, Converter={StaticResource BooleanToStringConverter}}" FontWeight="Bold" />
+                  </StackPanel>
+                </StackPanel>
+
+                <ListBox x:DataType="vm:MainViewModel"
+                         Margin="2"
+                         FontFamily="Consolas"
+                         FontSize="-1"
+                         ItemsSource="{Binding BleDevicesFound}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"
+                         SelectedIndex="{Binding BleDeviceSelectedIndex}"
+                         SelectionMode="Single">
+                  <ListBox.DataTemplates>
+                    <DataTemplate x:DataType="vm:MainViewModel">
+                      <TextBlock Text="{Binding .}" TextWrapping="NoWrap" />
+                      <!--
+                      <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" TextWrapping="NoWrap" />
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock Text="{Binding Rssi}" TextWrapping="NoWrap" />
+                          <TextBlock Text="{Binding Address}" TextWrapping="NoWrap" />
+                        </StackPanel>
+                      </StackPanel>-->
+                    </DataTemplate>
+                  </ListBox.DataTemplates>
+                </ListBox>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </Grid>
+
+        <!-- Test Commands -->
+        <!--<Border Classes="ControlBorder">
+          <StackPanel Classes="SubPanel">-->
+
+        <Border Grid.Row="1"
+                Background="GhostWhite"
+                BorderBrush="Gainsboro"
+                Classes="ControlBorder"
+                CornerRadius="3,3">
+          <Grid Classes="SubPanel" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+            <Grid.Styles>
+              <Style Selector="Label">
+                <!-- MARGIN: LEFT TOP RIGHT BOTTOM -->
+                <Setter Property="Margin" Value="5 0 0 5" />
+              </Style>
+              <Style Selector="Button">
+                <Setter Property="Margin" Value="5 5 0 5" />
+              </Style>
+              <Style Selector="TextBox">
+                <Setter Property="Margin" Value="5 0 0 0" />
+              </Style>
+            </Grid.Styles>
+
+            <Label Grid.Row="0"
+                   Content="Device Commands:"
+                   FontWeight="Bold" />
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+              <Button Command="{Binding CmdDeviceGetInfo}" Content="Get Info" />
+              <Button Command="{Binding CmdDeviceUnlock}" Content="Unlock" />
+              <Button Command="{Binding CmdDeviceWriteInfo}" Content="Send String" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+              <Label VerticalAlignment="Center"
+                     Content="Calibration:"
+                     FontWeight="Bold" />
+              <Button Command="{Binding CmdDeviceCalibration}" Content="Calibrate Device" />
+              <Button Command="{Binding CmdClearCache}" Content="CLEAR" />
+            </StackPanel>
+
+            <Label Grid.Row="3" Content="Input to Device:" />
+            <TextBox Text="{Binding BleTextMessage}"
+                     Grid.Row="4"
+                     Margin="5" />
+
+            <Label Grid.Row="5" Content="Received Characteristic Messages:" />
+            <Grid Grid.Row="6"
+                  Margin="10"
+                  HorizontalAlignment="Stretch"
+                  ColumnDefinitions="*,*">
+
+              <ListBox FontFamily="Consolas"
+                       FontSize="-1"
+                       ItemsSource="{Binding BleDeviceServiceMessages}"
+                       ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                       ScrollViewer.VerticalScrollBarVisibility="Visible"
+                       SelectedIndex="{Binding BleDeviceServiceMessageSelected}"
+                       SelectionMode="Single">
+                <ListBox.DataTemplates>
+                  <DataTemplate x:DataType="vm:MainViewModel">
+                    <TextBlock Text="{Binding .}"
+                               FontSize="10"
+                               TextWrapping="NoWrap" />
+                  </DataTemplate>
+                </ListBox.DataTemplates>
+              </ListBox>
+
+              <TextBox Text="{Binding BleDeviceServiceMessageText}"
+                       Grid.Column="1"
+                       Margin="5,0"
+                       ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                       ScrollViewer.VerticalScrollBarVisibility="Visible"
+                       TextWrapping="Wrap" />
+
+              <GridSplitter Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Stretch"
+                            Background="LightGray"
+                            BorderBrush="Gray"
+                            BorderThickness="1" />
+            </Grid>
+          </Grid>
+        </Border>
+      </Grid>
+    </ScrollViewer>
+  </DockPanel>
 </UserControl>
