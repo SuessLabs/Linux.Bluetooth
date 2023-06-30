@@ -27,6 +27,7 @@ public partial class App : PrismApplication
     // Services
     containerRegistry.RegisterSingleton<ILogService, LogService>();
     containerRegistry.RegisterSingleton<IBluetoothLeService, BluetoothLeService>();
+    containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
 
     // Views
     containerRegistry.Register<MainWindow>();

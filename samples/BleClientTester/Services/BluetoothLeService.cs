@@ -48,7 +48,7 @@ public class BluetoothLeService : IBluetoothLeService
   public BleDevice CurrentDevice { get; private set; } = new();
 
   /// <summary>Gets or sets the filter for discovered devices name during scanning. Default = "" (no filter).</summary>
-  public string DeviceScanFilter { get; set; }
+  public string DeviceScanFilter { get; set; } = string.Empty;
 
   public bool IsDeviceConnected { get; private set; }
 
@@ -94,7 +94,7 @@ public class BluetoothLeService : IBluetoothLeService
 
     if (adapters.Count == 0)
     {
-      Console.WriteLine("BLE - No Bluetooth Adapters Found.");
+      _log.Debug("BLE - No Bluetooth Adapters Found.");
       return (false, adapters);
     }
 
@@ -368,9 +368,8 @@ public class BluetoothLeService : IBluetoothLeService
     }
     catch (Exception ex)
     {
-      _log.Error($"BLE - Failed to disconnect. {ex.Message}");
-
-      LastError = ex.Message;
+      LastError = $"Failed to disconnect. {ex.Message}";
+      _log.Error(LastError);
       return false;
     }
   }
@@ -389,19 +388,19 @@ public class BluetoothLeService : IBluetoothLeService
     }
     catch (Tmds.DBus.ConnectException conEx)
     {
-      LastError = $"BLE - Failed to get adapters; DBus Connection unavailable.{Environment.NewLine}{conEx}";
+      LastError = $"Failed to get adapters; DBus Connection unavailable.{Environment.NewLine}{conEx}";
       _log.Error(LastError);
       //// throw;
     }
     catch (Tmds.DBus.DBusException dbusEx)
     {
-      LastError = $"BLE - Failed to get adapters. Potential missing or unavailable BLE Adapter .{Environment.NewLine}{dbusEx}";
+      LastError = $"Failed to get adapters. Potential missing or unavailable BLE Adapter .{Environment.NewLine}{dbusEx}";
       _log.Error(LastError);
       //// throw;
     }
     catch (Exception ex)
     {
-      LastError = $"BLE - Failed to get adapters.{Environment.NewLine}{ex}";
+      LastError = $"Failed to get adapters.{Environment.NewLine}{ex}";
       _log.Error(LastError);
       //// throw;
     }
@@ -413,10 +412,9 @@ public class BluetoothLeService : IBluetoothLeService
   {
     var device = deviceArgs.Device;
 
-    // Filter Scan results
-
     try
     {
+      // Filter Scan results
       if (!string.IsNullOrEmpty(DeviceScanFilter))
       {
         var devName = await device.GetNameAsync();
@@ -424,10 +422,16 @@ public class BluetoothLeService : IBluetoothLeService
           return;
       }
     }
+    catch (Tmds.DBus.DBusException dbusEx)
+    {
+      // org.freedesktop.DBus.Error.InvalidArgs: No such property 'Name'
+      _log.Error($"BLE - Adapter_OnDeviceFoundAsync - Exception reading device name.{Environment.NewLine}{dbusEx}");
+      return;
+    }
     catch (Exception ex)
     {
       // Could not validate device name, leave.
-      _log.Error($"BLE - Adapter_OnDeviceFoundAsync - Exception reading device name.{Environment.NewLine}{ex}");
+      _log.Error($"BLE - Adapter_OnDeviceFoundAsync - Unknown Exception reading device name.{Environment.NewLine}{ex}");
       return;
     }
 

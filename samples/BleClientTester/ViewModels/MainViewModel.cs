@@ -13,8 +13,9 @@ namespace BleClientTester.ViewModels;
 public class MainViewModel : ViewModelBase
 {
   private readonly IBluetoothLeService _ble;
+  private readonly INotificationService _notify;
   private readonly ILogService _log;
-  
+
   private ObservableCollection<string> _bleAdapters = new();
   private string _bleAdapterSelected = string.Empty;
   private Dictionary<Device, DeviceProperties> _bleCachedDevices = new();
@@ -34,10 +35,11 @@ public class MainViewModel : ViewModelBase
   private bool _bleReadCharacteristicTx = false;
   private bool _bleAdapterIsScanning;
 
-  public MainViewModel(IRegionManager region, ILogService log, IBluetoothLeService ble)
+  public MainViewModel(IRegionManager region, ILogService log, IBluetoothLeService ble, INotificationService notify)
   {
     _log = log;
     _ble = ble;
+    _notify = notify;
 
     Title = "BLE Connection Tester";
 
@@ -140,27 +142,26 @@ public class MainViewModel : ViewModelBase
     // Find BLE Adapters
     _log.Status("Initializing BLE Adapter(s)");
 
-    try
-    {
-      // TODO: Allow usage of selected adapter.
-      // Wire-up event handlers and get list of available adapters.
-      var ret = await _ble.AdapterInitializeAsync();
+    // TODO: Allow usage of selected adapter.
+    // Wire-up event handlers and get list of available adapters.
+    var ret = await _ble.AdapterInitializeAsync();
 
-      if (ret.Success)
+    if (ret.Success)
+    {
+      BleAdapters.Clear();
+
+      // Sample: "/org/bluez/hci0"
+      foreach (var adapter in ret.Adapters)
       {
-        BleAdapters.Clear();
-
-        // Sample: "/org/bluez/hci0"
-        foreach (var adapter in ret.Adapters)
-        {
-          var name = adapter.ObjectPath.ToString();
-          AddAdapterItem(name);
-        }
+        var name = adapter.ObjectPath.ToString();
+        AddAdapterItem(name);
       }
+
+      _notify.Show("BLE Adapter", "Refreshed");
     }
-    catch (Exception ex)
+    else
     {
-      _log.Error($"Unable to initialize BLE Adapter. It may be disconnected or unavailable.{Environment.NewLine}{ex.Message}");
+      _notify.Show("BLE Adapter", "Refresh failed");
     }
   });
 
@@ -225,38 +226,23 @@ public class MainViewModel : ViewModelBase
     if (BleDeviceSelectedIndex == -1)
     {
       _log.Status("Please select a device first.");
-      return;
     }
-
-    if (string.IsNullOrEmpty(BleDeviceSelectedAddress))
+    else if (string.IsNullOrEmpty(BleDeviceSelectedAddress))
     {
       _log.Status("Invalid device selected");
-      return;
     }
-
-    _log.Status($"Connecting to '{BleDeviceSelectedAddress}'...");
-    await DeviceConnectAsync(BleDeviceSelectedAddress);
+    else
+    {
+      _log.Status($"Connecting to '{BleDeviceSelectedAddress}'...");
+      await DeviceConnectAsync(BleDeviceSelectedAddress);
+    }
   });
 
-  public DelegateCommand CmdDeviceDisconnect => new(async () =>
-  {
-    await DeviceDisconnectAsync();
-  });
+  public DelegateCommand CmdDeviceDisconnect => new(async () => await DeviceDisconnectAsync());
 
-  public DelegateCommand CmdDeviceCalibration => new(async () =>
-  {
-    await GattWriteAsync("Calibrate");
-  });
+  public DelegateCommand CmdDeviceReadRx => new(async () => await GattReadAsync(Constants.BasicCharacteristicRxUuid));
 
-  public DelegateCommand CmdDeviceReadRx => new(async () =>
-  {
-    await GattReadAsync(Constants.BasicCharacteristicRxUuid);
-  });
-
-  public DelegateCommand CmdDeviceReadTx => new(async () =>
-  {
-    await GattReadAsync(Constants.BasicCharacteristicTxUuid);
-  });
+  public DelegateCommand CmdDeviceReadTx => new(async () => await GattReadAsync(Constants.BasicCharacteristicTxUuid));
 
   public DelegateCommand CmdDeviceWriteJunk => new(async () =>
   {
@@ -265,20 +251,11 @@ public class MainViewModel : ViewModelBase
   });
 
   /// <summary>Write to specified Device Characteristic.</summary>
-  public DelegateCommand CmdDeviceWriteInfo => new(async () =>
-  {
-    await GattWriteAsync("Some info");
-  });
+  public DelegateCommand CmdDeviceWriteInfo => new(async () => await GattWriteAsync("Some info"));
 
-  public DelegateCommand CmdDeviceGetInfo => new(async () =>
-  {
-    await GattWriteAsync("GetInfo");
-  });
+  public DelegateCommand CmdDeviceGetInfo => new(async () => await GattWriteAsync("GetInfo"));
 
-  public DelegateCommand CmdDeviceUnlock => new(async () =>
-  {
-    await GattWriteAsync("Unlock");
-  });
+  public DelegateCommand CmdDeviceUnlock => new(async () => await GattWriteAsync("Unlock"));
 
   public DelegateCommand CmdForceNav => new(() =>
   {
@@ -621,6 +598,7 @@ public class MainViewModel : ViewModelBase
 
     return success;
   }
+
   /// <summary>Read response from .</summary>
   /// <param name="forcedCharacteristicUuid">Optional GATT Characteristic.</param>
   /// <returns>Task.</returns>
@@ -748,8 +726,6 @@ public class MainViewModel : ViewModelBase
     var success = await Helper.WaitUntilAsync(
         condition: () => (_bleLastNotification is not null),
         timeout: msTimeout);
-
-    //// TODO: decypher deviceAction
 
     return success;
   }

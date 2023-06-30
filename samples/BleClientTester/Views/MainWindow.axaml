@@ -1,18 +1,24 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:BleClientTester;assembly=BleClientTester"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:core="clr-namespace:BleClientTester;assembly=BleClientTester"
+        xmlns:prism="http://prismlibrary.com/"
         xmlns:views="clr-namespace:BleClientTester.Views"
         xmlns:vm="using:BleClientTester.ViewModels"
-        xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Avalonia"
         x:Class="BleClientTester.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         d:DesignHeight="450"
         d:DesignWidth="800"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}"
         Icon="/Assets/avalonia-logo.ico"
         mc:Ignorable="d">
-  <!--<views:MainView />-->
+  <!--
+    When using Prism.Avalonia, you must use the 'ContentControl' so that
+    this Window's ViewModel doesn't attemt to attatch to the child's ViewModel
+
+    <views:MainView />
+  -->
   <ContentControl prism:RegionManager.RegionName="{x:Static core:Constants.ContentRegion}" />
 </Window>
