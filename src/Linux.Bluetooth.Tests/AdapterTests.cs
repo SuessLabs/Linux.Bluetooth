@@ -36,7 +36,7 @@ namespace Linux.Bluetooth.Tests
     ////    ////using (var client = new Connection(boundAddress))
     ////    ////{
     ////    ////  await client.ConnectAsync();
-    ////    ////  Console.WriteLine("Client Connected!");
+    ////    ////  Console.WriteLine("Client IsConnected!");
     ////    ////
     ////    ////  var proxy = client.CreateProxy<IMyService>("Test.BleAdapter", MyService.Path);
     ////    ////  var greeting = await proxy.SendCommandAsync("BLE");

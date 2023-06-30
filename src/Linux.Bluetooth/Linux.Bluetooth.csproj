@@ -9,7 +9,7 @@
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Linux.Bluetooth</PackageId>
-    <Version>5.65.0</Version>
+    <Version>5.66.0</Version>
     <Authors>Xeno Innovations</Authors>
     <Title>Linux.Bluetooth Linux Bluetooth LE library</Title>
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="Tmds.DBus" Version="0.15.0" />
-    <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.10.1" />-->
+    <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.15.0" />-->
   </ItemGroup>
 
 </Project>

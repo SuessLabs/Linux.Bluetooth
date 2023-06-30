@@ -28,4 +28,12 @@
     <PackageReference Include="Prism.Avalonia" Version="8.1.97.11000-rc1.1" />
     <PackageReference Include="Prism.DryIoc.Avalonia" Version="8.1.97.11000-rc1.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Linux.Bluetooth\Linux.Bluetooth.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>
