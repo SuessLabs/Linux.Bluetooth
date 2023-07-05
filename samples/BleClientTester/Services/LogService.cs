@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BleClientTester.Services;
+namespace BleTester.Services;
 
 public interface ILogService
 {

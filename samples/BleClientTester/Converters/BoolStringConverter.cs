@@ -1,4 +1,4 @@
-﻿namespace BleClientTester.Converters;
+﻿namespace BleTester.Converters;
 
 public class BoolStringConverter : BoolValueConverter<string>
 {

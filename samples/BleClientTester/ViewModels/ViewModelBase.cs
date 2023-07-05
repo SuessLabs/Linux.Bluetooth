@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace BleClientTester.ViewModels;
+namespace BleTester.ViewModels;
 
 public class ViewModelBase : BindableBase
 {

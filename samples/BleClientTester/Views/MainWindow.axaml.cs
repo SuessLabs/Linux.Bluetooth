@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-namespace BleClientTester.Views;
+namespace BleTester.Views;
 
 public partial class MainWindow : Window
 {

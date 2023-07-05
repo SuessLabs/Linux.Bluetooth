@@ -1,9 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using BleClientTester.Services;
+using BleTester.Services;
 using Prism.Ioc;
 
-namespace BleClientTester.Views;
+namespace BleTester.Views;
 
 public partial class MainView : UserControl
 {

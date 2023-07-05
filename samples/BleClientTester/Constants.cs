@@ -1,4 +1,4 @@
-﻿namespace BleClientTester;
+﻿namespace BleTester;
 
 public static class Constants
 {

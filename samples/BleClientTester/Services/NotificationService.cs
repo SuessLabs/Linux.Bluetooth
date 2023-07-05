@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 
-namespace BleClientTester.Services;
+namespace BleTester.Services;
 
 public interface INotificationService
 {

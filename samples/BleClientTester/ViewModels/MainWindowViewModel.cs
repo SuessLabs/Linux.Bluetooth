@@ -1,4 +1,4 @@
-﻿namespace BleClientTester.ViewModels;
+﻿namespace BleTester.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BleClientTester.ViewModels;
+using BleTester.ViewModels;
 using Linux.Bluetooth;
 using Linux.Bluetooth.Constants;
 using Linux.Bluetooth.Extensions;
 
-namespace BleClientTester.Services;
+namespace BleTester.Services;
 
 public class BluetoothLeService : IBluetoothLeService
 {

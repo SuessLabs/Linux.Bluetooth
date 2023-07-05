@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using BleClientTester.Services;
+using BleTester.Services;
 using Linux.Bluetooth;
 using Linux.Bluetooth.Extensions;
 using Prism.Commands;
 using Prism.Regions;
 
-namespace BleClientTester.ViewModels;
+namespace BleTester.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {

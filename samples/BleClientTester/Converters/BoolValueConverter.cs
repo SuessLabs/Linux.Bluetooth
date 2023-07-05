@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Avalonia.Data.Converters;
 
-namespace BleClientTester.Converters;
+namespace BleTester.Converters;
 
 public class BoolValueConverter<T> : IValueConverter
 {

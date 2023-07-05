@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BleClientTester;
+namespace BleTester;
 
 public static class Helper
 {

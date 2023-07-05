@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BleClientTester.ViewModels;
+using BleTester.ViewModels;
 using Linux.Bluetooth;
 
-namespace BleClientTester.Services;
+namespace BleTester.Services;
 
 public interface IBluetoothLeService
 {

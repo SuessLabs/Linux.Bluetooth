@@ -7,7 +7,7 @@ using Linux.Bluetooth;
 using Linux.Bluetooth.Extensions;
 using Prism.Mvvm;
 
-namespace BleClientTester.ViewModels;
+namespace BleTester.ViewModels;
 
 public class BleDevice : BindableBase, IDisposable
 {

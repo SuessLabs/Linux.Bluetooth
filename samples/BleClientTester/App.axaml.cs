@@ -1,13 +1,13 @@
 ﻿using Avalonia;
 using Avalonia.Markup.Xaml;
-using BleClientTester.Services;
-using BleClientTester.ViewModels;
-using BleClientTester.Views;
+using BleTester.Services;
+using BleTester.ViewModels;
+using BleTester.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Regions;
 
-namespace BleClientTester;
+namespace BleTester;
 
 public partial class App : PrismApplication
 {

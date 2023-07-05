@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BleClientTester;
+namespace BleTester;
 
 /// <summary>Dictionary class extension.</summary>
 public static class DictionaryExtension

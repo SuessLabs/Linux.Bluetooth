@@ -34,8 +34,8 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Prism.Avalonia" Version="8.1.97.11000-rc1.1" />
-    <PackageReference Include="Prism.DryIoc.Avalonia" Version="8.1.97.11000-rc1.1" />
+    <PackageReference Include="Prism.Avalonia" Version="8.1.97.11000" />
+    <PackageReference Include="Prism.DryIoc.Avalonia" Version="8.1.97.11000" />
   </ItemGroup>
 
   <ItemGroup>
