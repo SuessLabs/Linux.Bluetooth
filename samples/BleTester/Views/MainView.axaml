@@ -7,8 +7,8 @@
              xmlns:vm="clr-namespace:BleTester.ViewModels"
              x:Class="BleTester.Views.MainView"
              x:DataType="vm:MainViewModel"
-             d:DesignHeight="350"
-             d:DesignWidth="400"
+             d:DesignHeight="500"
+             d:DesignWidth="600"
              mc:Ignorable="d">
   <UserControl.Styles>
     <Style Selector="Button.cmdBtn">
