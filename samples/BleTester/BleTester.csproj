@@ -11,8 +11,17 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Authors>Damian Suess</Authors>
     <Copyright>Copyright 2023 Xeno Innovations, Inc.</Copyright>
-    <BaseOutputPath>..\..\output\samples</BaseOutputPath>
+    <BaseOutputPath>..\..\output\samples\BleTester</BaseOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Reduce Build Resources -->
+    <!-- Supported languages https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#satelliteresourcelanguages -->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- Supported runtimes (https://learn.microsoft.com/en-us/dotnet/core/rid-catalog) -->
+    <RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
+    <!--<RuntimeIdentifier>linux-x64</RuntimeIdentifier>-->
   </PropertyGroup>
 
   <ItemGroup>
