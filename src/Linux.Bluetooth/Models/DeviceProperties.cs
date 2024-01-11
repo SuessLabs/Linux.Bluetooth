@@ -34,7 +34,7 @@ namespace Linux.Bluetooth
 
     public bool Paired { get; set; }
 
-    [Obsolete("Use the preferred, Rssi, property")]]
+    [Obsolete("Use the preferred, Rssi, property")]
     public short RSSI { get; set; }
 
     public short Rssi { get; set; }

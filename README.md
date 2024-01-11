@@ -145,7 +145,7 @@ private static async Task characteristic_Value(GattCharacteristic characteristic
 It may be necessary to pair with a device for a GATT service to be visible or for reading GATT characteristics to work. To pair, one option is to run `bluetoothctl` (or `sudo bluetoothctl`)
 and then run `default agent` and `agent on` within `bluetoothctl`. Watch `bluetoothctl` for pairing requests.
 
-See [Ubuntu's Introduction to Pairing](https://core.docs.ubuntu.com/en/stacks/bluetooth/bluez/docs/reference/pairing/introduction).
+See [Ubuntu's Introduction to Pairing](https://ubuntu.com/core/docs/bluez/reference/pairing/introduction).
 
 ### BluetoothCtl Helper
 
