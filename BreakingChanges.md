@@ -1,10 +1,10 @@
-# Breaking Changes
+# Deprecation and Breaking Changes
 
-## Version 5.65
+## Version 5.66
 
 ### DeviceProperties
 
-A couple of Property names have been changed to fit standard C# naming conventions
+The following property names have been marked for deprecation to better fit standard C# naming conventions.
 
 * `Connected` -> `IsConnected` - This helps denote its a boolean
 * `RSSI` -> `Rssi` - Propert PascalCase
