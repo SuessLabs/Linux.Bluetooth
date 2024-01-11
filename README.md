@@ -168,6 +168,10 @@ devices
 
 See [Contributing](./github/CONTRIBUTING.md).
 
+## Coming Soon
+
+* Deprecating `Linux.Bluetooth.Extensions`. It will now just be `Linux.Bluetooth` namespace.
+
 ## Reference
 
 * [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf)
