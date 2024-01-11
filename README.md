@@ -180,3 +180,5 @@ See [Contributing](./github/CONTRIBUTING.md).
   * [v5.53](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc?h=5.53) - _i.e. Ubuntu v20.04 LTS_
 * [BlueZ Official Site](http://www.bluez.org/)
 * [Install BlueZ on the Raspberry PI](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/overview)
+
+**Sponsored by:** [Suess Labs](https://suesslabs.com) a subsidary of [Xeno Innovations, Inc](https://xenoinc.com).
