@@ -52,7 +52,7 @@
         <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
           <!-- Adapter List -->
           <StackPanel Grid.Column="0">
-            <Label Content="BLE Adapter" FontWeight="Bold" />
+            <Label Content="Step 1: BLE Adapter" FontWeight="Bold" />
             <Border Classes="ControlBorder">
               <StackPanel Classes="SubPanel">
 
@@ -87,7 +87,7 @@
 
           <!-- Device List -->
           <StackPanel Grid.Column="1">
-            <Label Content="Devices" FontWeight="Bold" />
+            <Label Content="Step 2: Devices" FontWeight="Bold" />
             <Border Classes="ControlBorder">
               <StackPanel Classes="SubPanel">
 
@@ -114,7 +114,6 @@
                     <Button Command="{Binding CmdAdapterDeviceScanOff}" Content="Stop" />
                     <Button Command="{Binding CmdDeviceConnect}" Content="Connect" />
                     <Button Command="{Binding CmdDeviceDisconnect}" Content="Disconnect" />
-                    <!--<Button Command="{Binding CmdForceNav}" Content="NAV" />-->
                   </StackPanel>
                   <StackPanel Orientation="Horizontal">
                     <Label Content="IsScanning: " />
@@ -125,6 +124,7 @@
                   </StackPanel>
                 </StackPanel>
 
+                <Label Content="Devices:" />
                 <ListBox x:DataType="vm:MainViewModel"
                          Margin="2"
                          FontFamily="Consolas"
@@ -154,15 +154,12 @@
         </Grid>
 
         <!-- Test Commands -->
-        <!--<Border Classes="ControlBorder">
-          <StackPanel Classes="SubPanel">-->
-
         <Border Grid.Row="1"
                 Background="GhostWhite"
                 BorderBrush="Gainsboro"
                 Classes="ControlBorder"
                 CornerRadius="3,3">
-          <Grid Classes="SubPanel" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+          <Grid Classes="SubPanel" RowDefinitions="Auto,Auto,Auto,Auto">
             <Grid.Styles>
               <Style Selector="Label">
                 <!-- MARGIN: LEFT TOP RIGHT BOTTOM -->
@@ -176,23 +173,18 @@
               </Style>
             </Grid.Styles>
 
-            <Label Grid.Row="0"
-                   Content="Device Commands:"
-                   FontWeight="Bold" />
+            <Label Content="Device Commands:" FontWeight="Bold" />
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
-              <Button Command="{Binding CmdDeviceGetInfo}" Content="Get Info" />
-              <Button Command="{Binding CmdDeviceUnlock}" Content="Unlock" />
-              <Button Command="{Binding CmdDeviceWriteInfo}" Content="Send String" />
-            </StackPanel>
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
+              <Button Command="{Binding CmdDeviceWriteString}" Content="Send String" />
+              <TextBox Text="{Binding BleTextMessage}"
+                       Grid.Column="1"
+                       Margin="5"
+                       Watermark="Input text to send" />
+            </Grid>
 
-            <Label Grid.Row="2" Content="Input to Device:" />
-            <TextBox Text="{Binding BleTextMessage}"
-                     Grid.Row="3"
-                     Margin="5" />
-
-            <Label Grid.Row="4" Content="Received Characteristic Messages:" />
-            <Grid Grid.Row="5"
+            <Label Grid.Row="2" Content="Received Characteristic Messages:" />
+            <Grid Grid.Row="3"
                   Margin="10"
                   HorizontalAlignment="Stretch"
                   ColumnDefinitions="*,*">

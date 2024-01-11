@@ -10,7 +10,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Authors>Damian Suess</Authors>
-    <Copyright>Copyright 2023 Xeno Innovations, Inc.</Copyright>
+    <Copyright>Copyright 2023-2024 Xeno Innovations, Inc.</Copyright>
     <BaseOutputPath>..\..\output\samples\BleTester</BaseOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>

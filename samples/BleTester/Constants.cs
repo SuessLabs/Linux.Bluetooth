@@ -1,5 +1,6 @@
 ﻿namespace BleTester;
 
+/// <summary>Custom Characteristics defined by your remote device.</summary>
 public static class Constants
 {
   public const string ContentRegion = "ContentRegion";

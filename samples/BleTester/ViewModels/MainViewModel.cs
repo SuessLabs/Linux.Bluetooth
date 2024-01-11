@@ -30,7 +30,6 @@ public class MainViewModel : ViewModelBase
   private byte[]? _bleLastNotification = null;
   private IGattService1? _bleService = null;
   private string _bleTextMessage = string.Empty;
-  private bool _isHost = false;
   private IRegionNavigationJournal? _journal;
   private bool _bleReadCharacteristicTx = false;
   private bool _bleAdapterIsScanning;
@@ -43,14 +42,14 @@ public class MainViewModel : ViewModelBase
 
     Title = "BLE Connection Tester";
 
-    _isHost = false;
-
     _ble.AutoScanDevices = false;
     _ble.AutoConnectDevice = false;
 
     // SET Device Scan Filter
     BleDeviceScanFilter = "";
     BleDeviceIsConnected = false;
+
+    BleRegisterEventHandlers(true);
   }
 
   public ObservableCollection<string> BleAdapters { get => _bleAdapters; set => SetProperty(ref _bleAdapters, value); }
@@ -130,8 +129,6 @@ public class MainViewModel : ViewModelBase
   public string BleDeviceServiceMessageText { get => _bleDeviceServiceMessageText; set => SetProperty(ref _bleDeviceServiceMessageText, value); }
 
   public ObservableCollection<string> BleDevicesFound { get => _bleDevicesFound; set => SetProperty(ref _bleDevicesFound, value); }
-
-  ////public string BleTextBrightness { get => _bleTextBrightness; set => SetProperty(ref _bleTextBrightness, value); }
 
   public string BleTextMessage { get => _bleTextMessage; set => SetProperty(ref _bleTextMessage, value); }
 
@@ -251,28 +248,7 @@ public class MainViewModel : ViewModelBase
   });
 
   /// <summary>Write to specified Device Characteristic.</summary>
-  public DelegateCommand CmdDeviceWriteInfo => new(async () => await GattWriteAsync("Some info"));
-
-  public DelegateCommand CmdDeviceGetInfo => new(async () => await GattWriteAsync("GetInfo"));
-
-  public DelegateCommand CmdDeviceUnlock => new(async () => await GattWriteAsync("Unlock"));
-
-  public DelegateCommand CmdForceNav => new(() =>
-  {
-    ////var fakeDevice = _bleDeviceNative;
-    ////
-    ////var navParams = new NavigationParameters();
-    ////navParams.Add(NavigationKey.BleDevice, fakeDevice);
-    ////
-    ////_regionManager.RequestNavigate(
-    ////    RegionNames.ContentRegion,
-    ////    nameof(BleServicesView),
-    ////    r =>
-    ////    {
-    ////      _log.Status($"Navigation success: {r.Result}");
-    ////    },
-    ////    navParams);
-  });
+  public DelegateCommand CmdDeviceWriteString => new(async () => await GattWriteAsync(BleTextMessage));
 
   private string FormattedTime => $"{DateTime.Now.Hour:00}:{DateTime.Now.Minute:00}:{DateTime.Now.Second:00}.{DateTime.Now.Millisecond:00}";
 
@@ -352,6 +328,7 @@ public class MainViewModel : ViewModelBase
     bool found = false;
     var deviceDisplayName = deviceProperties.ToString();
 
+    ////foreach (var dev in BleDevicesFound)
     for (int ndx = 0; ndx < BleDevicesFound.Count; ndx++)
     {
       if (BleDevicesFound[ndx].Contains($";Addr={deviceProperties.Address};"))
@@ -362,16 +339,6 @@ public class MainViewModel : ViewModelBase
         break;
       }
     }
-
-    ////foreach (var dev in BleDevicesFound)
-    ////{
-    ////    if (dev.Contains(deviceProperties.Address))
-    ////    {
-    ////        // TODO: Update RSSI
-    ////        found = true;
-    ////        break;
-    ////    }
-    ////}
 
     if (!found)
       BleDevicesFound.Add(deviceDisplayName);
@@ -439,6 +406,8 @@ public class MainViewModel : ViewModelBase
     _ble.OnDeviceDisconnected -= Ble_OnDeviceDisconnected;
     _ble.OnDeviceServicesResolved -= Ble_OnDeviceServicesResolved;
     _ble.OnDeviceServiceResolved -= Ble_OnDeviceServiceResolvedAsync;
+
+    // In this example, Notifications are set by the Characteristic
     //// _ble.OnDeviceNotification -= Ble_OnDeviceNotification;
 
     if (registerForEvents)
@@ -455,6 +424,8 @@ public class MainViewModel : ViewModelBase
       _ble.OnDeviceDisconnected += Ble_OnDeviceDisconnected;
       _ble.OnDeviceServicesResolved += Ble_OnDeviceServicesResolved;
       _ble.OnDeviceServiceResolved += Ble_OnDeviceServiceResolvedAsync;
+
+      // In this example, Notifications are set by the Characteristic
       //// _ble.OnDeviceNotification += Ble_OnDeviceNotification;
     }
   }
@@ -498,9 +469,8 @@ public class MainViewModel : ViewModelBase
 
     if (result && !navToServices)
     {
-      _log.Status($"Fetching services");
-
-      // This breaks shit!
+      // TODO: List services
+      _log.Status($"Fetching services (not implemented)");
       ////var services = await _bleDeviceNative.GetServiceDataAsync();
     }
     else if (result && navToServices)
@@ -576,27 +546,6 @@ public class MainViewModel : ViewModelBase
       var name = a.ObjectPath.ToString();
       AddAdapterItem(name);
     }
-  }
-
-  private bool ValidateConnection()
-  {
-    if (!BleDeviceIsConnected)
-    {
-      _log.Status("Not connected to Ble");
-      return false;
-    }
-    else
-    {
-      return true;
-    }
-  }
-
-  private async Task<bool> SendCommandAsync(string commandText)
-  {
-    var cmdBytes = Helper.StringToBytes(commandText);
-    var success = await GattWriteAsync(cmdBytes);
-
-    return success;
   }
 
   /// <summary>Read response from .</summary>

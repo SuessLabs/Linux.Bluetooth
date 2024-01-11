@@ -562,9 +562,9 @@ public class BluetoothLeService : IBluetoothLeService
       var uuid = await characteristic.GetUUIDAsync();
       var bytes = eventArgs.Value;
 
+      // Is notification from iOS smartphone?
       if (uuid.Equals(GattConstants.ANCSNotificationSourceUUID))
       {
-        // Convert byte to string
         var msg = PrintAncsDescription(bytes);
         OnDeviceNotification?.Invoke(msg);
       }
@@ -576,8 +576,8 @@ public class BluetoothLeService : IBluetoothLeService
       }
       else
       {
+        // Generic string
         var strValue = Helper.StringFromBytes(bytes);
-
         OnDeviceNotification?.Invoke(strValue);
       }
     }
@@ -591,7 +591,7 @@ public class BluetoothLeService : IBluetoothLeService
   /// <param name="device">Device.</param>
   /// <param name="eventArgs">BlueZ Event Args.</param>
   /// <returns>Task.</returns>
-  [Obsolete("Use cross-platform, `BleDevice` instead.")]
+  [Obsolete("Use cross-platform, `BleDevice` instead (coming soon).")]
   private async Task Device_OnServicesResolvedAsync(Device device, BlueZEventArgs eventArgs)
   {
     try
@@ -660,6 +660,9 @@ public class BluetoothLeService : IBluetoothLeService
     return props;
   }
 
+  /// <summary>Convert byte array to Notifications from iOS smartphone.</summary>
+  /// <param name="value">Byte array.</param>
+  /// <returns>Converted string.</returns>
   private string PrintAncsDescription(byte[] value)
   {
     if (value.Length < 8)
