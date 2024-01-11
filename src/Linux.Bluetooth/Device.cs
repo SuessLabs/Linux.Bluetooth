@@ -173,6 +173,7 @@ namespace Linux.Bluetooth
         Appearance = p.Appearance,
         Blocked = p.Blocked,
         Class = p.Class,
+        Connected = p.Connected, // Connected is marked for deprecation (2024-01-11)
         IsConnected = p.Connected,
         Icon = p.Icon,
         LegacyPairing = p.LegacyPairing,
@@ -180,6 +181,7 @@ namespace Linux.Bluetooth
         Modalias = p.Modalias,
         Name = p.Name,
         Paired = p.Paired,
+        RSSI = p.RSSI,    // RSSI is marked for deprecation (2024-01-11)
         Rssi = p.RSSI,
         ServiceData = p.ServiceData,
         ServicesResolved = p.ServicesResolved,

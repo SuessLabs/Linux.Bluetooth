@@ -5,11 +5,11 @@ namespace Linux.Bluetooth
 {
   public class DeviceProperties
   {
-    public string Address { get; set; } = string.Empty;
+    public string? Address { get; set; }
 
-    public string AddressType { get; set; } = string.Empty;
+    public string? AddressType { get; set; }
 
-    public string Alias { get; set; } = string.Empty;
+    public string? Alias { get; set; }
 
     public ushort Appearance { get; set; }
 
@@ -17,19 +17,25 @@ namespace Linux.Bluetooth
 
     public uint Class { get; set; }
 
+    [Obsolete("Use the preferred, IsConnected, property.")]
+    public bool Connected { get; set; }
+
     public bool IsConnected { get; set; }
 
-    public string Icon { get; set; } = string.Empty;
+    public string? Icon { get; set; }
 
     public bool LegacyPairing { get; set; }
 
     public IDictionary<ushort, object>? ManufacturerData { get; set; }
 
-    public string Modalias { get; set; } = string.Empty;
+    public string? Modalias { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
     public bool Paired { get; set; }
+
+    [Obsolete("Use the preferred, Rssi, property")]]
+    public short RSSI { get; set; }
 
     public short Rssi { get; set; }
 
@@ -43,7 +49,7 @@ namespace Linux.Bluetooth
 
     public short TxPower { get; set; }
 
-    public string[] UUIDs { get; set; } = Array.Empty<string>();
+    public string[]? UUIDs { get; set; }
 
     public override string ToString()
     {
