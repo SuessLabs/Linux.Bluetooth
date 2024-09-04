@@ -157,6 +157,9 @@ From command line, use `bluetoothctl` or Bluetooth Manager to scan and retrieve 
 ```bash
 $ bluetoothctl
 
+; Get list of BT Adapters
+list
+
 ; Scan for devices
 scan on
 
