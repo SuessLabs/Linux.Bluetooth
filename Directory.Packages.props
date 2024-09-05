@@ -16,8 +16,8 @@
     <PackageVersion Include="Avalonia.Themes.Simple" Version="11.1.3" />
     <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.1.3" />
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.1.3" />
-    <PackageVersion Include="Prism.Avalonia" Version="8.1.97.11073" />
-    <PackageVersion Include="Prism.DryIoc.Avalonia" Version="8.1.97.11073" />
+    <PackageVersion Include="Prism.Avalonia" Version="9.0.537.11130" />
+    <PackageVersion Include="Prism.DryIoc.Avalonia" Version="9.0.537.11130" />
   </ItemGroup>
   <!-- Tests -->
   <ItemGroup>

@@ -6,7 +6,7 @@ using BleTester.Services;
 using Linux.Bluetooth;
 using Linux.Bluetooth.Extensions;
 using Prism.Commands;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 
 namespace BleTester.ViewModels;
 
