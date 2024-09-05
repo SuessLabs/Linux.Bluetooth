@@ -177,6 +177,7 @@ See [Contributing](./github/CONTRIBUTING.md).
 
 ## Reference
 
+* [Prism Avalonia](https://github.com/AvaloniaCommunity/Prism.Avalonia) for Linux GUI test app
 * [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf)
 * **BlueZ API**:
   * [HEAD](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
