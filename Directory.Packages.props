@@ -1,7 +1,10 @@
 <Project>
+  <PropertyGroup>
+   <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
-    <PackageVersion Include="Tmds.DBus" Version="0.20.0" />
+    <PackageVersion Include="Tmds.DBus" Version="0.15.0" />
+    <!-- <PackageVersion Include="Tmds.DBus" Version="0.20.0" /> -->
   </ItemGroup>
   <!-- Samples -->
   <ItemGroup>
@@ -19,6 +22,7 @@
   </ItemGroup>
   <!-- Tests -->
   <ItemGroup>
+    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
     <PackageVersion Include="MSTest.TestAdapter" Version="3.5.2" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.5.2" />
