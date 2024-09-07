@@ -6,13 +6,13 @@
 
 The Linux.Bluetooth library for .NET gives developers the ability to quickly stand up and interface with Linux's BLE radio with very little effort. There's no need to recall the laborious D-Bus API calls, we handle that for you.
 
-[![Linux.Bluetooth NuGet Badge](https://buildstats.info/nuget/Linux.Bluetooth?dWidth=70&includePreReleases=true)](https://www.nuget.org/packages/Linux.Bluetooth/)
+[![Linux.Bluetooth NuGet Version](https://img.shields.io/nuget/v/Linux.Bluetooth)](https://www.nuget.org/packages/Linux.Bluetooth/)
 
-![Debugging Image](https://github.com/SuessLabs/Linux.Bluetooth/blob/master/docs/Adapter%20-%20ObjectPath%20Contents.png)
+![Debugging Image](https://raw.githubusercontent.com/SuessLabs/Linux.Bluetooth/master/docs/Adapter%20-%20ObjectPath%20Contents.png)
 
 The library uses, [Tmds.DBus](https://github.com/tmds/Tmds.DBus) to access Linux's D-Bus, the preferred interface for Bluetooth in userspace.
 
-Check out the SuessLabs article on using [Plugin.BlueZ](https://suesslabs.com/csharp/net-and-linux-bluetooth/)
+Check out the SuessLabs article on using [Linux.Bluetooth](https://suesslabs.com/csharp/net-and-linux-bluetooth/)
 
 ## Requirements
 
@@ -157,6 +157,9 @@ From command line, use `bluetoothctl` or Bluetooth Manager to scan and retrieve 
 ```bash
 $ bluetoothctl
 
+; Get list of BT Adapters
+list
+
 ; Scan for devices
 scan on
 
@@ -177,6 +180,7 @@ See [Contributing](./github/CONTRIBUTING.md).
 
 ## Reference
 
+* [Prism Avalonia](https://github.com/AvaloniaCommunity/Prism.Avalonia) for Linux GUI test app
 * [Doing Bluetooth Low Energy on Linux](https://elinux.org/images/3/32/Doing_Bluetooth_Low_Energy_on_Linux.pdf)
 * **BlueZ API**:
   * [HEAD](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
