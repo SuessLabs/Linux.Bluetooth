@@ -9,7 +9,7 @@
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Linux.Bluetooth</PackageId>
-    <Version>5.66.0</Version>
+    <Version>5.67.0</Version>
     <Authors>Xeno Innovations</Authors>
     <Title>Linux.Bluetooth Linux Bluetooth LE library</Title>
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
