@@ -1,6 +1,6 @@
 # Linux Bluetooth Library for .NET
 
-![img](images/Linux.Bluetooth-128x128.png)
+![img](https://raw.githubusercontent.com/SuessLabs/Linux.Bluetooth/master/images/Linux.Bluetooth-128x128.png)
 
 The Linux.Bluetooth library for .NET gives developers the ability to quickly stand up and interface with Linux's BLE radio with very little effort. There's no need to recall the laborious D-Bus API calls, we handle that for you.
 
