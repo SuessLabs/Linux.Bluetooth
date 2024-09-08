@@ -347,6 +347,53 @@ namespace Linux.Bluetooth
     public static Task<string[]> GetSupportedSecondaryChannelsAsync(this ILEAdvertisingManager1 o) => o.GetAsync<string[]>("SupportedSecondaryChannels");
   }
 
+  [DBusInterface("org.bluez.LEAdvertisement1")]
+  public interface ILEAdvertisement1 : IDBusObject
+  {
+    Task ReleaseAsync();
+    Task<object> GetAsync(string prop);
+    Task<LEAdvertisement1Properties> GetAllAsync();
+    Task SetAsync(string prop, object val);
+    Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
+  }
+
+  [Dictionary]
+  public class LEAdvertisement1Properties
+  {
+    private string _Type;
+    private string[] _ServiceUUIDs;
+    private IDictionary<string, object> _ManufacturerData;
+    private string[] _SolicitUUIDs;
+    private IDictionary<string, object> _ServiceData;
+    private bool _IncludeTxPower;
+    private string _LocalName;
+    private UInt16 _Appearance;
+    private bool _Discoverable;
+
+    public string Type { get => _Type; set => _Type = value; }
+
+    public string[] ServiceUUIDs { get => _ServiceUUIDs; set => _ServiceUUIDs = value; }
+
+    public IDictionary<string, object> ManufacturerData { get => _ManufacturerData; set => _ManufacturerData = value; }
+
+    public string[] SolicitUUIDs { get => _SolicitUUIDs; set => _SolicitUUIDs = value; }
+
+    public IDictionary<string, object> ServiceData { get => _ServiceData; set => _ServiceData = value; }
+
+    public bool IncludeTxPower { get => _IncludeTxPower; set => _IncludeTxPower = value; }
+
+    public string LocalName { get => _LocalName; set => _LocalName = value; }
+
+    public UInt16 Appearance { get => _Appearance; set => _Appearance = value; }
+
+    public bool Discoverable { get => _Discoverable; set => _Discoverable = value; }
+  }
+
+  public static class LEAdvertisement1Extensions
+  {
+    public static Task SetLocalNameAsync(this ILEAdvertisement1 o, string val) => o.SetAsync("LocalName", val);
+  }
+
   [DBusInterface("org.bluez.Media1")]
   public interface IMedia1 : IDBusObject
   {
