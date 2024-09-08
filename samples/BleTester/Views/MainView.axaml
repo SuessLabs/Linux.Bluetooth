@@ -66,7 +66,6 @@
                 <!-- x:DataType="sys:string" -->
                 <ListBox x:DataType="vm:MainViewModel"
                          FontFamily="Consolas"
-                         FontSize="-1"
                          ItemsSource="{Binding BleAdapters}"
                          ScrollViewer.HorizontalScrollBarVisibility="Visible"
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -128,7 +127,6 @@
                 <ListBox x:DataType="vm:MainViewModel"
                          Margin="2"
                          FontFamily="Consolas"
-                         FontSize="-1"
                          ItemsSource="{Binding BleDevicesFound}"
                          ScrollViewer.HorizontalScrollBarVisibility="Visible"
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -190,7 +188,6 @@
                   ColumnDefinitions="*,*">
 
               <ListBox FontFamily="Consolas"
-                       FontSize="-1"
                        ItemsSource="{Binding BleDeviceServiceMessages}"
                        ScrollViewer.HorizontalScrollBarVisibility="Visible"
                        ScrollViewer.VerticalScrollBarVisibility="Visible"

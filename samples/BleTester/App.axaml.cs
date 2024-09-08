@@ -5,7 +5,7 @@ using BleTester.ViewModels;
 using BleTester.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 
 namespace BleTester;
 

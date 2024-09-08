@@ -3,17 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Linux.Bluetooth</RootNamespace>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Linux.Bluetooth</PackageId>
-    <Version>5.67.1</Version>
+    <Version>$(ReleaseVersion)</Version>
     <Authors>Xeno Innovations</Authors>
     <Title>Linux.Bluetooth - Linux Bluetooth LE library</Title>
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
-    <PackageTags>Linux;Bluetooth;BlueZ;dotnet;net;dbus;tmds-dbus;net-core;netstandard;BluetoothLowEnergy;BLE;BluetoothLE;SuessLabs;Suess;Xeno Innovations</PackageTags>
+    <PackageTags>Linux;Bluetooth;library;BlueZ;dotnet;net;dbus;tmds-dbus;tdms;net-core;netstandard;BluetoothLowEnergy;BLE;BluetoothLE;SuessLabs;Suess;Xeno;Xeno Innovations</PackageTags>
     <RepositoryUrl>https://github.com/SuessLabs/Linux.Bluetooth</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -37,8 +37,9 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Tmds.DBus" Version="0.20.0" />
+    <PackageReference Include="Tmds.DBus" />
     <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.20.0" />-->
   </ItemGroup>
 
