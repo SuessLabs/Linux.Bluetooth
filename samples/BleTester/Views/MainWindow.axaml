@@ -14,7 +14,7 @@
         Width="600"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/logo.ico"
         mc:Ignorable="d">
   <!--
     When using Prism.Avalonia, you must use the 'ContentControl' so that

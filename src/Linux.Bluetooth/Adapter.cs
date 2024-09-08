@@ -21,6 +21,7 @@ namespace Linux.Bluetooth
     private IDisposable _propertyWatcher;
     private DeviceChangeEventHandlerAsync _deviceFound;
     private AdapterEventHandlerAsync _poweredOn;
+    private IObjectManager _objectManager;
 
     ~Adapter()
     {
@@ -34,8 +35,8 @@ namespace Linux.Bluetooth
         _proxy = proxy,
       };
 
-      var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
-      adapter._interfacesWatcher = await objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
+      adapter._objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
+      adapter._interfacesWatcher = await adapter._objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
       adapter._propertyWatcher = await proxy.WatchPropertiesAsync(adapter.OnPropertyChanges);
 
       return adapter;
@@ -170,6 +171,25 @@ namespace Linux.Bluetooth
     public Task StopDiscoveryAsync()
     {
       return _proxy.StopDiscoveryAsync();
+    }
+
+    public async Task<List<ObjectPath>> GetDevicesPathsAsync()
+    {
+      List<ObjectPath> result = new List<ObjectPath>();
+      var objects = await _objectManager.GetManagedObjectsAsync();
+      foreach (var path in objects.Keys)
+      {
+        var interfaces = objects[path];
+        foreach (var intf in interfaces.Keys)
+        {
+          if (intf == BluezConstants.DeviceInterface)
+          {
+            result.Add(path);
+          }
+        }
+      }
+
+      return result;
     }
 
     /// <summary>Watch for property updates.</summary>

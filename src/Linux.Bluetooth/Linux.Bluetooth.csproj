@@ -3,17 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Linux.Bluetooth</RootNamespace>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Linux.Bluetooth</PackageId>
-    <Version>6.0.0</Version>
+    <Version>$(ReleaseVersion)</Version>
     <Authors>Xeno Innovations</Authors>
-    <Title>Linux.Bluetooth Linux Bluetooth LE library</Title>
+    <Title>Linux.Bluetooth - Linux Bluetooth LE library</Title>
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
-    <PackageTags>BlueZ;dotnet;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE;SuessLabs;XenoInnovations;Xeno;Suess</PackageTags>
+    <PackageTags>Linux;Bluetooth;library;BlueZ;dotnet;net;dbus;tmds-dbus;tdms;net-core;netstandard;BluetoothLowEnergy;BLE;BluetoothLE;SuessLabs;Suess;Xeno;Xeno Innovations</PackageTags>
     <RepositoryUrl>https://github.com/SuessLabs/Linux.Bluetooth</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,11 +23,12 @@
     <Copyright>Copyright 2024 Xeno Innovations, Inc.</Copyright>
     <PackageProjectUrl>https://github.com/SuessLabs/Linux.Bluetooth</PackageProjectUrl>
     <PackageReleaseNotes>Upgraded DBus support.</PackageReleaseNotes>
-    <PackageIcon>Icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>Linux.Bluetooth-128x128.png</PackageIcon>
   </PropertyGroup>
+
   <ItemGroup>
-    <None Include="..\..\docs\Icon.png">
+    <None Include="..\..\images\Linux.Bluetooth-128x128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
@@ -38,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tmds.DBus" Version="0.15.0" />
-    <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.15.0" />-->
+    <PackageReference Include="Tmds.DBus" />
+    <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.20.0" />-->
   </ItemGroup>
 
 </Project>

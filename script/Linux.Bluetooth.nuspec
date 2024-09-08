@@ -2,17 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Linux.Bluetooth</id>
-    <version>5.66.0</version>
+    <version>5.67.1</version>
     <title>Linux Bluetooth Library for .NET</title>
     <description>Linux Bluetooth and Bluetooth LE library for .NET.</description>
-    <tags>BlueZ dotnet net net-core netstandard Linux Bluetooth BluetoothLowEnergy BLE BluetoothLE SuessLabs Suess Xeno Innovations</tags>
+    <tags>Linux Bluetooth BlueZ dotnet net dbus tmds-dbus net-core netstandard BluetoothLowEnergy BLE BluetoothLE SuessLabs Suess Xeno Innovations</tags>
     <authors>Xeno Innovations</authors>
     <license type="expression">Apache-2.0</license>
     <licenseUrl>https://licenses.nuget.org/Apache-2.0</licenseUrl>
     <repository url="https://github.com/SuessLabs/Linux.Bluetooth" />
     <dependencies>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Tmds.DBus" version="0.15.0" exclude="Build,Analyzers" />
+        <dependency id="Tmds.DBus" version="0.20.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>

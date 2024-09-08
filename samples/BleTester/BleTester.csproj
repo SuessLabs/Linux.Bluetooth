@@ -3,9 +3,10 @@
     <OutputType>WinExe</OutputType>
     <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
     One for Windows with net7.0-windows TFM, one for MacOS with net7.0-macos and one with net7.0 TFM for Linux.-->
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+<!--    <TargetFramework>net8.0</TargetFramework>-->
     <Nullable>enable</Nullable>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -20,8 +21,8 @@
     <!-- Supported languages https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#satelliteresourcelanguages -->
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <!-- Supported runtimes (https://learn.microsoft.com/en-us/dotnet/core/rid-catalog) -->
-    <RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
-    <!--<RuntimeIdentifier>linux-x64</RuntimeIdentifier>-->
+    <!--<RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>-->
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,15 +37,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <!--<PackageReference Include="Avalonia.ReactiveUI" />-->
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Prism.Avalonia" Version="8.1.97.11000" />
-    <PackageReference Include="Prism.DryIoc.Avalonia" Version="8.1.97.11000" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
+    <PackageReference Include="Prism.Avalonia" />
+    <PackageReference Include="Prism.DryIoc.Avalonia" />
   </ItemGroup>
 
   <ItemGroup>

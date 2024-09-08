@@ -109,7 +109,7 @@ namespace Linux.Bluetooth.Extensions
             if (pair.Value.Equals(value))
             {
               // Console.WriteLine($"[CHG] {propertyName}: {pair.Value}.");
-              taskSource.SetResult(true);
+              taskSource.TrySetResult(true);
               watcher.Dispose();
             }
           }
