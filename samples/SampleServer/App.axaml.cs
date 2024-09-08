@@ -1,36 +1,32 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-
+using Prism.DryIoc;
+using Prism.Ioc;
 using SampleServer.ViewModels;
 using SampleServer.Views;
 
 namespace SampleServer;
 
-public partial class App : Application
+public partial class App : PrismApplication
 {
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+  public override void Initialize()
+  {
+    AvaloniaXamlLoader.Load(this);
 
-    public override void OnFrameworkInitializationCompleted()
-    {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainViewModel()
-            };
-        }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-        {
-            singleViewPlatform.MainView = new MainView
-            {
-                DataContext = new MainViewModel()
-            };
-        }
+    // Required when overriding Initialize
+    base.Initialize();
+  }
 
-        base.OnFrameworkInitializationCompleted();
-    }
+  protected override AvaloniaObject CreateShell()
+  {
+    return Container.Resolve<MainWindow>();
+  }
+
+  protected override void RegisterTypes(IContainerRegistry containerRegistry)
+  {
+    // Register you Services, Views, Dialogs, etc.
+  }
 }

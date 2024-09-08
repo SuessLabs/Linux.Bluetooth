@@ -77,5 +77,4 @@ TestResult.xml
 ## USER DEFINED
 /[Dd]ocs/*.csv
 /[Dd]ocs/backup
-/[Tt]ests
 /[Tt]ools

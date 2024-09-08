@@ -1,11 +1,13 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 
-namespace SampleServer.Views;
-
-public partial class MainWindow : Window
+namespace SampleServer.Views
 {
-    public MainWindow()
+    /// <summary>Main window view.</summary>
+    public partial class MainWindow : Window
     {
-        InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
     }
 }
