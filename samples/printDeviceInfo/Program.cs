@@ -20,7 +20,8 @@ class Program
     {
       Console.WriteLine("Usage: PrintDeviceInfo <deviceAddress> [adapterName]");
       Console.WriteLine("Example: PrintDeviceInfo AA:BB:CC:11:22:33 hci0");
-      Console.WriteLine("Adapters:");
+      Console.WriteLine("");
+      Console.WriteLine("Available Adapters:");
 
       var tmp = await BlueZManager.GetAdaptersAsync();
       foreach (var a in tmp)
@@ -33,6 +34,7 @@ class Program
 
     var deviceAddress = args[0];
 
+    // Get available Bluetooth adapters
     IAdapter1 adapter;
     if (args.Length > 1)
     {
@@ -59,11 +61,12 @@ class Program
       adapter = adapters.First();
     }
 
+    // Select Bluetooth Adapter
     var adapterPath = adapter.ObjectPath.ToString();
     var adapterName = adapterPath.Substring(adapterPath.LastIndexOf("/") + 1);
     Console.WriteLine($"Using Bluetooth adapter {adapterName}");
 
-    // Find the Bluetooth peripheral.
+    // Find the Bluetooth to connect to
     var device = await adapter.GetDeviceAsync(deviceAddress);
     if (device == null)
     {
@@ -71,15 +74,18 @@ class Program
       return;
     }
 
+    // Connect and wait
     Console.WriteLine("Connecting...");
     await device.ConnectAsync();
     await device.WaitForPropertyValueAsync("Connected", value: true, timeout);
     var deviceObjPath = device.ObjectPath.ToString();
     Console.WriteLine($"Connected ({deviceObjPath}).");
 
+    // Wait for services to be resolved
     Console.WriteLine("Waiting for services to resolve...");
     await device.WaitForPropertyValueAsync("ServicesResolved", value: true, timeout);
 
+    // Output the available services
     var servicesUUID = await device.GetUUIDsAsync();
     Console.WriteLine($"Device offers {servicesUUID.Length} service(s).");
     if (servicesUUID is not null)
