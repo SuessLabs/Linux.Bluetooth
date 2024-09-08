@@ -9,11 +9,11 @@
   <!-- NuGet -->
   <PropertyGroup>
     <PackageId>Linux.Bluetooth</PackageId>
-    <Version>5.67.0</Version>
+    <Version>5.67.1</Version>
     <Authors>Xeno Innovations</Authors>
-    <Title>Linux.Bluetooth Linux Bluetooth LE library</Title>
+    <Title>Linux.Bluetooth - Linux Bluetooth LE library</Title>
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
-    <PackageTags>BlueZ;dotnet;net-core;netstandard;Bluetooth;BluetoothLowEnergy;BLE;SuessLabs;XenoInnovations;Xeno;Suess</PackageTags>
+    <PackageTags>Linux;Bluetooth;BlueZ;dotnet;net;dbus;tmds-dbus;net-core;netstandard;BluetoothLowEnergy;BLE;BluetoothLE;SuessLabs;Suess;Xeno Innovations</PackageTags>
     <RepositoryUrl>https://github.com/SuessLabs/Linux.Bluetooth</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,8 +23,20 @@
     <Copyright>Copyright 2024 Xeno Innovations, Inc.</Copyright>
     <PackageProjectUrl>https://github.com/SuessLabs/Linux.Bluetooth</PackageProjectUrl>
     <PackageReleaseNotes>Upgraded DBus support.</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>Linux.Bluetooth-128x128.png</PackageIcon>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\..\images\Linux.Bluetooth-128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Tmds.DBus" Version="0.20.0" />
     <!--<DotNetCliToolReference Include="Tmds.DBus.Tool" Version="0.20.0" />-->

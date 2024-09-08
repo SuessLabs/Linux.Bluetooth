@@ -1,8 +1,6 @@
 # Linux Bluetooth Library for .NET
 
-> ## Announcement
->
-> _The next generation of the [Plugin.BlueZ](https://github.com/SuessLabs/Plugin.BlueZ) library!_
+![img](images/Linux.Bluetooth-128x128.png)
 
 The Linux.Bluetooth library for .NET gives developers the ability to quickly stand up and interface with Linux's BLE radio with very little effort. There's no need to recall the laborious D-Bus API calls, we handle that for you.
 
@@ -17,7 +15,7 @@ Check out the SuessLabs article on using [Linux.Bluetooth](https://suesslabs.com
 ## Requirements
 
 * Linux
-* .NET 6, 7, or 8
+* .NET 6, 7, and 8
 
 _Sorry, older Mono (.NET Framework) versions are not supported._
 

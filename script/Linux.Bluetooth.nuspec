@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Linux.Bluetooth</id>
-    <version>5.67.0</version>
+    <version>5.67.1</version>
     <title>Linux Bluetooth Library for .NET</title>
     <description>Linux Bluetooth and Bluetooth LE library for .NET.</description>
     <tags>Linux Bluetooth BlueZ dotnet net dbus tmds-dbus net-core netstandard BluetoothLowEnergy BLE BluetoothLE SuessLabs Suess Xeno Innovations</tags>
