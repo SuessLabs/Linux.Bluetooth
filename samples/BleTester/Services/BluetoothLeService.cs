@@ -240,6 +240,7 @@ public class BluetoothLeService : IBluetoothLeService
       // Tmds.DBus.DBusException: 'org.bluez.Error.Failed: No discovery started'
       if (dbusEx.ErrorMessage.Contains("No discovery started"))
         return true;
+
       LastError = "Exception stopping device discovery";
       _log.Error($"BLE - {LastError}. {dbusEx.ErrorName} - {dbusEx.ErrorMessage}");
       return false;

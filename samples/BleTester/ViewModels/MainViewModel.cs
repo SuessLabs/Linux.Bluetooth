@@ -30,7 +30,6 @@ public class MainViewModel : ViewModelBase
   private byte[]? _bleLastNotification = null;
   private IGattService1? _bleService = null;
   private string _bleTextMessage = string.Empty;
-  private IRegionNavigationJournal? _journal;
   private bool _bleReadCharacteristicTx = false;
   private bool _bleAdapterIsScanning;
 

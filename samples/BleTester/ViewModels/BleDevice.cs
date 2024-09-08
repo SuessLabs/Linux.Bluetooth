@@ -51,11 +51,14 @@ public class BleDevice : BindableBase, IDisposable
     NativeDevice.ServicesResolved += Device_OnServicesResolvedAsync;
   }
 
-  public event Action<Device, BlueZEventArgs> OnConnected;
+  /// <summary>Device connection established.</summary>
+  public event Action<Device, BlueZEventArgs>? OnConnected;
 
-  public event Action<Device, BlueZEventArgs> OnDisconnected;
+  /// <summary>Device was disconnected.</summary>
+  public event Action<Device, BlueZEventArgs>? OnDisconnected;
 
-  public event Action<Device, BlueZEventArgs> OnServicesResolved;
+  /// <summary>Services resolved.</summary>
+  public event Action<Device, BlueZEventArgs>? OnServicesResolved;
 
   /// <summary>Is device connected.</summary>
   public bool IsConnected { get; set; }
@@ -72,7 +75,8 @@ public class BleDevice : BindableBase, IDisposable
   /// <summary>Gets or sets the signal strength.</summary>
   public string Rssi { get => _rssi; set => SetProperty(ref _rssi, value); }
 
-  public ObservableCollection<string> ServiceUuids { get; set; }
+  /// <summary>Service unique identifiers.</summary>
+  public ObservableCollection<string> ServiceUuids { get; set; } = [];
 
   public int TxPower { get => _txPower; set => SetProperty(ref _txPower, value); }
 
@@ -246,6 +250,7 @@ public class BleDevice : BindableBase, IDisposable
   {
     // TODO: Moved device actions from BleService to here
     IsConnected = true;
+    OnConnected?.Invoke(device, eventArgs);
   }
 
   /// <summary>Device disconnected event.</summary>
@@ -256,6 +261,7 @@ public class BleDevice : BindableBase, IDisposable
   {
     // TODO: Moved device actions from BleService to here
     IsConnected = false;
+    OnDisconnected?.Invoke(device, eventArgs);
   }
 
   /// <summary>Device service found event.</summary>
@@ -265,6 +271,7 @@ public class BleDevice : BindableBase, IDisposable
   private async Task Device_OnServicesResolvedAsync(Device device, BlueZEventArgs eventArgs)
   {
     // TODO: Moved device actions from BleService to here
+    OnServicesResolved?.Invoke(device, eventArgs);
     return;
   }
 
