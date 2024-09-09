@@ -175,6 +175,7 @@ See [Contributing](./github/CONTRIBUTING.md).
 ## Coming Soon
 
 * Deprecating `Linux.Bluetooth.Extensions`. It will now just be `Linux.Bluetooth` namespace.
+* Wrappers to ease the learning curve
 
 ## Reference
 
