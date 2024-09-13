@@ -15,7 +15,7 @@ Check out the SuessLabs article on using [Linux.Bluetooth](https://suesslabs.com
 ## Requirements
 
 * Linux
-* .NET 6, 7, and 8
+* .NET 6, 7, 8, and 9
 
 _Sorry, older Mono (.NET Framework) versions are not supported._
 
