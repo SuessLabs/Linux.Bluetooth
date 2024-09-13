@@ -2,18 +2,16 @@
 name: Issue
 about: Create a report to help us improve
 title: "[Issue] "
-labels: enhancement
+labels: not-reviewed
 assignees: ''
 
 ---
-
 ## Description
 A clear and concise description of what the bug is and include samples (using code blocks) if applicable.
 
 ## Environment
-* **OS:**  _Windows 10, Ubuntu 22.04, etc._
-*  **Prism.Avalonia Version:**
-* **Avalonia Version:** 
+* **OS Distro:**  _Ubuntu v22.04, etc._
+* **Linux.Bluetooth Version:**
 
 ## Severity (1-5)
 1=Low (_annoyance_), 5=High (_crashes visual studio_)
