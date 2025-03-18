@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Linux.Bluetooth
 {
@@ -32,4 +33,11 @@ namespace Linux.Bluetooth
 
     public byte[] Value { get; }
   }
+
+  public class AdvertisementReceivedEventArgs(string deviceAddress, IDictionary<string, object> advertisementData) : EventArgs
+  {
+    public string DeviceAddress { get; } = deviceAddress;
+    public IDictionary<string, object> AdvertisementData { get; } = advertisementData;
+  }
+
 }
