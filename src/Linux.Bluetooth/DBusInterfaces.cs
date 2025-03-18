@@ -362,7 +362,7 @@ namespace Linux.Bluetooth
   {
     private string _Type;
     private string[] _ServiceUUIDs;
-    private IDictionary<string, object> _ManufacturerData;
+    private IDictionary<ushort, object> _ManufacturerData;
     private string[] _SolicitUUIDs;
     private IDictionary<string, object> _ServiceData;
     private bool _IncludeTxPower;
@@ -374,7 +374,7 @@ namespace Linux.Bluetooth
 
     public string[] ServiceUUIDs { get => _ServiceUUIDs; set => _ServiceUUIDs = value; }
 
-    public IDictionary<string, object> ManufacturerData { get => _ManufacturerData; set => _ManufacturerData = value; }
+    public IDictionary<ushort, object> ManufacturerData { get => _ManufacturerData; set => _ManufacturerData = value; }
 
     public string[] SolicitUUIDs { get => _SolicitUUIDs; set => _SolicitUUIDs = value; }
 

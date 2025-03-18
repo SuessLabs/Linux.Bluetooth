@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.IO;
   using System.Threading.Tasks;
   using Tmds.DBus;
 
@@ -29,11 +30,12 @@
 
     ~BleGattServer()
     {
-      Dispose();
+      //Dispose();
     }
 
     public void Dispose()
     {
+      Console.Error.WriteLine("Disposed Gatt server.");
       Connection.Dispose();
       GC.SuppressFinalize(this);
     }
@@ -48,8 +50,11 @@
       var advProperties = new LEAdvertisement1Properties
       {
         Type = Peripheral,
-        ServiceUUIDs = uuids,
+        //ServiceUUIDs = uuids,
         LocalName = name,
+        ManufacturerData = new Dictionary<ushort, object> {
+                        { 0x070E, new byte[]{1,2,3,4} }
+                    },
         Appearance = 0x80,
         Discoverable = true,  // False for Broadcast
         IncludeTxPower = true,
