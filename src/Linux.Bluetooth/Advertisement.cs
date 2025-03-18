@@ -8,21 +8,29 @@ namespace Linux.Bluetooth
 {
   public class Advertisement : ILEAdvertisement1, IDisposable
   {
-    public ObjectPath ObjectPath => throw new NotImplementedException();
+    private LEAdvertisement1Properties _properties;
+
+    public Advertisement(LEAdvertisement1Properties properties)
+    {
+      _properties = properties;
+    }
+
+    public ObjectPath ObjectPath { get; }
 
     public void Dispose()
     {
-      throw new NotImplementedException();
+      // Anything to dispose ?
+      GC.SuppressFinalize(this);
     }
 
     public Task<LEAdvertisement1Properties> GetAllAsync()
     {
-      throw new NotImplementedException();
+      return Task.FromResult(_properties);
     }
 
     public Task<object> GetAsync(string prop)
     {
-      throw new NotImplementedException();
+      return Task.FromResult(_properties.GetType().GetProperty(prop).GetValue(_properties));
     }
 
     public Task ReleaseAsync()
@@ -32,12 +40,16 @@ namespace Linux.Bluetooth
 
     public Task SetAsync(string prop, object val)
     {
-      throw new NotImplementedException();
+      OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty(prop, val));
+      _properties.GetType().GetProperty(prop).SetValue(_properties, val);
+      return Task.CompletedTask;
     }
 
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
-      throw new NotImplementedException();
+      return SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
     }
+
+    public event Action<PropertyChanges>? OnPropertiesChanged;
   }
 }
