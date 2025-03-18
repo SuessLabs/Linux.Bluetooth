@@ -10,9 +10,10 @@ namespace Linux.Bluetooth
   {
     private LEAdvertisement1Properties _properties;
 
-    public Advertisement(LEAdvertisement1Properties properties)
+    public Advertisement(ObjectPath objectPath, LEAdvertisement1Properties properties)
     {
       _properties = properties;
+      ObjectPath = objectPath;
     }
 
     public ObjectPath ObjectPath { get; }
