@@ -15,7 +15,7 @@
     private const string Peripheral = "peripheral";
     private readonly Adapter _adapter;
     private ILEAdvertisingManager1 _advManager;
-    private Advertisement _advertisement;
+    private Advertisement? _advertisement;
 
     public event EventHandler<AdvertisementReceivedEventArgs>? AdvertisementReceived;
 
@@ -30,7 +30,7 @@
 
     ~BleGattServer()
     {
-      //Dispose();
+      Dispose();
     }
 
     public void Dispose()
@@ -45,21 +45,8 @@
       await Connection.ConnectAsync();
     }
 
-    public Advertisement CreateAdvertisement(string name, string[] uuids)
+    public Advertisement CreateAdvertisement(LEAdvertisement1Properties advProperties)
     {
-      var advProperties = new LEAdvertisement1Properties
-      {
-        Type = Peripheral,
-        //ServiceUUIDs = uuids,
-        LocalName = name,
-        ManufacturerData = new Dictionary<ushort, object> {
-                        { 0x070E, new byte[]{1,2,3,4} }
-                    },
-        Appearance = 0x80,
-        Discoverable = true,  // False for Broadcast
-        IncludeTxPower = true,
-      };
-
       return new Advertisement(_adapter.Name + "/advertisement0", advProperties);
     }
 
@@ -95,9 +82,14 @@
     public async Task UnregisterAdvertisement()
     {
       AdvertisementReceived -= OnAdvertisementReceived;
-      await _advManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
-      Connection.UnregisterObject(_advertisement);
-      Console.WriteLine($"Advertisement {_advertisement.ObjectPath} unregistered");
+
+      if (_advertisement is not null)
+      {
+        await _advManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
+        Connection.UnregisterObject(_advertisement);
+        Console.WriteLine($"Advertisement {_advertisement.ObjectPath} unregistered");
+        _advertisement = null;
+      }
     }
 
     public void OnAdvertisementReceived(object? sender, AdvertisementReceivedEventArgs e)
