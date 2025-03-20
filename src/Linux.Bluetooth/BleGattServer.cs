@@ -2,7 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
-  using System.IO;
+  using System.Diagnostics;
   using System.Threading.Tasks;
   using Tmds.DBus;
 
@@ -12,10 +12,11 @@
   /// <remarks>Move  methods into here.</remarks>
   public class BleGattServer : IDisposable
   {
-    private const string Peripheral = "peripheral";
     private readonly Adapter _adapter;
-    private ILEAdvertisingManager1 _advManager;
     private Advertisement? _advertisement;
+    private readonly ILEAdvertisingManager1 _advManager;
+    private readonly IGattManager1 _gattManager;
+    private GattApplication? _gattApplication;
 
     public event EventHandler<AdvertisementReceivedEventArgs>? AdvertisementReceived;
 
@@ -26,6 +27,7 @@
       Connection = new Connection(Address.System);
       _adapter = adapter;
       _advManager = Connection.CreateProxy<ILEAdvertisingManager1>(BluezConstants.DbusService, adapter.ObjectPath);
+      _gattManager = Connection.CreateProxy<IGattManager1>(BluezConstants.DbusService, adapter.ObjectPath);
     }
 
     ~BleGattServer()
@@ -35,6 +37,9 @@
 
     public void Dispose()
     {
+      Task.Run(async () => await UnregisterAdvertisement());
+      UnregisterApplication();
+
       Console.Error.WriteLine("Disposed Gatt server.");
       Connection.Dispose();
       GC.SuppressFinalize(this);
@@ -45,22 +50,70 @@
       await Connection.ConnectAsync();
     }
 
+    public void CreateService(GattService1Properties serviceProperties,
+                              List<GattCharacteristic1Properties> characteristicProperties)
+    {
+      _gattApplication ??= new GattApplication();
+      GattService service = new (_gattApplication.ObjectPath, serviceProperties);
+
+      foreach (GattCharacteristic1Properties properties in characteristicProperties)
+      {
+        service.AddCharacteristic(new GattCharacteristicServer(service.ObjectPath, properties));
+
+        // todo: add Descriptors
+      }
+
+      _gattApplication.AddService(service);
+    }
+
+    public async Task RegisterApplication(Dictionary<string, object>? Options = null)
+    {
+      if (_gattApplication is not null)
+      {
+        await Connection.RegisterObjectAsync(_gattApplication);
+
+        foreach (GattService service in _gattApplication.Services)
+        {
+          await Connection.RegisterObjectAsync(service);
+          Debug.WriteLine($"Registered service {service.ObjectPath}");
+
+          //await Connection.RegisterObjectsAsync(service.Characteristics);
+          foreach (GattCharacteristicServer characteristic in service.Characteristics)
+          {
+            await Connection.RegisterObjectAsync(characteristic);
+            Debug.WriteLine($"Registered characterisitc {characteristic.ObjectPath}");
+
+            // todo: register Descriptors
+          }
+        }
+
+        Options ??= new Dictionary<string, object>();
+        await _gattManager.RegisterApplicationAsync(_gattApplication.ObjectPath, Options);
+        Debug.WriteLine($"Registered application {_gattApplication.ObjectPath}");
+      }
+    }
+
+    public void UnregisterApplication()
+    {
+      if (_gattApplication is not null)
+      {
+        foreach (GattService service in _gattApplication.Services)
+        {
+          Connection.UnregisterObjects(service.Characteristics);
+          Connection.UnregisterObject(service);
+        }
+
+        _gattManager.UnregisterApplicationAsync(_gattApplication.ObjectPath);
+        _gattApplication = null;
+      }
+    }
+
     public Advertisement CreateAdvertisement(LEAdvertisement1Properties advProperties)
     {
       return new Advertisement(_adapter.Name + "/advertisement0", advProperties);
     }
 
-    public async Task<GattService> CreateService(string uuid)
-    {
-      var gattService = new GattService(uuid);
-
-      return gattService;
-    }
-
-    /// <summary>Begin advertising our BLE Server.</summary>
-    /// <param name="advertisement"></param>
-    /// <returns></returns>
-    public async Task RegisterAdvertisement(Advertisement advertisement)
+    public async Task RegisterAdvertisement(Advertisement advertisement, Dictionary<string, object>? Options = null)
     {
       var advertisementExists = await _advManager.GetAsync<byte>("ActiveInstances");
       if (advertisementExists == 0)
@@ -68,14 +121,11 @@
         // Subscribe to the AdvertisementReceived event with the provided action
         AdvertisementReceived += OnAdvertisementReceived;
         await Connection.RegisterObjectAsync(advertisement);
-        Console.WriteLine($"Advertisement object {advertisement.ObjectPath} created");
 
-        await _advManager.RegisterAdvertisementAsync(
-            ((IDBusObject)advertisement).ObjectPath,
-            new Dictionary<string, object>()
-        );
+        Options ??= new Dictionary<string, object>();
+        await _advManager.RegisterAdvertisementAsync(advertisement.ObjectPath, Options);
         _advertisement = advertisement;
-        Console.WriteLine($"Advertisement {advertisement.ObjectPath} registered in BlueZ advertising manager");
+        Debug.WriteLine($"Registered advertisement {advertisement.ObjectPath}");
       }
     }
 
@@ -87,7 +137,7 @@
       {
         await _advManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
         Connection.UnregisterObject(_advertisement);
-        Console.WriteLine($"Advertisement {_advertisement.ObjectPath} unregistered");
+        Debug.WriteLine($"Advertisement {_advertisement.ObjectPath} unregistered");
         _advertisement = null;
       }
     }
@@ -96,32 +146,6 @@
     {
       AdvertisementReceived?.Invoke(this, e);
     }
-
-    public class GattService
-    {
-      public GattService(string uuid) => Uuid = uuid;
-
-      public string Uuid { get; private set; }
-    }
-
-    public class GattCharacteristic
-    {
-      public ushort Read = 1 << 0;
-      public ushort Write = 1 << 1;
-      public ushort Notify = 1 << 2;
-      public ushort Broadcast = 1 << 3;
-      public ushort Indicate = 1 << 4;
-      public ushort Write_NR = 1 << 5; // Write No-Response
-
-      public GattCharacteristic(string uuid, int properties)
-      {
-        Uuid = uuid;
-        Properties = properties;
-      }
-
-      public string Uuid { get; private set; }
-
-      public int Properties { get; private set; }
-    }
+    
   }
 }

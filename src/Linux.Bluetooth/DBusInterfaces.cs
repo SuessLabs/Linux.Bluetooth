@@ -773,7 +773,7 @@ namespace Linux.Bluetooth
   [DBusInterface("org.bluez.GattService1")]
   public interface IGattService1 : IDBusObject
   {
-    Task<T> GetAsync<T>(string prop);
+    Task<object> GetAsync(string prop);
     Task<GattService1Properties> GetAllAsync();
     Task SetAsync(string prop, object val);
     Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
@@ -841,10 +841,10 @@ namespace Linux.Bluetooth
 
   public static class GattService1Extensions
   {
-    public static Task<string> GetUUIDAsync(this IGattService1 o) => o.GetAsync<string>("UUID");
-    public static Task<IDevice1> GetDeviceAsync(this IGattService1 o) => o.GetAsync<IDevice1>("Device");
-    public static Task<bool> GetPrimaryAsync(this IGattService1 o) => o.GetAsync<bool>("Primary");
-    public static Task<ObjectPath[]> GetIncludesAsync(this IGattService1 o) => o.GetAsync<ObjectPath[]>("Includes");
+    public static Task<string> GetUUIDAsync(this IGattService1 o) => o.GetAsync("UUID").ContinueWith(t => (string)t.Result);
+    public static Task<IDevice1> GetDeviceAsync(this IGattService1 o) => o.GetAsync("Device").ContinueWith(t => (IDevice1)t.Result);
+    public static Task<bool> GetPrimaryAsync(this IGattService1 o) => o.GetAsync("Primary").ContinueWith(t => (bool)t.Result);
+    public static Task<ObjectPath[]> GetIncludesAsync(this IGattService1 o) => o.GetAsync("Includes").ContinueWith(t => (ObjectPath[])t.Result);
   }
 
   [DBusInterface("org.bluez.GattCharacteristic1")]
@@ -856,7 +856,7 @@ namespace Linux.Bluetooth
     Task<(CloseSafeHandle fd, ushort mtu)> AcquireNotifyAsync(IDictionary<string, object> Options);
     Task StartNotifyAsync();
     Task StopNotifyAsync();
-    Task<T> GetAsync<T>(string prop);
+    Task<object> GetAsync(string prop);
     Task<GattCharacteristic1Properties> GetAllAsync();
     Task SetAsync(string prop, object val);
     Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
@@ -966,13 +966,13 @@ namespace Linux.Bluetooth
 
   public static class GattCharacteristic1Extensions
   {
-    public static Task<string> GetUUIDAsync(this IGattCharacteristic1 o) => o.GetAsync<string>("UUID");
-    public static Task<IGattService1> GetServiceAsync(this IGattCharacteristic1 o) => o.GetAsync<IGattService1>("Service");
-    public static Task<byte[]> GetValueAsync(this IGattCharacteristic1 o) => o.GetAsync<byte[]>("Value");
-    public static Task<bool> GetNotifyingAsync(this IGattCharacteristic1 o) => o.GetAsync<bool>("Notifying");
-    public static Task<string[]> GetFlagsAsync(this IGattCharacteristic1 o) => o.GetAsync<string[]>("Flags");
-    public static Task<bool> GetWriteAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync<bool>("WriteAcquired");
-    public static Task<bool> GetNotifyAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync<bool>("NotifyAcquired");
+    public static Task<string> GetUUIDAsync(this IGattCharacteristic1 o) => o.GetAsync("UUID").ContinueWith(t => (string)t.Result);
+    public static Task<IGattService1> GetServiceAsync(this IGattCharacteristic1 o) => o.GetAsync("Service").ContinueWith(t => (IGattService1)t.Result);
+    public static Task<byte[]> GetValueAsync(this IGattCharacteristic1 o) => o.GetAsync("Value").ContinueWith(t => (byte[])t.Result);
+    public static Task<bool> GetNotifyingAsync(this IGattCharacteristic1 o) => o.GetAsync("Notifying").ContinueWith(t => (bool)t.Result);
+    public static Task<string[]> GetFlagsAsync(this IGattCharacteristic1 o) => o.GetAsync("Flags").ContinueWith(t => (string[])t.Result);
+    public static Task<bool> GetWriteAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync("WriteAcquired").ContinueWith(t => (bool)t.Result);
+    public static Task<bool> GetNotifyAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync("NotifyAcquired").ContinueWith(t => (bool)t.Result);
   }
 
   [DBusInterface("org.bluez.GattDescriptor1")]
@@ -980,7 +980,7 @@ namespace Linux.Bluetooth
   {
     Task<byte[]> ReadValueAsync(IDictionary<string, object> Options);
     Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options);
-    Task<T> GetAsync<T>(string prop);
+    Task<object> GetAsync(string prop);
     Task<GattDescriptor1Properties> GetAllAsync();
     Task SetAsync(string prop, object val);
     Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
@@ -1034,9 +1034,9 @@ namespace Linux.Bluetooth
 
   public static class GattDescriptor1Extensions
   {
-    public static Task<string> GetUUIDAsync(this IGattDescriptor1 o) => o.GetAsync<string>("UUID");
-    public static Task<IGattCharacteristic1> GetCharacteristicAsync(this IGattDescriptor1 o) => o.GetAsync<IGattCharacteristic1>("Characteristic");
-    public static Task<byte[]> GetValueAsync(this IGattDescriptor1 o) => o.GetAsync<byte[]>("Value");
+    public static Task<string> GetUUIDAsync(this IGattDescriptor1 o) => o.GetAsync("UUID").ContinueWith(t => (string)t.Result);
+    public static Task<IGattCharacteristic1> GetCharacteristicAsync(this IGattDescriptor1 o) => o.GetAsync("Characteristic").ContinueWith(t => (IGattCharacteristic1)t.Result);
+    public static Task<byte[]> GetValueAsync(this IGattDescriptor1 o) => o.GetAsync("Value").ContinueWith(t => (byte[])t.Result);
   }
 
   [DBusInterface("org.bluez.MediaControl1")]
