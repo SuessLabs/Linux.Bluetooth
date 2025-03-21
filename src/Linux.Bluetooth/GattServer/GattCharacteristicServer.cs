@@ -1,9 +1,11 @@
 ﻿namespace Linux.Bluetooth.GattServer
 {
   using System;
+  using System.Collections;
   using System.Collections.Generic;
   using System.Diagnostics;
   using System.Linq;
+  using System.Threading;
   using System.Threading.Tasks;
   using Tmds.DBus;
 
@@ -18,6 +20,11 @@
     public event Action<PropertyChanges>? OnPropertiesChanged;
 
     public ObjectPath ObjectPath { get; }
+
+    public bool Notifying
+    {
+      get => _gattCharacteristicProperties.Notifying;
+    }
 
     public List<GattDescriptor> Descriptors { get; } = new List<GattDescriptor>();
 
@@ -59,23 +66,38 @@
 
     public Task<byte[]> ReadValueAsync(IDictionary<string, object> Options)
     {
-      throw new NotImplementedException();
+      // todo: handle Options
+      return Task.FromResult(_gattCharacteristicProperties.Value);
     }
-
     public Task SetAsync(string prop, object val)
     {
       _gattCharacteristicProperties.GetType().GetProperty(prop).SetValue(_gattCharacteristicProperties, val);
+      if (_gattCharacteristicProperties.Notifying)
+      {
+        OnPropertiesChanged?.Invoke(new PropertyChanges([new KeyValuePair<string, object>(prop, val)]));
+      }
+
       return Task.CompletedTask;
     }
 
     public Task StartNotifyAsync()
     {
-      throw new NotImplementedException();
+      if (_gattCharacteristicProperties.Notifying)
+      {
+        return Task.CompletedTask;
+      }
+
+      _gattCharacteristicProperties.Notifying = true;
+      Debug.WriteLine("Notification started");
+
+      return Task.CompletedTask;
     }
 
     public Task StopNotifyAsync()
     {
-      throw new NotImplementedException();
+      Debug.WriteLine("Notification stopped");
+      _gattCharacteristicProperties.Notifying = false;
+      return Task.CompletedTask;
     }
 
     public IDictionary<string, IDictionary<string, object>> GetProperties()

@@ -44,9 +44,15 @@
             };
     }
 
+    public void SetValue(byte[] value)
+    {
+      _gattDescriptorProperties.Value = value;
+    }
+
     public Task<byte[]> ReadValueAsync(IDictionary<string, object> Options)
     {
-      throw new NotImplementedException();
+      // todo: handle Options
+      return Task.FromResult(_gattDescriptorProperties.Value);
     }
 
     public Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options)

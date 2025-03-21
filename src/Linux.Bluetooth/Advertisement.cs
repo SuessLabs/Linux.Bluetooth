@@ -10,6 +10,8 @@ namespace Linux.Bluetooth
   {
     private LEAdvertisement1Properties _properties;
 
+    public event Action<PropertyChanges>? OnPropertiesChanged;
+
     public Advertisement(ObjectPath objectPath, LEAdvertisement1Properties properties)
     {
       _properties = properties;
@@ -50,7 +52,5 @@ namespace Linux.Bluetooth
     {
       return SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
     }
-
-    public event Action<PropertyChanges>? OnPropertiesChanged;
   }
 }
