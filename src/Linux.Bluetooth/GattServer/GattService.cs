@@ -15,7 +15,7 @@
 
     public List<GattCharacteristicServer> Characteristics { get; } = new List<GattCharacteristicServer>();
 
-    public void AddCharacteristic(GattCharacteristic1Properties characteristicProperties,
+    public GattCharacteristicServer AddCharacteristic(GattCharacteristic1Properties characteristicProperties,
                                   List<GattDescriptor1Properties>? descriptorProperties = null)
     {
       GattCharacteristicServer characteristic = new(ObjectPath, characteristicProperties);
@@ -28,6 +28,7 @@
       }
 
       Characteristics.Add(characteristic);
+      return characteristic;
     }
 
     public Task<GattService1Properties> GetAllAsync()

@@ -18,8 +18,6 @@
     private readonly IGattManager1 _gattManager;
     private GattApplication? _gattApplication;
 
-    public event EventHandler<AdvertisementReceivedEventArgs>? AdvertisementReceived;
-
     public Connection Connection { get; }
 
     public GattServer(Adapter adapter)
@@ -37,8 +35,11 @@
 
     public void Dispose()
     {
-      Task.Run(async () => await UnregisterAdvertisement());
-      UnregisterGattApplication();
+      Task.Run(async () =>
+      {
+        await UnregisterAdvertisement();
+        await UnregisterGattApplication();
+      }).Wait();
 
       Console.Error.WriteLine("Disposed Gatt server.");
       Connection.Dispose();
@@ -133,8 +134,6 @@
       var advertisementExists = await _advManager.GetAsync<byte>("ActiveInstances");
       if (advertisementExists == 0)
       {
-        // Subscribe to the AdvertisementReceived event with the provided action
-        AdvertisementReceived += OnAdvertisementReceived;
         await Connection.RegisterObjectAsync(advertisement);
 
         Options ??= new Dictionary<string, object>();
@@ -146,8 +145,6 @@
 
     public async Task UnregisterAdvertisement()
     {
-      AdvertisementReceived -= OnAdvertisementReceived;
-
       if (_advertisement is not null)
       {
         await _advManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
@@ -155,11 +152,6 @@
         Debug.WriteLine($"Advertisement {_advertisement.ObjectPath} unregistered");
         _advertisement = null;
       }
-    }
-
-    public void OnAdvertisementReceived(object? sender, AdvertisementReceivedEventArgs e)
-    {
-      AdvertisementReceived?.Invoke(this, e);
     }
     
   }

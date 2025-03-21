@@ -5,10 +5,15 @@
   using System.Threading.Tasks;
   using Tmds.DBus;
 
+  public delegate Task GattDescriptorValueEventHandlerAsync(GattDescriptor sender, GattDescriptorValueEventArgs eventArgs);
+
   public class GattDescriptor : IGattDescriptor1
   {
     private static int _descriptorCounter = 1;
     private GattDescriptor1Properties _gattDescriptorProperties;
+
+    public event GattDescriptorValueEventHandlerAsync? WriteValueEvent;
+    public event Action<PropertyChanges>? OnPropertiesChanged;
 
     public ObjectPath ObjectPath { get; }
 
@@ -46,7 +51,8 @@
 
     public Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options)
     {
-      throw new NotImplementedException();
+      WriteValueEvent?.Invoke(this, new GattDescriptorValueEventArgs(Options["device"], Value));
+      return Task.CompletedTask;
     }
 
     public Task<object> GetAsync(string prop)
@@ -71,7 +77,6 @@
       return SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
     }
 
-    public event Action<PropertyChanges>? OnPropertiesChanged;
   }
   public static class DescriptorFlags
   {

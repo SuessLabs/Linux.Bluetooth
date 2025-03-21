@@ -2,14 +2,20 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Diagnostics;
   using System.Linq;
   using System.Threading.Tasks;
   using Tmds.DBus;
+
+  public delegate Task GattCharacteristicEventHandlerAsync(GattCharacteristicServer sender, GattCharacteristicServerValueEventArgs eventArgs);
 
   public class GattCharacteristicServer : IGattCharacteristic1
   {
     private static int _characteristicCounter = 1;
     private readonly GattCharacteristic1Properties _gattCharacteristicProperties;
+
+    public event GattCharacteristicEventHandlerAsync? WriteValueEvent;
+    public event Action<PropertyChanges>? OnPropertiesChanged;
 
     public ObjectPath ObjectPath { get; }
 
@@ -97,10 +103,10 @@
 
     public Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options)
     {
-      throw new NotImplementedException();
+      WriteValueEvent?.Invoke(this, new GattCharacteristicServerValueEventArgs(Options["device"], Value));
+      return Task.CompletedTask;
     }
 
-    public event Action<PropertyChanges>? OnPropertiesChanged;
   }
   public static class CharacteristicFlags
   {

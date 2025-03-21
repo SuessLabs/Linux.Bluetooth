@@ -38,7 +38,6 @@ public class Program
     Advertisement advertisement = bleServer.CreateAdvertisement(oAdvProperties);
 
     // Start advertising
-    bleServer.AdvertisementReceived += AdvertisementReceived;
     await bleServer.RegisterAdvertisement(advertisement);
 
     // Create Gatt Application
@@ -75,7 +74,6 @@ public class Program
     Console.ReadLine();
 
     // Stop Advertising
-    bleServer.AdvertisementReceived -= AdvertisementReceived;
     await bleServer.UnregisterAdvertisement();
 
     // Stop Gatt Application
@@ -92,8 +90,4 @@ public class Program
     return adapters[0];
   }
 
-  private static void AdvertisementReceived(object? Sender, AdvertisementReceivedEventArgs Args)
-  {
-    Console.WriteLine($"received data from {Args.DeviceAddress}");
-  }
 }
