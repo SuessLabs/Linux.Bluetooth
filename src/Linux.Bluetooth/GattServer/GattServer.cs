@@ -50,46 +50,55 @@
       await Connection.ConnectAsync();
     }
 
-    public void CreateService(GattService1Properties serviceProperties,
-                              List<GattCharacteristic1Properties> characteristicProperties)
+    public void CreateApplication(ObjectPath? applicationPath=null)
     {
-      _gattApplication ??= new GattApplication();
-      GattService service = new (_gattApplication.ObjectPath, serviceProperties);
-
-      foreach (GattCharacteristic1Properties properties in characteristicProperties)
-      {
-        service.AddCharacteristic(new GattCharacteristicServer(service.ObjectPath, properties));
-
-        // todo: add Descriptors
-      }
-
-      _gattApplication.AddService(service);
+      _gattApplication ??= new GattApplication(applicationPath);
     }
 
-    public async Task RegisterApplication(Dictionary<string, object>? Options = null)
+    public GattService CreateService(GattService1Properties serviceProperties)
+    {
+      _gattApplication ??= new GattApplication();
+      return new GattService(_gattApplication.ObjectPath, serviceProperties);
+    }
+
+    public async Task RegisterApplication(List<GattService> GattServices, Dictionary<string, object>? Options = null)
     {
       if (_gattApplication is not null)
       {
-        await Connection.RegisterObjectAsync(_gattApplication);
+        // Add all services to the application
+        foreach (GattService service in GattServices)
+        {
+          _gattApplication.AddService(service);
+        }
 
+        // Register the Application, each Service with its Characteristic and Descriptors objects
+        await Connection.RegisterObjectAsync(_gattApplication);
         foreach (GattService service in _gattApplication.Services)
         {
           await Connection.RegisterObjectAsync(service);
           Debug.WriteLine($"Registered service {service.ObjectPath}");
 
-          //await Connection.RegisterObjectsAsync(service.Characteristics);
           foreach (GattCharacteristicServer characteristic in service.Characteristics)
           {
             await Connection.RegisterObjectAsync(characteristic);
             Debug.WriteLine($"Registered characterisitc {characteristic.ObjectPath}");
 
-            // todo: register Descriptors
+            foreach (GattDescriptor descriptor in characteristic.Descriptors)
+            {
+              await Connection.RegisterObjectAsync(descriptor);
+              Debug.WriteLine($"Registered descriptor {descriptor.ObjectPath}");
+            }
           }
         }
 
+        // Register the Application
         Options ??= new Dictionary<string, object>();
         await _gattManager.RegisterApplicationAsync(_gattApplication.ObjectPath, Options);
         Debug.WriteLine($"Registered application {_gattApplication.ObjectPath}");
+      }
+      else
+      {
+        throw new NullReferenceException("Gatt Application must be created before calling this method.");
       }
     }
 

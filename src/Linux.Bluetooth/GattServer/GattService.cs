@@ -14,8 +14,18 @@
 
     public List<GattCharacteristicServer> Characteristics { get; } = new List<GattCharacteristicServer>();
 
-    public void AddCharacteristic(GattCharacteristicServer characteristic)
+    public void AddCharacteristic(GattCharacteristic1Properties characteristicProperties,
+                                  List<GattDescriptor1Properties>? descriptorProperties = null)
     {
+      GattCharacteristicServer characteristic = new(ObjectPath, characteristicProperties);
+      if (descriptorProperties is not null)
+      {
+        foreach (GattDescriptor1Properties properties in descriptorProperties)
+        {
+          characteristic.AddDescriptor(new(characteristic.ObjectPath, properties));
+        }
+      }
+
       Characteristics.Add(characteristic);
     }
 
@@ -23,12 +33,6 @@
     {
       return Task.FromResult(_gattServiceProperties);
     }
-
-    //public Task<T> GetAsync<T>(string prop)
-    //{
-    //  var value = _gattServiceProperties.GetType().GetProperty(prop).GetValue(_gattServiceProperties);
-    //  return Task.FromResult((T)value);
-    //}
 
     public Task<object> GetAsync(string prop)
     {

@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Tmds.DBus;
-
-namespace Linux.Bluetooth.GattServer
+﻿namespace Linux.Bluetooth.GattServer
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Threading.Tasks;
+  using Tmds.DBus;
+
   public class GattDescriptor : IGattDescriptor1
   {
     private GattDescriptor1Properties _gattDescriptorProperties;
 
     public ObjectPath ObjectPath { get; }
 
-    public GattDescriptor(ObjectPath servicePath, GattDescriptor1Properties gattDescriptorProperties)
+    public GattDescriptor(ObjectPath characteristicPath, GattDescriptor1Properties gattDescriptorProperties)
     {
       _gattDescriptorProperties = gattDescriptorProperties;
-      ObjectPath = $"{servicePath}/{gattDescriptorProperties.UUID.Substring(0, 8)}";
+      ObjectPath = $"{characteristicPath}/{gattDescriptorProperties.UUID.Substring(0, 8)}";
     }
 
     public IDictionary<string, IDictionary<string, object>> GetProperties()
@@ -27,7 +27,6 @@ namespace Linux.Bluetooth.GattServer
                     {
                         { "Characteristic", _gattDescriptorProperties.Characteristic },
                         { "UUID", _gattDescriptorProperties.UUID },
-                        //{ "Flags", _gattDescriptorProperties.Flags }
                     }
                 }
             };
@@ -45,22 +44,26 @@ namespace Linux.Bluetooth.GattServer
 
     public Task<object> GetAsync(string prop)
     {
-      throw new NotImplementedException();
+      var value = _gattDescriptorProperties.GetType().GetProperty(prop).GetValue(_gattDescriptorProperties);
+      return Task.FromResult(value);
     }
 
     public Task<GattDescriptor1Properties> GetAllAsync()
     {
-      throw new NotImplementedException();
+      return Task.FromResult(_gattDescriptorProperties);
     }
 
     public Task SetAsync(string prop, object val)
     {
-      throw new NotImplementedException();
+      _gattDescriptorProperties.GetType().GetProperty(prop).SetValue(_gattDescriptorProperties, val);
+      return Task.CompletedTask;
     }
 
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
-      throw new NotImplementedException();
+      return SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
     }
+
+    public event Action<PropertyChanges>? OnPropertiesChanged;
   }
 }

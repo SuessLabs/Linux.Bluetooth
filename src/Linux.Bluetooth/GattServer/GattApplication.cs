@@ -5,9 +5,9 @@
   using System.Threading.Tasks;
   using Tmds.DBus;
 
-  public class GattApplication : IObjectManager
+  public class GattApplication(ObjectPath? objectPath = null) : IObjectManager
   {
-    public ObjectPath ObjectPath { get; } = $"/{Guid.NewGuid().ToString().Substring(0, 8)}";
+    public ObjectPath ObjectPath { get; } = objectPath ?? $"/{Guid.NewGuid().ToString().Substring(0, 8)}";
 
     public List<GattService> Services { get; } = new List<GattService>();
 
