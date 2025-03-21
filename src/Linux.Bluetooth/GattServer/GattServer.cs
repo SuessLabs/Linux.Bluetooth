@@ -38,7 +38,7 @@
     public void Dispose()
     {
       Task.Run(async () => await UnregisterAdvertisement());
-      UnregisterApplication();
+      UnregisterGattApplication();
 
       Console.Error.WriteLine("Disposed Gatt server.");
       Connection.Dispose();
@@ -50,7 +50,7 @@
       await Connection.ConnectAsync();
     }
 
-    public void CreateApplication(ObjectPath? applicationPath=null)
+    public void CreateGattApplication(ObjectPath? applicationPath=null)
     {
       _gattApplication ??= new GattApplication(applicationPath);
     }
@@ -61,7 +61,7 @@
       return new GattService(_gattApplication.ObjectPath, serviceProperties);
     }
 
-    public async Task RegisterApplication(List<GattService> GattServices, Dictionary<string, object>? Options = null)
+    public async Task RegisterGattApplication(List<GattService> GattServices, Dictionary<string, object>? Options = null)
     {
       if (_gattApplication is not null)
       {
@@ -102,17 +102,23 @@
       }
     }
 
-    public void UnregisterApplication()
+    public async Task UnregisterGattApplication()
     {
       if (_gattApplication is not null)
       {
         foreach (GattService service in _gattApplication.Services)
         {
+          foreach (GattCharacteristicServer characteristic in service.Characteristics)
+          {
+            Connection.UnregisterObjects(characteristic.Descriptors);
+          }
+
           Connection.UnregisterObjects(service.Characteristics);
-          Connection.UnregisterObject(service);
         }
 
-        _gattManager.UnregisterApplicationAsync(_gattApplication.ObjectPath);
+        Connection.UnregisterObjects(_gattApplication.Services);
+
+        await _gattManager.UnregisterApplicationAsync(_gattApplication.ObjectPath);
         _gattApplication = null;
       }
     }
