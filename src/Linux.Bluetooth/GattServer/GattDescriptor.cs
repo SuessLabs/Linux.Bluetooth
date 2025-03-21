@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
-namespace Linux.Bluetooth
+namespace Linux.Bluetooth.GattServer
 {
   public class GattDescriptor : IGattDescriptor1
   {

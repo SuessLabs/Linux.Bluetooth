@@ -1,4 +1,4 @@
-﻿namespace Linux.Bluetooth
+﻿namespace Linux.Bluetooth.GattServer
 {
   using System;
   using System.Collections.Generic;
@@ -33,7 +33,7 @@
     public Task<object> GetAsync(string prop)
     {
       var value = _gattServiceProperties.GetType().GetProperty(prop).GetValue(_gattServiceProperties);
-      return Task.FromResult((object)value);
+      return Task.FromResult(value);
     }
 
     public Task SetAsync(string prop, object val)

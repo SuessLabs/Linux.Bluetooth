@@ -1,4 +1,4 @@
-﻿namespace Linux.Bluetooth
+﻿namespace Linux.Bluetooth.GattServer
 {
   using System;
   using System.Collections.Generic;
@@ -10,7 +10,7 @@
   /// BlueZ D-Bus GATT Server class.
   /// </summary>
   /// <remarks>Move  methods into here.</remarks>
-  public class BleGattServer : IDisposable
+  public class GattServer : IDisposable
   {
     private readonly Adapter _adapter;
     private Advertisement? _advertisement;
@@ -22,7 +22,7 @@
 
     public Connection Connection { get; }
 
-    public BleGattServer(Adapter adapter)
+    public GattServer(Adapter adapter)
     {
       Connection = new Connection(Address.System);
       _adapter = adapter;
@@ -30,7 +30,7 @@
       _gattManager = Connection.CreateProxy<IGattManager1>(BluezConstants.DbusService, adapter.ObjectPath);
     }
 
-    ~BleGattServer()
+    ~GattServer()
     {
       Dispose();
     }

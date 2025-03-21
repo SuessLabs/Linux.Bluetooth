@@ -1,4 +1,4 @@
-﻿namespace Linux.Bluetooth
+﻿namespace Linux.Bluetooth.GattServer
 {
   using System;
   using System.Collections.Generic;

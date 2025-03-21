@@ -1,4 +1,4 @@
-﻿namespace Linux.Bluetooth
+﻿namespace Linux.Bluetooth.GattServer
 {
   using System;
   using System.Collections.Generic;
@@ -96,5 +96,24 @@
     }
 
     public event Action<PropertyChanges>? OnPropertiesChanged;
+  }
+  public static class CharacteristicFlags
+  {
+    public const string Authorize = "authorize";
+    public const string AuthSignedWrite = "authenticated-signed-writes";
+    public const string Broadcast = "broadcast";
+    public const string EncryptAuthRead = "encrypt-read";
+    public const string EncryptAuthWrite = "encrypt-write";
+    public const string EncryptRead = "encrypt-authenticated-read";
+    public const string EncryptWrite = "encrypt-authenticated-write";
+    public const string Indicate = "indicate";
+    public const string Notify = "notify";
+    public const string Read = "read";
+    public const string ReliableWrite = "reliable-write";
+    public const string SecureRead = "secure-read";
+    public const string SecureWrite = "secure-write";
+    public const string Write = "write";
+    public const string WriteNoResponse = "write-without-response";
+    public const string WritableAuxiliaries = "writable-auxiliaries";
   }
 }
