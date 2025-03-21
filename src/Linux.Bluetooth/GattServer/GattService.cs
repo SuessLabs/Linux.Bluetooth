@@ -9,8 +9,9 @@
   public class GattService(ObjectPath basePath, GattService1Properties gattServiceProperties) : IGattService1
   {
     private readonly GattService1Properties _gattServiceProperties = gattServiceProperties;
+    private static int _serviceCounter = 1;
 
-    public ObjectPath ObjectPath { get; } = $"{basePath}/{gattServiceProperties.UUID.Substring(0,8)}";
+    public ObjectPath ObjectPath { get; } = $"{basePath}/service{_serviceCounter++:0000}";
 
     public List<GattCharacteristicServer> Characteristics { get; } = new List<GattCharacteristicServer>();
 

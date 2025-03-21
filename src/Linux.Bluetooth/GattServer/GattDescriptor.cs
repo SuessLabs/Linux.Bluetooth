@@ -8,13 +8,15 @@
   public class GattDescriptor : IGattDescriptor1
   {
     private GattDescriptor1Properties _gattDescriptorProperties;
+    private static int _descriptorCounter = 1;
 
     public ObjectPath ObjectPath { get; }
 
     public GattDescriptor(ObjectPath characteristicPath, GattDescriptor1Properties gattDescriptorProperties)
     {
       _gattDescriptorProperties = gattDescriptorProperties;
-      ObjectPath = $"{characteristicPath}/{gattDescriptorProperties.UUID.Substring(0, 8)}";
+      _gattDescriptorProperties.Characteristic = characteristicPath;
+      ObjectPath = $"{characteristicPath}/descriptor{_descriptorCounter++:0000}";
     }
 
     public IDictionary<string, IDictionary<string, object>> GetProperties()
@@ -27,6 +29,8 @@
                     {
                         { "Characteristic", _gattDescriptorProperties.Characteristic },
                         { "UUID", _gattDescriptorProperties.UUID },
+                        { "Value", _gattDescriptorProperties.Value },
+                        { "Flags", _gattDescriptorProperties.Flags },
                     }
                 }
             };
@@ -65,5 +69,16 @@
     }
 
     public event Action<PropertyChanges>? OnPropertiesChanged;
+  }
+  public static class DescriptorFlags
+  {
+    public const string EncryptAuthRead = "encrypt-read";
+    public const string EncryptAuthWrite = "encrypt-write";
+    public const string EncryptRead = "encrypt-authenticated-read";
+    public const string EncryptWrite = "encrypt-authenticated-write";
+    public const string Read = "read";
+    public const string SecureRead = "secure-read";
+    public const string SecureWrite = "secure-write";
+    public const string Write = "write";
   }
 }

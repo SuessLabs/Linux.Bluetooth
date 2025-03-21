@@ -9,6 +9,7 @@
   public class GattCharacteristicServer : IGattCharacteristic1
   {
     private readonly GattCharacteristic1Properties _gattCharacteristicProperties;
+    private static int _characteristicCounter = 1;
 
     public ObjectPath ObjectPath { get; }
 
@@ -17,7 +18,7 @@
     public GattCharacteristicServer(ObjectPath servicePath, GattCharacteristic1Properties gattCharacteristicProperties)
     {
       _gattCharacteristicProperties = gattCharacteristicProperties;
-      ObjectPath = $"{servicePath}/{gattCharacteristicProperties.UUID.Substring(0, 8)}";
+      ObjectPath = $"{servicePath}/characteristic{_characteristicCounter++:0000}";
       _gattCharacteristicProperties.Service = servicePath;
     }
 

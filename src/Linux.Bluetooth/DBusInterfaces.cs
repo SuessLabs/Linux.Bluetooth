@@ -1030,6 +1030,20 @@ namespace Linux.Bluetooth
         _Value = (value);
       }
     }
+
+    private string[] _Flags = default(string[]);
+    public string[] Flags
+    {
+      get
+      {
+        return _Flags;
+      }
+
+      set
+      {
+        _Flags = (value);
+      }
+    }
   }
 
   public static class GattDescriptor1Extensions
@@ -1037,6 +1051,7 @@ namespace Linux.Bluetooth
     public static Task<string> GetUUIDAsync(this IGattDescriptor1 o) => o.GetAsync("UUID").ContinueWith(t => (string)t.Result);
     public static Task<IGattCharacteristic1> GetCharacteristicAsync(this IGattDescriptor1 o) => o.GetAsync("Characteristic").ContinueWith(t => (IGattCharacteristic1)t.Result);
     public static Task<byte[]> GetValueAsync(this IGattDescriptor1 o) => o.GetAsync("Value").ContinueWith(t => (byte[])t.Result);
+    public static Task<string[]> GetFlagsAsync(this IGattDescriptor1 o) => o.GetAsync("Flags").ContinueWith(t => (string[])t.Result);
   }
 
   [DBusInterface("org.bluez.MediaControl1")]
