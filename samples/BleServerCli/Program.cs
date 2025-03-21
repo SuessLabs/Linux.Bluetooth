@@ -46,20 +46,20 @@ public class Program
 
     GattService1Properties serviceProperties = new()                // create service
     {
-      UUID = "00000001-0000-0000-0000-008000000000",
-      Primary = true,
+      UUID = "00000001-0000-0000-0000-008000000000",                // mandatory
+      Primary = true,                                               // mandatory
     };
     GattService gattService = bleServer.CreateService(serviceProperties);
 
     GattCharacteristic1Properties characteristicProperties = new()  // create characteristic
     {
-      UUID = "00000002-0000-0000-0000-008000000000",
-      Flags = [CharacteristicFlags.Write, CharacteristicFlags.WriteNoResponse],
+      UUID = "00000002-0000-0000-0000-008000000000",                // mandatory
+      Flags = [CharacteristicFlags.Write],
     };
 
     GattDescriptor1Properties descriptorProperties = new()          // create descriptor
     {
-      UUID = "00000003-0000-0000-0000-008000000000",
+      UUID = "00000003-0000-0000-0000-008000000000",                // mandatory
       Value = [5,6,7,8],
       Flags = [DescriptorFlags.Read],
     };

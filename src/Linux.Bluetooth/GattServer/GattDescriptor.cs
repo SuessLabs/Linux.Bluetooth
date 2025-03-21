@@ -7,16 +7,19 @@
 
   public class GattDescriptor : IGattDescriptor1
   {
-    private GattDescriptor1Properties _gattDescriptorProperties;
     private static int _descriptorCounter = 1;
+    private GattDescriptor1Properties _gattDescriptorProperties;
 
     public ObjectPath ObjectPath { get; }
 
     public GattDescriptor(ObjectPath characteristicPath, GattDescriptor1Properties gattDescriptorProperties)
     {
+      ObjectPath = $"{characteristicPath}/descriptor{_descriptorCounter++:0000}";
+
       _gattDescriptorProperties = gattDescriptorProperties;
       _gattDescriptorProperties.Characteristic = characteristicPath;
-      ObjectPath = $"{characteristicPath}/descriptor{_descriptorCounter++:0000}";
+      _gattDescriptorProperties.Value ??= new byte[] { };
+      _gattDescriptorProperties.Flags ??= new string[] { };
     }
 
     public IDictionary<string, IDictionary<string, object>> GetProperties()
@@ -27,8 +30,8 @@
                     BluezConstants.GattDescriptorInterface,
                     new Dictionary<string, object>
                     {
-                        { "Characteristic", _gattDescriptorProperties.Characteristic },
                         { "UUID", _gattDescriptorProperties.UUID },
+                        { "Characteristic", _gattDescriptorProperties.Characteristic },
                         { "Value", _gattDescriptorProperties.Value },
                         { "Flags", _gattDescriptorProperties.Flags },
                     }

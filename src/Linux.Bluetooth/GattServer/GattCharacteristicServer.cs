@@ -8,8 +8,8 @@
 
   public class GattCharacteristicServer : IGattCharacteristic1
   {
-    private readonly GattCharacteristic1Properties _gattCharacteristicProperties;
     private static int _characteristicCounter = 1;
+    private readonly GattCharacteristic1Properties _gattCharacteristicProperties;
 
     public ObjectPath ObjectPath { get; }
 
@@ -17,9 +17,12 @@
 
     public GattCharacteristicServer(ObjectPath servicePath, GattCharacteristic1Properties gattCharacteristicProperties)
     {
-      _gattCharacteristicProperties = gattCharacteristicProperties;
       ObjectPath = $"{servicePath}/characteristic{_characteristicCounter++:0000}";
+
+      _gattCharacteristicProperties = gattCharacteristicProperties;
       _gattCharacteristicProperties.Service = servicePath;
+      _gattCharacteristicProperties.Value ??= new byte[] { };
+      _gattCharacteristicProperties.Flags ??= new string[] { };
     }
 
     public void AddDescriptor(GattDescriptor descriptor)
@@ -77,8 +80,9 @@
               BluezConstants.GattCharacteristicInterface,
               new Dictionary<string, object>
               {
-                  { "Service", _gattCharacteristicProperties.Service },
                   { "UUID", _gattCharacteristicProperties.UUID },
+                  { "Service", _gattCharacteristicProperties.Service },
+                  { "Value", _gattCharacteristicProperties.Value },
                   { "Flags", _gattCharacteristicProperties.Flags },
                   { "Descriptors", Descriptors.Select(d => d.ObjectPath).ToArray() }
               }
