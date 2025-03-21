@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Linux.Bluetooth;
 using Linux.Bluetooth.GattServer;
 
@@ -50,7 +51,8 @@ public class Program
     };
     GattService gattService = bleServer.CreateService(serviceProperties);
 
-    GattCharacteristic1Properties characteristicProperties = new()  // create characteristic
+    // Write charcterisitc example
+    GattCharacteristic1Properties characteristicProperties1 = new() // create characteristic
     {
       UUID = "00000002-0000-0000-0000-008000000000",                // mandatory
       Flags = [CharacteristicFlags.Write],
@@ -58,13 +60,27 @@ public class Program
 
     GattDescriptor1Properties descriptorProperties = new()          // create descriptor
     {
-      UUID = "00000003-0000-0000-0000-008000000000",                // mandatory
-      Value = [5,6,7,8],
+      UUID = "00000004-0000-0000-0000-008000000000",                // mandatory
       Flags = [DescriptorFlags.Read],
     };
 
     // Add the charcteristic with its descriptor(s) to the service
-    gattService.AddCharacteristic(characteristicProperties, [descriptorProperties]);
+    GattCharacteristicServer gattCharacteristic1 =
+      gattService.AddCharacteristic(characteristicProperties1, [descriptorProperties]);
+
+    // Subscribe to write events
+    gattCharacteristic1.WriteValueEvent += NewGattCharacteristicData;
+
+    // Notify charcterisitc example
+    GattCharacteristic1Properties characteristicProperties2 = new() // create characteristic
+    {
+      UUID = "00000003-0000-0000-0000-008000000000",                // mandatory
+      Flags = [CharacteristicFlags.Notify],
+    };
+    GattCharacteristicServer gattCharacteristic2 = gattService.AddCharacteristic(characteristicProperties2);
+
+    // When Notify is enabled by the client, SetAsync function triggers OnPropertiesChange:
+    // gattCharacteristic2.SetAsync("Value", byte[]);
 
     // Start the Gatt Apllication, containing the provided service(s)
     await bleServer.RegisterGattApplication([gattService]);
@@ -77,6 +93,7 @@ public class Program
     await bleServer.UnregisterAdvertisement();
 
     // Stop Gatt Application
+    gattCharacteristic1.WriteValueEvent -= NewGattCharacteristicData;
     await bleServer.UnregisterGattApplication();
 
   }
@@ -88,6 +105,12 @@ public class Program
       return null;
 
     return adapters[0];
+  }
+
+  private static Task NewGattCharacteristicData(object? oSender, GattCharacteristicServerValueEventArgs oArgs)
+  {
+    Debug.WriteLine($"Device {oArgs.DevicePath} sent : {BitConverter.ToString(oArgs.Value)}");
+    return Task.CompletedTask;
   }
 
 }
