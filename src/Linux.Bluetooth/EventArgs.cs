@@ -1,4 +1,6 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using Tmds.DBus;
 
 namespace Linux.Bluetooth
 {
@@ -32,4 +34,19 @@ namespace Linux.Bluetooth
 
     public byte[] Value { get; }
   }
+
+  public class GattCharacteristicServerValueEventArgs(object devicePath, byte[] value) : EventArgs
+  {
+    public object DevicePath { get; } = devicePath;
+
+    public byte[] Value { get; } = value;
+  }
+
+  public class GattDescriptorValueEventArgs(object devicePath, byte[] value) : EventArgs
+  {
+    public object DevicePath { get; } = devicePath;
+
+    public byte[] Value { get; } = value;
+  }
+
 }
