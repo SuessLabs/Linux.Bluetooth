@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-   <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Tmds.DBus" Version="0.20.0" />
+    <PackageVersion Include="Tmds.DBus" Version="0.21.2" />
   </ItemGroup>
   <!-- Samples -->
   <ItemGroup>

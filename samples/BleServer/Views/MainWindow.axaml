@@ -1,0 +1,19 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SampleServer.ViewModels"
+        x:Class="SampleServer.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        d:DesignHeight="450"
+        d:DesignWidth="600"
+        Title="{Binding Title}"
+        Width="600"
+        Height="450"
+        Icon="/Assets/logo.ico"
+        mc:Ignorable="d">
+
+  <TextBlock Text="{Binding Greeting}"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Center" />
+</Window>

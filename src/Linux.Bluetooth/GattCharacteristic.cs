@@ -89,9 +89,9 @@ namespace Linux.Bluetooth
       return _proxy.StopNotifyAsync();
     }
 
-    public Task<T> GetAsync<T>(string prop)
+    public Task<object> GetAsync(string prop)
     {
-      return _proxy.GetAsync<T>(prop);
+      return _proxy.GetAsync(prop);
     }
 
     public Task<GattCharacteristic1Properties> GetAllAsync()
