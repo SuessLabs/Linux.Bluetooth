@@ -6,9 +6,6 @@ labels: enhancement, not-reviewed
 assignees: ''
 
 ---
+## Description
 
-_Please prove clear and concise descriptions._
-**Description:**
-As a user, I want ...
-
-**Describe the solution you'd like**
+As a user, I'd like ... _please prove clear and concise descriptions._
