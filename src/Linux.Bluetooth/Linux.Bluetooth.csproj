@@ -20,7 +20,7 @@
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <BaseOutputPath>..\..\output</BaseOutputPath>
-    <Copyright>Copyright 2024 Xeno Innovations, Inc.</Copyright>
+    <Copyright>Copyright 2025 Xeno Innovations, Inc.</Copyright>
     <PackageProjectUrl>https://github.com/SuessLabs/Linux.Bluetooth</PackageProjectUrl>
     <PackageReleaseNotes>Upgraded DBus support.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
