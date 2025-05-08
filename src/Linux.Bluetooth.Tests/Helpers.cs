@@ -11,15 +11,15 @@ namespace Linux.Bluetooth.Tests
   /// </remarks>
   public static class Helpers
   {
-    public static object GetPropValue(this object obj, string name)
+    public static object? GetPropValue(this object? obj, string name)
     {
+      if (obj is null)
+        return null;
+
+      Type type = obj.GetType();
       foreach (string part in name.Split('.'))
       {
-        if (obj == null)
-          return null;
-
-        Type type = obj.GetType();
-        PropertyInfo info = type.GetProperty(part);
+        PropertyInfo? info = type.GetProperty(part);
 
         if (info is null)
           return null;
@@ -30,9 +30,9 @@ namespace Linux.Bluetooth.Tests
       return obj;
     }
 
-    public static T GetPropValue<T>(this object obj, string name)
+    public static T? GetPropValue<T>(this object obj, string name)
     {
-      object retval = GetPropValue(obj, name);
+      object? retval = GetPropValue(obj, name);
 
       if (retval is null)
         return default(T);
@@ -41,27 +41,27 @@ namespace Linux.Bluetooth.Tests
       return (T)retval;
     }
 
-    public static object? GetPropertyValue(object srcobj, string propertyName)
+    public static object? GetPropertyValue(object? srcobj, string propertyName)
     {
-      if (srcobj == null)
+      if (srcobj is null)
         return null;
 
-      object obj = srcobj;
+      object? obj = srcobj;
 
       // Split property name to parts (propertyName could be hierarchical, like obj.subobj.subobj.property
       string[] propertyNameParts = propertyName.Split('.');
 
       foreach (string propertyNamePart in propertyNameParts)
       {
-        if (obj == null)
+        if (obj is null)
           return null;
 
-        // propertyNamePart could contain reference to specific 
+        // propertyNamePart could contain reference to specific
         // element (by index) inside a collection
         if (!propertyNamePart.Contains("["))
         {
-          PropertyInfo pi = obj.GetType().GetProperty(propertyNamePart);
-          if (pi == null)
+          PropertyInfo? pi = obj.GetType().GetProperty(propertyNamePart);
+          if (pi is null)
             return null;
 
           obj = pi.GetValue(obj, null);
@@ -76,26 +76,24 @@ namespace Linux.Bluetooth.Tests
           int collectionElementIndex = Int32.Parse(propertyNamePart.Substring(indexStart, propertyNamePart.Length - indexStart - 1));
 
           //   get collection object
-          PropertyInfo pi = obj.GetType().GetProperty(collectionPropertyName);
+          PropertyInfo? pi = obj.GetType().GetProperty(collectionPropertyName);
 
-          if (pi == null)
+          if (pi is null)
             return null;
 
-          object unknownCollection = pi.GetValue(obj, null);
+          object? unknownCollection = pi.GetValue(obj, null);
 
           //   try to process the collection as array
-          if (unknownCollection.GetType().IsArray)
+          if (unknownCollection is object[] unknownCollectionArray)
           {
-            object[] collectionAsArray = unknownCollection as object[];
-            obj = collectionAsArray[collectionElementIndex];
+            obj = unknownCollectionArray[collectionElementIndex];
           }
           else
           {
             //   try to process the collection as IList
-            System.Collections.IList collectionAsList = unknownCollection as System.Collections.IList;
-            if (collectionAsList != null)
+            if(unknownCollection is System.Collections.IList unknownCollectionIList)
             {
-              obj = collectionAsList[collectionElementIndex];
+              obj = unknownCollectionIList[collectionElementIndex];
             }
             else
             {
