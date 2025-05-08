@@ -15,7 +15,7 @@ namespace Linux.Bluetooth.Extensions
     ///   var percentage = await battery.GetPercentageAsync();
     /// </example>
     /// <returns>Battery or null if unavailable.</returns>
-    public static async Task<IBattery1> GetBatteryAsync(this IDevice1 device)
+    public static async Task<IBattery1?> GetBatteryAsync(this IDevice1 device)
     {
       try
       {
@@ -32,7 +32,7 @@ namespace Linux.Bluetooth.Extensions
     /// <param name="device">Device object.</param>
     /// <param name="serviceUuid">UUID of the Service.</param>
     /// <returns><seealso cref="IGattService1"/> object or null.</returns>
-    public static async Task<IGattService1> GetServiceAsync(this IDevice1 device, string serviceUuid)
+    public static async Task<IGattService1?> GetServiceAsync(this IDevice1 device, string serviceUuid)
     {
       var services = await BlueZManager.GetProxiesAsync<IGattService1>(BluezConstants.GattServiceInterface, device);
 
