@@ -67,7 +67,7 @@ namespace Linux.Bluetooth.Tests
           obj = pi.GetValue(obj, null);
         }
         else
-        {   // propertyNamePart is areference to specific element 
+        {   // propertyNamePart is a reference to specific element
             // (by index) inside a collection
             // like AggregatedCollection[123]
             //   get collection name and element index
