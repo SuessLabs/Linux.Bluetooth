@@ -12,7 +12,7 @@ namespace Linux.Bluetooth.Extensions
     /// <param name="service">GATT Service.</param>
     /// <param name="characteristicUuid">GATT Characteristic UUID.</param>
     /// <returns><seealso cref="GattCharacteristic"/> object or null.</returns>
-    public static async Task<GattCharacteristic> GetCharacteristicAsync(this IGattService1 service, string characteristicUuid)
+    public static async Task<GattCharacteristic?> GetCharacteristicAsync(this IGattService1 service, string characteristicUuid)
     {
       var characteristics = await BlueZManager.GetProxiesAsync<IGattCharacteristic1>(BluezConstants.GattCharacteristicInterface, service);
 
