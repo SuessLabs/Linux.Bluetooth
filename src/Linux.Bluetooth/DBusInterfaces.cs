@@ -35,6 +35,13 @@ namespace Linux.Bluetooth
     Task UnregisterProfileAsync(ObjectPath Profile);
   }
 
+  [DBusInterface("org.bluez.AdvertisementMonitorManager1")]
+  public interface IAdvertisementMonitorManager1 : IDBusObject
+  {
+    Task RegisterMonitorAsync(ObjectPath Application);
+    Task UnregisterMonitorAsync(ObjectPath Application);
+  }
+
   [DBusInterface("org.bluez.Adapter1")]
   public interface IAdapter1 : IDBusObject
   {
@@ -392,6 +399,114 @@ namespace Linux.Bluetooth
   public static class LEAdvertisement1Extensions
   {
     public static Task SetLocalNameAsync(this ILEAdvertisement1 o, string val) => o.SetAsync("LocalName", val);
+  }
+
+  [DBusInterface("org.bluez.AdvertisementMonitor1")]
+  public interface IAdvertisementMonitor1 : IDBusObject
+  {
+    Task ActivateAsync();
+    Task ReleaseAsync();
+    Task DeviceFoundAsync(ObjectPath Device);
+    Task DeviceLostAsync(ObjectPath Device);
+    Task<object> GetAsync(string prop);
+    Task<AdvertisementMonitor1Properties> GetAllAsync();
+    Task SetAsync(string prop, object val);
+    Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
+  }
+
+  [Dictionary]
+  public class AdvertisementMonitor1Properties
+  {
+    private string _Type = default(string);
+    public string Type
+    {
+      get
+      {
+        return _Type;
+      }
+      set
+      {
+        _Type = value;
+      }
+    }
+
+    private short _RSSILowThreshold = default(short);
+    public short RSSILowThreshold
+    {
+      get
+      {
+        return _RSSILowThreshold;
+      }
+      set
+      {
+        _RSSILowThreshold = value;
+      }
+    }
+
+    private short _RSSIHighThreshold = default(short);
+    public short RSSIHighThreshold
+    {
+      get
+      {
+        return _RSSIHighThreshold;
+      }
+      set
+      {
+        _RSSIHighThreshold = value;
+      }
+    }
+
+    private ushort _RSSILowTimeout = default(ushort);
+    public ushort RSSILowTimeout
+    {
+      get
+      {
+        return _RSSILowTimeout;
+      }
+      set
+      {
+        _RSSILowTimeout = value;
+      }
+    }
+
+    private ushort _RSSIHighTimeout = default(ushort);
+    public ushort RSSIHighTimeout
+    {
+      get
+      {
+        return _RSSIHighTimeout;
+      }
+      set
+      {
+        _RSSIHighTimeout = value;
+      }
+    }
+
+    private ushort _RSSISamplingPeriod = default(ushort);
+    public ushort RSSISamplingPeriod
+    {
+      get
+      {
+        return _RSSISamplingPeriod;
+      }
+      set
+      {
+        _RSSISamplingPeriod = value;
+      }
+    }
+
+    private (byte start_position, byte AD_data_type, byte[] content_of_pattern)[] _Patterns = [];
+    public (byte start_position, byte AD_data_type, byte[] content_of_pattern)[] Patterns
+    {
+      get
+      {
+        return _Patterns;
+      }
+      set
+      {
+        _Patterns = value;
+      }
+    }
   }
 
   [DBusInterface("org.bluez.Media1")]
