@@ -107,6 +107,9 @@
     {
       if (_gattApplication is not null)
       {
+        // unregister the application before unregister objects
+        await _gattManager.UnregisterApplicationAsync(_gattApplication.ObjectPath);
+
         foreach (GattService service in _gattApplication.Services)
         {
           foreach (GattCharacteristicServer characteristic in service.Characteristics)
@@ -119,7 +122,6 @@
 
         Connection.UnregisterObjects(_gattApplication.Services);
 
-        await _gattManager.UnregisterApplicationAsync(_gattApplication.ObjectPath);
         _gattApplication = null;
       }
     }
@@ -153,6 +155,6 @@
         _advertisement = null;
       }
     }
-    
+
   }
 }
