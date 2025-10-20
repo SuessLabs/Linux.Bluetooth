@@ -46,6 +46,8 @@ namespace Linux.Bluetooth
     {
       _interfacesWatcher?.Dispose();
       _interfacesWatcher = null;
+      _propertyWatcher?.Dispose();
+      _propertyWatcher = null;
 
       GC.SuppressFinalize(this);
     }
