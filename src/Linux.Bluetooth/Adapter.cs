@@ -12,7 +12,7 @@ namespace Linux.Bluetooth
 
   /// <summary>Add events to IAdapter1.</summary>
   /// <remarks>
-  ///   Reference: https://github.com/bluez/bluez/blob/master/doc/adapter-api.txt
+  ///   Reference: https://github.com/bluez/bluez/blob/master/doc/org.bluez.Adapter.rst
   /// </remarks>
   public class Adapter : IAdapter1, IDisposable
   {
