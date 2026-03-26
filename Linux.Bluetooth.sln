@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GUI", "GUI", "{1A8CDB9B-703
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BleServerCli", "samples\BleServerCli\BleServerCli.csproj", "{A2947B49-83D1-4B32-8BA5-19895190F668}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentExample", "samples\AgentExample\AgentExample.csproj", "{7F78DFF5-F9BA-47D0-A21B-005857EA0AD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{A2947B49-83D1-4B32-8BA5-19895190F668}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2947B49-83D1-4B32-8BA5-19895190F668}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2947B49-83D1-4B32-8BA5-19895190F668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F78DFF5-F9BA-47D0-A21B-005857EA0AD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F78DFF5-F9BA-47D0-A21B-005857EA0AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F78DFF5-F9BA-47D0-A21B-005857EA0AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F78DFF5-F9BA-47D0-A21B-005857EA0AD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{E2918579-E426-4FF9-87D4-A571C71BA0A5} = {1A8CDB9B-703B-48AC-B196-A3A0358E635B}
 		{1A8CDB9B-703B-48AC-B196-A3A0358E635B} = {8DCF476D-3F5A-4228-BE63-B7D6D9E5F629}
 		{A2947B49-83D1-4B32-8BA5-19895190F668} = {8DCF476D-3F5A-4228-BE63-B7D6D9E5F629}
+		{7F78DFF5-F9BA-47D0-A21B-005857EA0AD2} = {8DCF476D-3F5A-4228-BE63-B7D6D9E5F629}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00669A67-D800-45CB-8AF3-2B4EB823A37C}
