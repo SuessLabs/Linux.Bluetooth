@@ -10,7 +10,7 @@
   <PropertyGroup>
     <PackageId>Linux.Bluetooth</PackageId>
     <Version>$(ReleaseVersion)</Version>
-    <Authors>Xeno Innovations</Authors>
+    <Authors>Xeno Innovations, Suess Labs</Authors>
     <Title>Linux.Bluetooth - Linux Bluetooth LE library</Title>
     <Description>Linux Bluetooth LE library for .NET using BlueZ D-Bus.</Description>
     <PackageTags>Linux;Bluetooth;library;BlueZ;dotnet;net;dbus;tmds-dbus;tdms;net-core;netstandard;BluetoothLowEnergy;BLE;BluetoothLE;SuessLabs;Suess;Xeno;Xeno Innovations</PackageTags>
@@ -20,7 +20,7 @@
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <BaseOutputPath>..\..\output</BaseOutputPath>
-    <Copyright>Copyright 2025 Xeno Innovations, Inc.</Copyright>
+    <Copyright>Copyright 2026 Xeno Innovations, Inc.</Copyright>
     <PackageProjectUrl>https://github.com/SuessLabs/Linux.Bluetooth</PackageProjectUrl>
     <PackageReleaseNotes>Upgraded DBus support.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
