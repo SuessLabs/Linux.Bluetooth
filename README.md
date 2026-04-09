@@ -4,7 +4,13 @@
 
 The Linux.Bluetooth library for .NET gives developers the ability to quickly stand up and interface with Linux's BLE radio with very little effort. There's no need to recall the laborious D-Bus API calls, we handle that for you. Linux.Bluetooth is used by Fortune organizations listed under the _Top 100 Fastest Growing Companies_ and the Linux layer for [InTheHand 32Feet](https://github.com/inthehand/32feet)! 🥇
 
-[![Linux.Bluetooth NuGet Version](https://img.shields.io/nuget/v/Linux.Bluetooth)](https://www.nuget.org/packages/Linux.Bluetooth/)
+Linux.Bluetooth provides you with the capabilities to creat your own BLE client or server applications, and low-level hooks for expansions.
+
+### _Get it today!_
+
+| Package | Stable | Preview
+|-|-|-|
+| Linux.Bluetooth NuGet Version | [![Linux.Bluetooth NuGet Badge](https://img.shields.io/nuget/v/Linux.Bluetooth)](https://www.nuget.org/packages/Linux.Bluetooth/) | [![Linux.Bluetooth NuGet Badge](https://img.shields.io/nuget/vpre/Linux.Bluetooth)](https://www.nuget.org/packages/Linux.Bluetooth/)
 
 ![Debugging Image](https://raw.githubusercontent.com/SuessLabs/Linux.Bluetooth/master/docs/Adapter%20-%20ObjectPath%20Contents.png)
 
@@ -15,7 +21,7 @@ Check out the SuessLabs article on using [Linux.Bluetooth](https://suesslabs.com
 ## Requirements
 
 * Linux
-* .NET 6, 7, 8, and 9
+* .NET 6, 7, 8, 9, and 10
 
 _Sorry, older Mono (.NET Framework) versions are not supported._
 

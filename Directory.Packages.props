@@ -3,7 +3,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Tmds.DBus" Version="0.21.2" />
+    <PackageVersion Include="Tmds.DBus" Version="0.92.0" />
   </ItemGroup>
   <!-- Samples -->
   <ItemGroup>
