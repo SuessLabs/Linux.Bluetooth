@@ -30,6 +30,16 @@ namespace Linux.Bluetooth
       return await Adapter.CreateAsync(adapter);
     }
 
+    public static Task<AgentManager> GetAgentManagerAsync(Connection connection)
+    {
+      return AgentManager.CreateAsync(connection);
+    }
+
+    public static Task<Agent> CreateAgentAsync(Connection connection, string capability = "NoInputNoOutput", ObjectPath? objectPath = null)
+    {
+      return Agent.CreateAsync(connection, capability, objectPath);
+    }
+
     public static async Task<IReadOnlyList<Adapter>> GetAdaptersAsync()
     {
       var adapters = await GetProxiesAsync<IAdapter1>(BluezConstants.AdapterInterface, rootObject: null);

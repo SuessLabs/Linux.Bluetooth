@@ -5,6 +5,8 @@
     public const string DbusService = "org.bluez";
 
     public const string AdapterInterface = "org.bluez.Adapter1";
+    public const string AgentInterface = "org.bluez.Agent1";
+    public const string AgentManagerInterface = "org.bluez.AgentManager1";
     public const string BatteryInterface = "org.bluez.Battery1";
     public const string DeviceInterface = "org.bluez.Device1";
     public const string GattServiceInterface = "org.bluez.GattService1";
