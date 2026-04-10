@@ -23,7 +23,7 @@ namespace Linux.Bluetooth.Extensions
     /// <param name="deviceAddress">BLE Device Address.</param>
     /// <returns><seealso cref="Device"/> object or NULL if not found.</returns>
     /// <exception cref="Exception"><see cref="Exception"/> thrown if an duplicate address are found.</exception>
-    public static async Task<Device> GetDeviceAsync(this IAdapter1 adapter, string deviceAddress)
+    public static async Task<Device?> GetDeviceAsync(this IAdapter1 adapter, string deviceAddress)
     {
       var devices = await BlueZManager.GetProxiesAsync<IDevice1>(BluezConstants.DeviceInterface, adapter);
 

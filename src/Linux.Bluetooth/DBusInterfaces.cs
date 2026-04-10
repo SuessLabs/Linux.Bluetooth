@@ -35,6 +35,13 @@ namespace Linux.Bluetooth
     Task UnregisterProfileAsync(ObjectPath Profile);
   }
 
+  [DBusInterface("org.bluez.AdvertisementMonitorManager1")]
+  public interface IAdvertisementMonitorManager1 : IDBusObject
+  {
+    Task RegisterMonitorAsync(ObjectPath Application);
+    Task UnregisterMonitorAsync(ObjectPath Application);
+  }
+
   [DBusInterface("org.bluez.Adapter1")]
   public interface IAdapter1 : IDBusObject
   {
@@ -345,6 +352,161 @@ namespace Linux.Bluetooth
     public static Task<byte> GetSupportedInstancesAsync(this ILEAdvertisingManager1 o) => o.GetAsync<byte>("SupportedInstances");
     public static Task<string[]> GetSupportedIncludesAsync(this ILEAdvertisingManager1 o) => o.GetAsync<string[]>("SupportedIncludes");
     public static Task<string[]> GetSupportedSecondaryChannelsAsync(this ILEAdvertisingManager1 o) => o.GetAsync<string[]>("SupportedSecondaryChannels");
+  }
+
+  [DBusInterface("org.bluez.LEAdvertisement1")]
+  public interface ILEAdvertisement1 : IDBusObject
+  {
+    Task ReleaseAsync();
+    Task<object> GetAsync(string prop);
+    Task<LEAdvertisement1Properties> GetAllAsync();
+    Task SetAsync(string prop, object val);
+    Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
+  }
+
+  [Dictionary]
+  public class LEAdvertisement1Properties
+  {
+    private string _Type;
+    private string[] _ServiceUUIDs;
+    private IDictionary<ushort, object> _ManufacturerData;
+    private string[] _SolicitUUIDs;
+    private IDictionary<string, object> _ServiceData;
+    private bool _IncludeTxPower;
+    private string _LocalName;
+    private UInt16 _Appearance;
+    private bool _Discoverable;
+
+    public string Type { get => _Type; set => _Type = value; }
+
+    public string[] ServiceUUIDs { get => _ServiceUUIDs; set => _ServiceUUIDs = value; }
+
+    public IDictionary<ushort, object> ManufacturerData { get => _ManufacturerData; set => _ManufacturerData = value; }
+
+    public string[] SolicitUUIDs { get => _SolicitUUIDs; set => _SolicitUUIDs = value; }
+
+    public IDictionary<string, object> ServiceData { get => _ServiceData; set => _ServiceData = value; }
+
+    public bool IncludeTxPower { get => _IncludeTxPower; set => _IncludeTxPower = value; }
+
+    public string LocalName { get => _LocalName; set => _LocalName = value; }
+
+    public UInt16 Appearance { get => _Appearance; set => _Appearance = value; }
+
+    public bool Discoverable { get => _Discoverable; set => _Discoverable = value; }
+  }
+
+  public static class LEAdvertisement1Extensions
+  {
+    public static Task SetLocalNameAsync(this ILEAdvertisement1 o, string val) => o.SetAsync("LocalName", val);
+  }
+
+  [DBusInterface("org.bluez.AdvertisementMonitor1")]
+  public interface IAdvertisementMonitor1 : IDBusObject
+  {
+    Task ActivateAsync();
+    Task ReleaseAsync();
+    Task DeviceFoundAsync(ObjectPath Device);
+    Task DeviceLostAsync(ObjectPath Device);
+    Task<object> GetAsync(string prop);
+    Task<AdvertisementMonitor1Properties> GetAllAsync();
+    Task SetAsync(string prop, object val);
+    Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
+  }
+
+  [Dictionary]
+  public class AdvertisementMonitor1Properties
+  {
+    private string _Type = default(string);
+    public string Type
+    {
+      get
+      {
+        return _Type;
+      }
+      set
+      {
+        _Type = value;
+      }
+    }
+
+    private short _RSSILowThreshold = default(short);
+    public short RSSILowThreshold
+    {
+      get
+      {
+        return _RSSILowThreshold;
+      }
+      set
+      {
+        _RSSILowThreshold = value;
+      }
+    }
+
+    private short _RSSIHighThreshold = default(short);
+    public short RSSIHighThreshold
+    {
+      get
+      {
+        return _RSSIHighThreshold;
+      }
+      set
+      {
+        _RSSIHighThreshold = value;
+      }
+    }
+
+    private ushort _RSSILowTimeout = default(ushort);
+    public ushort RSSILowTimeout
+    {
+      get
+      {
+        return _RSSILowTimeout;
+      }
+      set
+      {
+        _RSSILowTimeout = value;
+      }
+    }
+
+    private ushort _RSSIHighTimeout = default(ushort);
+    public ushort RSSIHighTimeout
+    {
+      get
+      {
+        return _RSSIHighTimeout;
+      }
+      set
+      {
+        _RSSIHighTimeout = value;
+      }
+    }
+
+    private ushort _RSSISamplingPeriod = default(ushort);
+    public ushort RSSISamplingPeriod
+    {
+      get
+      {
+        return _RSSISamplingPeriod;
+      }
+      set
+      {
+        _RSSISamplingPeriod = value;
+      }
+    }
+
+    private (byte start_position, byte AD_data_type, byte[] content_of_pattern)[] _Patterns = [];
+    public (byte start_position, byte AD_data_type, byte[] content_of_pattern)[] Patterns
+    {
+      get
+      {
+        return _Patterns;
+      }
+      set
+      {
+        _Patterns = value;
+      }
+    }
   }
 
   [DBusInterface("org.bluez.Media1")]
@@ -726,7 +888,7 @@ namespace Linux.Bluetooth
   [DBusInterface("org.bluez.GattService1")]
   public interface IGattService1 : IDBusObject
   {
-    Task<T> GetAsync<T>(string prop);
+    Task<object> GetAsync(string prop);
     Task<GattService1Properties> GetAllAsync();
     Task SetAsync(string prop, object val);
     Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
@@ -794,10 +956,10 @@ namespace Linux.Bluetooth
 
   public static class GattService1Extensions
   {
-    public static Task<string> GetUUIDAsync(this IGattService1 o) => o.GetAsync<string>("UUID");
-    public static Task<IDevice1> GetDeviceAsync(this IGattService1 o) => o.GetAsync<IDevice1>("Device");
-    public static Task<bool> GetPrimaryAsync(this IGattService1 o) => o.GetAsync<bool>("Primary");
-    public static Task<ObjectPath[]> GetIncludesAsync(this IGattService1 o) => o.GetAsync<ObjectPath[]>("Includes");
+    public static Task<string> GetUUIDAsync(this IGattService1 o) => o.GetAsync("UUID").ContinueWith(t => (string)t.Result);
+    public static Task<IDevice1> GetDeviceAsync(this IGattService1 o) => o.GetAsync("Device").ContinueWith(t => (IDevice1)t.Result);
+    public static Task<bool> GetPrimaryAsync(this IGattService1 o) => o.GetAsync("Primary").ContinueWith(t => (bool)t.Result);
+    public static Task<ObjectPath[]> GetIncludesAsync(this IGattService1 o) => o.GetAsync("Includes").ContinueWith(t => (ObjectPath[])t.Result);
   }
 
   [DBusInterface("org.bluez.GattCharacteristic1")]
@@ -809,7 +971,7 @@ namespace Linux.Bluetooth
     Task<(CloseSafeHandle fd, ushort mtu)> AcquireNotifyAsync(IDictionary<string, object> Options);
     Task StartNotifyAsync();
     Task StopNotifyAsync();
-    Task<T> GetAsync<T>(string prop);
+    Task<object> GetAsync(string prop);
     Task<GattCharacteristic1Properties> GetAllAsync();
     Task SetAsync(string prop, object val);
     Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
@@ -919,13 +1081,13 @@ namespace Linux.Bluetooth
 
   public static class GattCharacteristic1Extensions
   {
-    public static Task<string> GetUUIDAsync(this IGattCharacteristic1 o) => o.GetAsync<string>("UUID");
-    public static Task<IGattService1> GetServiceAsync(this IGattCharacteristic1 o) => o.GetAsync<IGattService1>("Service");
-    public static Task<byte[]> GetValueAsync(this IGattCharacteristic1 o) => o.GetAsync<byte[]>("Value");
-    public static Task<bool> GetNotifyingAsync(this IGattCharacteristic1 o) => o.GetAsync<bool>("Notifying");
-    public static Task<string[]> GetFlagsAsync(this IGattCharacteristic1 o) => o.GetAsync<string[]>("Flags");
-    public static Task<bool> GetWriteAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync<bool>("WriteAcquired");
-    public static Task<bool> GetNotifyAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync<bool>("NotifyAcquired");
+    public static Task<string> GetUUIDAsync(this IGattCharacteristic1 o) => o.GetAsync("UUID").ContinueWith(t => (string)t.Result);
+    public static Task<IGattService1> GetServiceAsync(this IGattCharacteristic1 o) => o.GetAsync("Service").ContinueWith(t => (IGattService1)t.Result);
+    public static Task<byte[]> GetValueAsync(this IGattCharacteristic1 o) => o.GetAsync("Value").ContinueWith(t => (byte[])t.Result);
+    public static Task<bool> GetNotifyingAsync(this IGattCharacteristic1 o) => o.GetAsync("Notifying").ContinueWith(t => (bool)t.Result);
+    public static Task<string[]> GetFlagsAsync(this IGattCharacteristic1 o) => o.GetAsync("Flags").ContinueWith(t => (string[])t.Result);
+    public static Task<bool> GetWriteAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync("WriteAcquired").ContinueWith(t => (bool)t.Result);
+    public static Task<bool> GetNotifyAcquiredAsync(this IGattCharacteristic1 o) => o.GetAsync("NotifyAcquired").ContinueWith(t => (bool)t.Result);
   }
 
   [DBusInterface("org.bluez.GattDescriptor1")]
@@ -933,7 +1095,7 @@ namespace Linux.Bluetooth
   {
     Task<byte[]> ReadValueAsync(IDictionary<string, object> Options);
     Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options);
-    Task<T> GetAsync<T>(string prop);
+    Task<object> GetAsync(string prop);
     Task<GattDescriptor1Properties> GetAllAsync();
     Task SetAsync(string prop, object val);
     Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
@@ -983,13 +1145,28 @@ namespace Linux.Bluetooth
         _Value = (value);
       }
     }
+
+    private string[] _Flags = default(string[]);
+    public string[] Flags
+    {
+      get
+      {
+        return _Flags;
+      }
+
+      set
+      {
+        _Flags = (value);
+      }
+    }
   }
 
   public static class GattDescriptor1Extensions
   {
-    public static Task<string> GetUUIDAsync(this IGattDescriptor1 o) => o.GetAsync<string>("UUID");
-    public static Task<IGattCharacteristic1> GetCharacteristicAsync(this IGattDescriptor1 o) => o.GetAsync<IGattCharacteristic1>("Characteristic");
-    public static Task<byte[]> GetValueAsync(this IGattDescriptor1 o) => o.GetAsync<byte[]>("Value");
+    public static Task<string> GetUUIDAsync(this IGattDescriptor1 o) => o.GetAsync("UUID").ContinueWith(t => (string)t.Result);
+    public static Task<IGattCharacteristic1> GetCharacteristicAsync(this IGattDescriptor1 o) => o.GetAsync("Characteristic").ContinueWith(t => (IGattCharacteristic1)t.Result);
+    public static Task<byte[]> GetValueAsync(this IGattDescriptor1 o) => o.GetAsync("Value").ContinueWith(t => (byte[])t.Result);
+    public static Task<string[]> GetFlagsAsync(this IGattDescriptor1 o) => o.GetAsync("Flags").ContinueWith(t => (string[])t.Result);
   }
 
   [DBusInterface("org.bluez.MediaControl1")]
