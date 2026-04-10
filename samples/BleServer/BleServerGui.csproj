@@ -22,5 +22,6 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
     <PackageReference Include="Prism.Avalonia" />
     <PackageReference Include="Prism.DryIoc.Avalonia" />
+    <PackageReference Include="Tmds.DBus.Protocol" />
   </ItemGroup>
 </Project>

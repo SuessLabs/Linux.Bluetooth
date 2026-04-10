@@ -11,7 +11,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Authors>Damian Suess</Authors>
-    <Copyright>Copyright 2023-2025 Xeno Innovations, Inc.</Copyright>
+    <Copyright>Copyright 2023-2026 Xeno Innovations, Inc.</Copyright>
     <BaseOutputPath>..\..\output\samples\BleTester</BaseOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -46,6 +46,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
     <PackageReference Include="Prism.Avalonia" />
     <PackageReference Include="Prism.DryIoc.Avalonia" />
+    <PackageReference Include="Tmds.DBus.Protocol" />
   </ItemGroup>
 
   <ItemGroup>
