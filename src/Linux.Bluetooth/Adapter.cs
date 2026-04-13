@@ -16,12 +16,17 @@ namespace Linux.Bluetooth
   /// </remarks>
   public class Adapter : IAdapter1, IDisposable
   {
-    private IAdapter1 _proxy;
-    private IDisposable _interfacesWatcher;
-    private IDisposable _propertyWatcher;
-    private DeviceChangeEventHandlerAsync _deviceFound;
-    private AdapterEventHandlerAsync _poweredOn;
-    private IObjectManager _objectManager;
+    private IAdapter1? _proxy;
+    private IDisposable? _interfacesWatcher;
+    private IDisposable? _propertyWatcher;
+    private DeviceChangeEventHandlerAsync? _deviceFound;
+    private AdapterEventHandlerAsync? _poweredOn;
+    private IObjectManager? _objectManager;
+
+    private IAdapter1 Proxy => _proxy ?? throw new InvalidOperationException("Adapter has not been initialized.");
+
+    private IObjectManager ObjectManager => 
+      _objectManager ?? throw new InvalidOperationException("Adapter object manager has not been initialized.");
 
     ~Adapter()
     {
@@ -35,8 +40,9 @@ namespace Linux.Bluetooth
         _proxy = proxy,
       };
 
-      adapter._objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
-      adapter._interfacesWatcher = await adapter._objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
+      var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
+      adapter._objectManager = objectManager;
+      adapter._interfacesWatcher = await objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
       adapter._propertyWatcher = await proxy.WatchPropertiesAsync(adapter.OnPropertyChanges);
 
       return adapter;
@@ -78,19 +84,19 @@ namespace Linux.Bluetooth
       }
     }
 
-    public event AdapterEventHandlerAsync PoweredOff;
+    public event AdapterEventHandlerAsync? PoweredOff;
 
     /// <summary>See also, Name, property.</summary>
-    public ObjectPath ObjectPath => _proxy.ObjectPath;
+    public ObjectPath ObjectPath => Proxy.ObjectPath;
 
     public Task<Adapter1Properties> GetAllAsync()
     {
-      return _proxy.GetAllAsync();
+      return Proxy.GetAllAsync();
     }
 
     public async Task<AdapterProperties> GetPropertiesAsync()
     {
-      var p = await _proxy.GetAllAsync();
+      var p = await Proxy.GetAllAsync();
 
       return new AdapterProperties
       {
@@ -121,7 +127,7 @@ namespace Linux.Bluetooth
     /// <returns></returns>
     public Task<T> GetAsync<T>(string prop)
     {
-      return _proxy.GetAsync<T>(prop);
+      return Proxy.GetAsync<T>(prop);
     }
 
     /// <summary>
@@ -132,12 +138,12 @@ namespace Linux.Bluetooth
     /// <returns>String of filters.</returns>
     public Task<string[]> GetDiscoveryFiltersAsync()
     {
-      return _proxy.GetDiscoveryFiltersAsync();
+      return Proxy.GetDiscoveryFiltersAsync();
     }
 
     public Task RemoveDeviceAsync(ObjectPath Device)
     {
-      return _proxy.RemoveDeviceAsync(Device);
+      return Proxy.RemoveDeviceAsync(Device);
     }
 
     /// <summary>Set Property Value Async.</summary>
@@ -146,7 +152,7 @@ namespace Linux.Bluetooth
     /// <returns></returns>
     public Task SetAsync(string prop, object val)
     {
-      return _proxy.SetAsync(prop, val);
+      return Proxy.SetAsync(prop, val);
     }
 
     /// <summary>
@@ -158,27 +164,27 @@ namespace Linux.Bluetooth
     /// <returns></returns>
     public Task SetDiscoveryFilterAsync(IDictionary<string, object> properties)
     {
-      return _proxy.SetDiscoveryFilterAsync(properties);
+      return Proxy.SetDiscoveryFilterAsync(properties);
     }
 
     /// <summary>Scan for devices nearby.</summary>
     /// <returns>Task.</returns>
     public Task StartDiscoveryAsync()
     {
-      return _proxy.StartDiscoveryAsync();
+      return Proxy.StartDiscoveryAsync();
     }
 
     /// <summary>Stop scanning for devices nearby.</summary>
     /// <returns>Task.</returns>
     public Task StopDiscoveryAsync()
     {
-      return _proxy.StopDiscoveryAsync();
+      return Proxy.StopDiscoveryAsync();
     }
 
     public async Task<List<ObjectPath>> GetDevicesPathsAsync()
     {
       List<ObjectPath> result = new List<ObjectPath>();
-      var objects = await _objectManager.GetManagedObjectsAsync();
+      var objects = await ObjectManager.GetManagedObjectsAsync();
       foreach (var path in objects.Keys)
       {
         var interfaces = objects[path];
@@ -199,7 +205,7 @@ namespace Linux.Bluetooth
     /// <returns>Disposable task.</returns>
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
-      return _proxy.WatchPropertiesAsync(handler);
+      return Proxy.WatchPropertiesAsync(handler);
     }
 
     private async void FireEventForExistingDevicesAsync()
@@ -226,7 +232,7 @@ namespace Linux.Bluetooth
     {
       try
       {
-        var value = await _proxy.GetAsync<bool>(prop);
+        var value = await Proxy.GetAsync<bool>(prop);
         if (value)
         {
           // TODO: Suppress duplicate event from OnPropertyChanges.

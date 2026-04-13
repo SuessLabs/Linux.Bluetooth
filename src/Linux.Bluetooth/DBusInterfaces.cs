@@ -2,6 +2,10 @@
 // Bluetoothctl was used to connect to a Bluetooth Low Energy device, then `dotnet dbus codegen --bus system --service org.bluez` was executed.
 // After code generation, some `ObjectPath`s were manually replaced with the right interface types.
 // For more context, see https://developers.redhat.com/blog/2017/09/18/connecting-net-core-d-bus/ or https://github.com/tmds/Tmds.DBus
+//
+// The generator does not emit nullable annotations, so keep the generated surface
+// as-is and handle nullability in the handwritten wrappers around it.
+#nullable disable
 
 using System;
 using System.Collections.Generic;

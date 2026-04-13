@@ -71,7 +71,7 @@ namespace Linux.Bluetooth
 
     /// <param name="interfaceName">The interface to search for</param>
     /// <param name="rootObject">The DBus object to search under. Can be null</param>
-    internal static async Task<IReadOnlyList<T>> GetProxiesAsync<T>(string interfaceName, IDBusObject rootObject)
+    internal static async Task<IReadOnlyList<T>> GetProxiesAsync<T>(string interfaceName, IDBusObject? rootObject)
     {
       // Console.WriteLine("GetProxiesAsync called.");
       var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
@@ -89,12 +89,14 @@ namespace Linux.Bluetooth
       return proxies;
     }
 
-    internal static bool IsMatch(string interfaceName, ObjectPath objectPath, IDictionary<string, IDictionary<string, object>> interfaces, IDBusObject rootObject)
+    internal static bool IsMatch(string interfaceName, ObjectPath objectPath, 
+      IDictionary<string, IDictionary<string, object>> interfaces, IDBusObject? rootObject)
     {
       return IsMatch(interfaceName, objectPath, interfaces.Keys, rootObject);
     }
 
-    internal static bool IsMatch(string interfaceName, ObjectPath objectPath, ICollection<string> interfaces, IDBusObject rootObject)
+    internal static bool IsMatch(string interfaceName, ObjectPath objectPath, ICollection<string> interfaces, 
+      IDBusObject? rootObject)
     {
       if (rootObject != null && !objectPath.ToString().StartsWith($"{rootObject.ObjectPath}/"))
       {

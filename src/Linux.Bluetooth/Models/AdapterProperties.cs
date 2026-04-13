@@ -1,23 +1,25 @@
-﻿namespace Linux.Bluetooth
+using System;
+
+namespace Linux.Bluetooth
 {
   /// <summary>Wrapper for Adapter1Properties.</summary>
   public class AdapterProperties
   {
-    public string Address { get; set; } = default(string);
+    public string Address { get; set; } = string.Empty;
 
     /// <summary>
     ///   The Bluetooth  Address Type. For dual-mode and BR/EDR
-		///   only adapter this defaults to "public". Single mode LE
-		///   adapters may have either value. With privacy enabled
-		///   this contains type of Identity Address and not type of
-		///   address used for connection.
+    ///   only adapter this defaults to "public". Single mode LE
+    ///   adapters may have either value. With privacy enabled
+    ///   this contains type of Identity Address and not type of
+    ///   address used for connection.
     ///
-		///   Possible values:
-		///   * "public" - Public address
-		///   * "random" - Random address
+    ///   Possible values:
+    ///   * "public" - Public address
+    ///   * "random" - Random address
     /// </summary>
     /// <remarks>Read-only</remarks>
-    public string AddressType { get; set; } = default(string);
+    public string AddressType { get; set; } = string.Empty;
 
     /// <summary>
     ///   The Bluetooth system name (pretty hostname).
@@ -27,7 +29,7 @@
     ///   access to the pretty hostname configuration.
     /// </summary>
     /// <remarks>Read-only.</remarks>
-    public string Name { get; set; } = default(string);
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     ///   The Bluetooth friendly name. This value can be changed.
@@ -47,7 +49,7 @@
     ///   resort.
     /// </summary>
     /// <remarks>Read-write.</remarks>
-    public string Alias { get; set; } = default(string);
+    public string Alias { get; set; } = string.Empty;
 
     /// <summary>
     ///   The Bluetooth class of device.
@@ -97,7 +99,7 @@
     ///   The discoverable timeout in seconds.A value of zero
     ///   means that the timeout is disabled and it will stay in
     ///   discoverable/limited mode forever.
-    ///   
+    ///
     ///   The default value for the discoverable timeout should
     ///   be 180 seconds(3 minutes).
     /// </summary>
@@ -136,11 +138,11 @@
 
     /// <summary>List of 128-bit UUIDs that represents the available local services.</summary>
     /// <remarks>Read-only.</remarks>
-    public string[] UUIDs { get; set; } = default(string[]);
+    public string[] UUIDs { get; set; } = Array.Empty<string>();
 
     /// <summary>Local device ID information in mod alias format used by the kernal and udev.</summary>
     /// <remarks>Readonly, optional.</remarks>
-    public string Modalias { get; set; } = default(string);
+    public string Modalias { get; set; } = string.Empty;
 
     // Optional:
     /////// <summary>
