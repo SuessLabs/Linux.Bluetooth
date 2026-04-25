@@ -52,6 +52,7 @@ namespace Linux.Bluetooth.Extensions
     public static Task WaitForPropertyValueAsync<T>(this IBattery1 obj, string propertyName, T value, TimeSpan timeout)
       => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
+    /*
     /// <summary>Wait for GattService's Property and specified value to resolve.</summary>
     /// <typeparam name="T">Type of value.</typeparam>
     /// <param name="obj">GattService.</param>
@@ -84,6 +85,7 @@ namespace Linux.Bluetooth.Extensions
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IGattDescriptor1 obj, string propertyName, T value, TimeSpan timeout)
       => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+    */
 
     /// <summary>Wait for MediaControl's Property and specified value to resolve.</summary>
     /// <typeparam name="T">Type of value.</typeparam>
