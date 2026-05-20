@@ -149,7 +149,7 @@ namespace Linux.Bluetooth.Extensions
     {
       var taskSource = new TaskCompletionSource<bool>();
 
-      IDisposable watcher = null;
+      IDisposable? watcher = null;
       watcher = watchPropertiesAsync(propertyChanges =>
       {
         try
@@ -161,7 +161,7 @@ namespace Linux.Bluetooth.Extensions
             {
               // Console.WriteLine($"[CHG] {propertyName}: {pair.Value}.");
               taskSource.TrySetResult(true);
-              watcher.Dispose();
+              watcher?.Dispose();
             }
           }
         }
@@ -169,7 +169,7 @@ namespace Linux.Bluetooth.Extensions
         {
           Console.WriteLine($"Exception: {ex}");
           taskSource.SetException(ex);
-          watcher.Dispose();
+          watcher?.Dispose();
         }
       });
 
