@@ -70,7 +70,8 @@ namespace Linux.Bluetooth
       {
         foreach (var device in _connTrackedDevices.Values)
         {
-          device.Dispose();
+          // Null while TrackDeviceForConnection holds a reserved slot.
+          device?.Dispose();
         }
 
         _connTrackedDevices.Clear();
