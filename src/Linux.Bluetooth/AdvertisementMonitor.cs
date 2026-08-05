@@ -9,7 +9,7 @@ namespace Linux.Bluetooth
   /// Advertisement Monitor class.
   /// Requires 'Experimental = true' and 'KernelExperimental = true' in BlueZ main.conf
   /// </summary>
-  public class AdvertisementMonitor : IAdvertisementMonitor1, IObjectManager
+  public class AdvertisementMonitor : IAdvertisementMonitor1, IObjectManager, IDisposable
   {
     public ObjectPath ObjectPath { get; }
 
@@ -46,6 +46,16 @@ namespace Linux.Bluetooth
     {
       await _manager.UnregisterMonitorAsync(ObjectPath);
       _conn.UnregisterObject(this);
+    }
+
+    /// <summary>
+    /// Closes the D-Bus connection opened by the constructor. Each monitor owns its own connection, so a
+    /// monitor dropped without disposing leaks its socket until finalization.
+    /// </summary>
+    public void Dispose()
+    {
+      _conn.Dispose();
+      GC.SuppressFinalize(this);
     }
 
     public Task ActivateAsync()
