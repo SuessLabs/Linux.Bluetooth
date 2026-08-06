@@ -16,6 +16,16 @@ namespace Linux.Bluetooth
     public event EventHandler<Device>? DeviceFoundEvent;
     public event EventHandler<Device>? DeviceLostEvent;
 
+    /// <summary>
+    ///   Raised when the D-Bus connection backing this monitor drops.
+    /// </summary>
+    /// <remarks>
+    ///   The connection is created by this monitor and never reconnects, so BlueZ loses the monitor
+    ///   registration for good: no further DeviceFoundEvent or DeviceLostEvent is ever raised. Dispose this
+    ///   monitor and create a new one to resume monitoring.
+    /// </remarks>
+    public event EventHandler? ConnectionLost;
+
     private readonly Connection _conn;
     private readonly AdvertisementMonitor1Properties _properties;
     private readonly IAdvertisementMonitorManager1 _manager;
@@ -40,12 +50,24 @@ namespace Linux.Bluetooth
       await _conn.ConnectAsync();
       await _conn.RegisterObjectAsync(this);
       await _manager.RegisterMonitorAsync(ObjectPath);
+
+      _conn.StateChanged += OnConnectionStateChanged;
     }
 
     public async Task StopAsync()
     {
+      _conn.StateChanged -= OnConnectionStateChanged;
+
       await _manager.UnregisterMonitorAsync(ObjectPath);
       _conn.UnregisterObject(this);
+    }
+
+    private void OnConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
+    {
+      if (e.State == ConnectionState.Disconnected)
+      {
+        ConnectionLost?.Invoke(this, EventArgs.Empty);
+      }
     }
 
     /// <summary>
@@ -54,6 +76,7 @@ namespace Linux.Bluetooth
     /// </summary>
     public void Dispose()
     {
+      _conn.StateChanged -= OnConnectionStateChanged;
       _conn.Dispose();
       GC.SuppressFinalize(this);
     }
