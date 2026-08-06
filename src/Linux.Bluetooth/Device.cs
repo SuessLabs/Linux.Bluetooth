@@ -246,33 +246,41 @@ namespace Linux.Bluetooth
 
     private void OnPropertyChanges(PropertyChanges changes)
     {
-      foreach (var pair in changes.Changed)
+      // Runs on the DBus receive loop: consumer throws must not escape.
+      try
       {
-        switch (pair.Key)
+        foreach (var pair in changes.Changed)
         {
-          case DeviceConnected:
-            if (true.Equals(pair.Value))
-              OnConnected?.Invoke(this, new BlueZEventArgs());
-            else
-              Disconnected?.Invoke(this, new BlueZEventArgs());
+          switch (pair.Key)
+          {
+            case DeviceConnected:
+              if (true.Equals(pair.Value))
+                OnConnected?.Invoke(this, new BlueZEventArgs());
+              else
+                Disconnected?.Invoke(this, new BlueZEventArgs());
 
-            break;
+              break;
 
-          case DeviceServicesResolved:
-            if (true.Equals(pair.Value))
-              OnResolved?.Invoke(this, new BlueZEventArgs());
+            case DeviceServicesResolved:
+              if (true.Equals(pair.Value))
+                OnResolved?.Invoke(this, new BlueZEventArgs());
 
-            break;
+              break;
 
-          case DeviceRSSI:
-            if (pair.Value is short sRSSI)
-              RSSIChanged?.Invoke(this, sRSSI);
+            case DeviceRSSI:
+              if (pair.Value is short sRSSI)
+                RSSIChanged?.Invoke(this, sRSSI);
 
-            break;
+              break;
+          }
         }
-      }
 
-      PropertyChanged?.Invoke(this, changes);
+        PropertyChanged?.Invoke(this, changes);
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"Device property handler threw: {ex.Message}");
+      }
     }
   }
 }
