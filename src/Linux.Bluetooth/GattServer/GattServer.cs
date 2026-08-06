@@ -36,7 +36,7 @@
         await UnregisterGattApplication();
       }).Wait();
 
-      Console.Error.WriteLine("Disposed Gatt server.");
+      Debug.WriteLine("Disposed Gatt server.");
       Connection.Dispose();
     }
 
