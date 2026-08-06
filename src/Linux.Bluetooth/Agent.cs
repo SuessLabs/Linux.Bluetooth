@@ -62,11 +62,6 @@ namespace Linux.Bluetooth
     private event AgentDisplayPasskeyEventHandlerAsync? _passkeyDisplayed;
     private event AgentOperationCancelledEventHandlerAsync? _operationCancelled;
 
-    ~Agent()
-    {
-      Dispose();
-    }
-
     private Agent(Connection connection, string capability = DefaultCapability, ObjectPath? objectPath = null)
     {
       _connection = connection;
@@ -99,7 +94,6 @@ namespace Linux.Bluetooth
     public void Dispose()
     {
       UnregisterObject();
-      GC.SuppressFinalize(this);
     }
 
     /// <summary>
