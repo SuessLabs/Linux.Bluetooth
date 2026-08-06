@@ -210,21 +210,40 @@ namespace Linux.Bluetooth
 
     private async void FireEventForExistingDevicesAsync()
     {
-      var devices = await this.GetDevicesAsync();
-      foreach (var device in devices)
+      // async void: exceptions must not escape.
+      try
       {
-        _deviceFound?.Invoke(this, new DeviceFoundEventArgs(device, isStateChange: false));
+        var devices = await this.GetDevicesAsync();
+        foreach (var device in devices)
+        {
+          _deviceFound?.Invoke(this, new DeviceFoundEventArgs(device, isStateChange: false));
+        }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"Existing-devices replay threw: {ex.Message}");
       }
     }
 
     private async void OnDeviceAddedAsync((ObjectPath objectPath, IDictionary<string, IDictionary<string, object>> interfaces) args)
     {
-      if (BlueZManager.IsMatch(BluezConstants.DeviceInterface, args.objectPath, args.interfaces, this))
+      // async void: exceptions must not escape.
+      try
       {
-        var device = Connection.System.CreateProxy<IDevice1>(BluezConstants.DbusService, args.objectPath);
+        if (BlueZManager.IsMatch(BluezConstants.DeviceInterface, args.objectPath, args.interfaces, this))
+        {
+          var device = Connection.System.CreateProxy<IDevice1>(BluezConstants.DbusService, args.objectPath);
 
-        var dev = await Device.CreateAsync(device);
-        _deviceFound?.Invoke(this, new DeviceFoundEventArgs(dev));
+          var dev = await Device.CreateAsync(device);
+          _deviceFound?.Invoke(this, new DeviceFoundEventArgs(dev));
+
+          // Relay this device's connection state if anyone is listening to the adapter-level events.
+          TrackDeviceForConnection(args.objectPath);
+        }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"InterfacesAdded handler threw: {ex.Message}");
       }
     }
 
@@ -247,22 +266,30 @@ namespace Linux.Bluetooth
 
     private void OnPropertyChanges(PropertyChanges changes)
     {
-      foreach (var pair in changes.Changed)
+      // Runs on the DBus receive loop: consumer throws must not escape.
+      try
       {
-        switch (pair.Key)
+        foreach (var pair in changes.Changed)
         {
-          case "Powered":
-            if (true.Equals(pair.Value))
-            {
-              _poweredOn?.Invoke(this, new BlueZEventArgs());
-            }
-            else
-            {
-              PoweredOff?.Invoke(this, new BlueZEventArgs());
-            }
+          switch (pair.Key)
+          {
+            case "Powered":
+              if (true.Equals(pair.Value))
+              {
+                _poweredOn?.Invoke(this, new BlueZEventArgs());
+              }
+              else
+              {
+                PoweredOff?.Invoke(this, new BlueZEventArgs());
+              }
 
-            break;
+              break;
+          }
         }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"Adapter property handler threw: {ex.Message}");
       }
     }
   }
