@@ -289,14 +289,22 @@ namespace Linux.Bluetooth
 
     private void OnDeviceRemoved((ObjectPath objectPath, string[] interfaces) args)
     {
-      lock (_connTrackLock)
+      // Runs on the DBus receive loop: consumer throws must not escape.
+      try
       {
-        // netstandard2.0: no Remove(key, out value) overload.
-        if (_connTrackedDevices.TryGetValue(args.objectPath, out var device))
+        lock (_connTrackLock)
         {
-          _connTrackedDevices.Remove(args.objectPath);
-          device?.Dispose();
+          // netstandard2.0: no Remove(key, out value) overload.
+          if (_connTrackedDevices.TryGetValue(args.objectPath, out var device))
+          {
+            _connTrackedDevices.Remove(args.objectPath);
+            device?.Dispose();
+          }
         }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"InterfacesRemoved handler threw: {ex.Message}");
       }
     }
 
@@ -363,16 +371,24 @@ namespace Linux.Bluetooth
           _connTrackedDevices.Remove(objectPath);
         }
 
-        Console.WriteLine($"Error tracking device '{objectPath}' for connection: {ex}");
+        Console.WriteLine($"Error tracking device '{objectPath}' for connection: {ex.Message}");
       }
     }
 
     private async void TrackExistingDevicesForConnectionAsync()
     {
-      var paths = await GetDevicesPathsAsync();
-      foreach (var path in paths)
+      // async void: exceptions must not escape.
+      try
       {
-        TrackDeviceForConnection(path);
+        var paths = await GetDevicesPathsAsync();
+        foreach (var path in paths)
+        {
+          TrackDeviceForConnection(path);
+        }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"Connection-tracking replay threw: {ex.Message}");
       }
     }
 
