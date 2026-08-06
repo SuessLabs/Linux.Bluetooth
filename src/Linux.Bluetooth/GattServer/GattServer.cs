@@ -28,11 +28,6 @@
       _gattManager = Connection.CreateProxy<IGattManager1>(BluezConstants.DbusService, adapter.ObjectPath);
     }
 
-    ~GattServer()
-    {
-      Dispose();
-    }
-
     public void Dispose()
     {
       Task.Run(async () =>
@@ -43,7 +38,6 @@
 
       Console.Error.WriteLine("Disposed Gatt server.");
       Connection.Dispose();
-      GC.SuppressFinalize(this);
     }
 
     public async Task InitializeAsync()
