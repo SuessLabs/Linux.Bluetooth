@@ -102,7 +102,15 @@
       if (_gattApplication is not null)
       {
         // unregister the application before unregister objects
-        await _gattManager.UnregisterApplicationAsync(_gattApplication.ObjectPath);
+        try
+        {
+          await _gattManager.UnregisterApplicationAsync(_gattApplication.ObjectPath);
+        }
+        catch (DBusException ex) when (ex.ErrorName == "org.bluez.Error.DoesNotExist")
+        {
+          // BlueZ already dropped it (e.g. bluetoothd restarted): that is the wanted end state.
+        }
+
 
         foreach (GattService service in _gattApplication.Services)
         {
@@ -143,7 +151,15 @@
     {
       if (_advertisement is not null)
       {
-        await _advManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
+        try
+        {
+          await _advManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
+        }
+        catch (DBusException ex) when (ex.ErrorName == "org.bluez.Error.DoesNotExist")
+        {
+          // BlueZ already dropped it (e.g. bluetoothd restarted): that is the wanted end state.
+        }
+
         Connection.UnregisterObject(_advertisement);
         Debug.WriteLine($"Advertisement {_advertisement.ObjectPath} unregistered");
         _advertisement = null;
