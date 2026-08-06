@@ -168,7 +168,7 @@ namespace Linux.Bluetooth.Extensions
         catch (Exception ex)
         {
           Console.WriteLine($"Exception: {ex}");
-          taskSource.SetException(ex);
+          taskSource.TrySetException(ex);
           watcher?.Dispose();
         }
       });
