@@ -23,7 +23,7 @@ Check out the SuessLabs article on using [Linux.Bluetooth](https://suesslabs.com
 * Linux
 * .NET 6, 7, 8, 9, and 10
 
-_Sorry, older Mono (.NET Framework) versions are not supported._
+_Older Mono (.NET Framework) versions are not supported._
 
 This project has been validated against, BlueZ v5.50 and above. You can check which version you're using with, `bluetoothd -v`.
 
