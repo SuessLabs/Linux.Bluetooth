@@ -12,10 +12,13 @@ namespace Linux.Bluetooth
   /// </summary>
   public class GattCharacteristic : IGattCharacteristic1, IDisposable
   {
-    private IGattCharacteristic1 _proxy;
-    private IDisposable _propertyWatcher;
+    private IGattCharacteristic1? _proxy;
+    private IDisposable? _propertyWatcher;
 
-    private event GattCharacteristicEventHandlerAsync _onValue;
+    private event GattCharacteristicEventHandlerAsync? _onValue;
+
+    private IGattCharacteristic1 Proxy => 
+      _proxy ?? throw new InvalidOperationException("GATT characteristic has not been initialized.");
 
     ~GattCharacteristic()
     {
@@ -57,63 +60,63 @@ namespace Linux.Bluetooth
       }
     }
 
-    public ObjectPath ObjectPath => _proxy.ObjectPath;
+    public ObjectPath ObjectPath => Proxy.ObjectPath;
 
     public Task<byte[]> ReadValueAsync(IDictionary<string, object> Options)
     {
-      return _proxy.ReadValueAsync(Options);
+      return Proxy.ReadValueAsync(Options);
     }
 
     public Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options)
     {
-      return _proxy.WriteValueAsync(Value, Options);
+      return Proxy.WriteValueAsync(Value, Options);
     }
 
     public Task<(CloseSafeHandle fd, ushort mtu)> AcquireWriteAsync(IDictionary<string, object> Options)
     {
-      return _proxy.AcquireWriteAsync(Options);
+      return Proxy.AcquireWriteAsync(Options);
     }
 
     public Task<(CloseSafeHandle fd, ushort mtu)> AcquireNotifyAsync(IDictionary<string, object> Options)
     {
-      return _proxy.AcquireNotifyAsync(Options);
+      return Proxy.AcquireNotifyAsync(Options);
     }
 
     public Task StartNotifyAsync()
     {
-      return _proxy.StartNotifyAsync();
+      return Proxy.StartNotifyAsync();
     }
 
     public Task StopNotifyAsync()
     {
-      return _proxy.StopNotifyAsync();
+      return Proxy.StopNotifyAsync();
     }
 
     public Task<object> GetAsync(string prop)
     {
-      return _proxy.GetAsync(prop);
+      return Proxy.GetAsync(prop);
     }
 
     public Task<GattCharacteristic1Properties> GetAllAsync()
     {
-      return _proxy.GetAllAsync();
+      return Proxy.GetAllAsync();
     }
 
     public Task SetAsync(string prop, object val)
     {
-      return _proxy.SetAsync(prop, val);
+      return Proxy.SetAsync(prop, val);
     }
 
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
-      return _proxy.WatchPropertiesAsync(handler);
+      return Proxy.WatchPropertiesAsync(handler);
     }
 
     private async void Subscribe()
     {
       try
       {
-        await _proxy.StartNotifyAsync();
+        await Proxy.StartNotifyAsync();
 
         // Is there a way to check if a characteristic supports Read?
         // // Reading the current value will trigger OnPropertyChanges.

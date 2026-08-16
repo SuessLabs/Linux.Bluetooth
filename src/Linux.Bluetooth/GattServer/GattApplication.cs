@@ -36,13 +36,15 @@
       return Task.FromResult(result);
     }
 
-    public async Task<IDisposable> WatchInterfacesAddedAsync(Action<(ObjectPath @object, IDictionary<string, IDictionary<string, object>> interfaces)> handler, Action<Exception> onError = null)
+    public async Task<IDisposable> WatchInterfacesAddedAsync(Action<(ObjectPath @object, 
+      IDictionary<string, IDictionary<string, object>> interfaces)> handler, Action<Exception>? onError = null)
     {
       await Task.Yield();
       return Task.CompletedTask;
     }
 
-    public async Task<IDisposable> WatchInterfacesRemovedAsync(Action<(ObjectPath @object, string[] interfaces)> handler, Action<Exception> onError = null)
+    public async Task<IDisposable> WatchInterfacesRemovedAsync(Action<(ObjectPath @object, string[] interfaces)> handler, 
+      Action<Exception>? onError = null)
     {
       await Task.Yield();
       return Task.CompletedTask;

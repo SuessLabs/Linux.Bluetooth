@@ -17,12 +17,14 @@ namespace Linux.Bluetooth
     private const string DeviceConnected = "Connected";
     private const string DeviceServicesResolved = "ServicesResolved";
 
-    private IDevice1 _proxy;
-    private IDisposable _propertyWatcher;
+    private IDevice1? _proxy;
+    private IDisposable? _propertyWatcher;
 
-    private event DeviceEventHandlerAsync OnConnected;
+    private event DeviceEventHandlerAsync? OnConnected;
 
-    private event DeviceEventHandlerAsync OnResolved;
+    private event DeviceEventHandlerAsync? OnResolved;
+
+    private IDevice1 Proxy => _proxy ?? throw new InvalidOperationException("Device has not been initialized.");
 
     ~Device()
     {
@@ -62,7 +64,7 @@ namespace Linux.Bluetooth
       }
     }
 
-    public event DeviceEventHandlerAsync Disconnected;
+    public event DeviceEventHandlerAsync? Disconnected;
 
     public event DeviceEventHandlerAsync ServicesResolved
     {
@@ -77,7 +79,7 @@ namespace Linux.Bluetooth
       }
     }
 
-    public ObjectPath ObjectPath => _proxy.ObjectPath;
+    public ObjectPath ObjectPath => Proxy.ObjectPath;
 
     /// <summary>
     ///   This method can be used to cancel a pairing operation initiated by the Pair method.
@@ -90,7 +92,7 @@ namespace Linux.Bluetooth
     /// <returns>Task.</returns>
     public Task CancelPairingAsync()
     {
-      return _proxy.CancelPairingAsync();
+      return Proxy.CancelPairingAsync();
     }
 
     /// <summary>
@@ -101,7 +103,7 @@ namespace Linux.Bluetooth
     /// <returns>Task.</returns>
     public Task ConnectAsync()
     {
-      return _proxy.ConnectAsync();
+      return Proxy.ConnectAsync();
     }
 
     /// <summary>
@@ -121,12 +123,12 @@ namespace Linux.Bluetooth
     /// <returns></returns>
     public Task ConnectProfileAsync(string uuid)
     {
-      return _proxy.ConnectProfileAsync(uuid);
+      return Proxy.ConnectProfileAsync(uuid);
     }
 
     public Task DisconnectAsync()
     {
-      return _proxy.DisconnectAsync();
+      return Proxy.DisconnectAsync();
     }
 
     /// <summary>
@@ -144,26 +146,26 @@ namespace Linux.Bluetooth
     /// <returns>Task.</returns>
     public Task DisconnectProfileAsync(string uuid)
     {
-      return _proxy.DisconnectProfileAsync(uuid);
+      return Proxy.DisconnectProfileAsync(uuid);
     }
 
     /// <summary>Gets all properties for connected device.</summary>
     /// <returns>BlueZ <seealso cref="Device1Properties"/>.</returns>
     public Task<Device1Properties> GetAllAsync()
     {
-      return _proxy.GetAllAsync();
+      return Proxy.GetAllAsync();
     }
 
     public Task<T> GetAsync<T>(string prop)
     {
-      return _proxy.GetAsync<T>(prop);
+      return Proxy.GetAsync<T>(prop);
     }
 
     /// <summary>Gets all properties for device.</summary>
     /// <returns><seealso cref="DeviceProperties"/> object.</returns>
     public async Task<DeviceProperties> GetPropertiesAsync()
     {
-      var p = await _proxy.GetAllAsync();
+      var p = await Proxy.GetAllAsync();
 
       var props = new DeviceProperties
       {
@@ -173,7 +175,11 @@ namespace Linux.Bluetooth
         Appearance = p.Appearance,
         Blocked = p.Blocked,
         Class = p.Class,
+        // Keep populating the legacy DTO members while the preferred names remain
+        // available for newer callers.
+#pragma warning disable CS0618
         Connected = p.Connected, // Connected is marked for deprecation (2024-01-11)
+#pragma warning restore CS0618
         IsConnected = p.Connected,
         Icon = p.Icon,
         LegacyPairing = p.LegacyPairing,
@@ -181,7 +187,9 @@ namespace Linux.Bluetooth
         Modalias = p.Modalias,
         Name = p.Name,
         Paired = p.Paired,
+#pragma warning disable CS0618
         RSSI = p.RSSI,    // RSSI is marked for deprecation (2024-01-11)
+#pragma warning restore CS0618
         Rssi = p.RSSI,
         ServiceData = p.ServiceData,
         ServicesResolved = p.ServicesResolved,
@@ -195,24 +203,24 @@ namespace Linux.Bluetooth
 
     public Task PairAsync()
     {
-      return _proxy.PairAsync();
+      return Proxy.PairAsync();
     }
 
     public Task SetAsync(string prop, object val)
     {
-      return _proxy.SetAsync(prop, val);
+      return Proxy.SetAsync(prop, val);
     }
 
     public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
     {
-      return _proxy.WatchPropertiesAsync(handler);
+      return Proxy.WatchPropertiesAsync(handler);
     }
 
     private async void FireEventIfPropertyAlreadyTrueAsync(DeviceEventHandlerAsync handler, string prop)
     {
       try
       {
-        var value = await _proxy.GetAsync<bool>(prop);
+        var value = await Proxy.GetAsync<bool>(prop);
         if (value)
         {
           // TODO: Suppress duplicate event from OnPropertyChanges.

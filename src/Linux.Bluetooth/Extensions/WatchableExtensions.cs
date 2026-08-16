@@ -17,7 +17,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IAdapter1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
     /// <summary>Wait for AdvertisingManager's Property and specified value to resolve.</summary>
     /// <typeparam name="T">Type of value.</typeparam>
@@ -28,7 +28,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this ILEAdvertisingManager1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
     /// <summary>Wait for Device's Property and specified value to resolve.</summary>
     /// <typeparam name="T">Type of value.</typeparam>
@@ -39,7 +39,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IDevice1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
     /// <summary>Wait for Battery's Property and specified value to resolve.</summary>
     /// <typeparam name="T">Type of value.</typeparam>
@@ -50,7 +50,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IBattery1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
     /*
     /// <summary>Wait for GattService's Property and specified value to resolve.</summary>
@@ -62,7 +62,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IGattService1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
     /// <summary>Wait for GattCharacteristic's Property and specified value to resolve.</summary>
     /// <typeparam name="T">Type of value.</typeparam>
@@ -73,7 +73,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IGattCharacteristic1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
     /// <summary>Wait for GattDescriptor's Property and specified value to resolve.</summary>
     /// <typeparam name="T">Type of value.</typeparam>
@@ -84,7 +84,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IGattDescriptor1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
     */
 
     /// <summary>Wait for MediaControl's Property and specified value to resolve.</summary>
@@ -96,7 +96,7 @@ namespace Linux.Bluetooth.Extensions
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
     public static Task WaitForPropertyValueAsync<T>(this IMediaControl1 obj, string propertyName, T value, TimeSpan timeout)
-      => WaitForPropertyValueInternalAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
+      => WaitForPropertyValueAsync(obj.GetAsync<T>, obj.WatchPropertiesAsync, propertyName, value, timeout);
 
     /// <summary>
     /// Wait for watchable objects property and specified value to resolve.
@@ -110,10 +110,13 @@ namespace Linux.Bluetooth.Extensions
     /// <param name="timeout">TimeSpan to wait for.</param>
     /// <returns>Task or exception.</returns>
     /// <exception cref="TimeoutException">On timeout a <seealso cref="TimeoutException"/> is thrown.</exception>
-    private static async Task WaitForPropertyValueInternalAsync<T>(
+    public static async Task WaitForPropertyValueAsync<T>(
       Func<string, Task<T>> getAsync,
-      Func<Action<PropertyChanges>, Task<IDisposable>> watchPropertiesAsync,
-      string propertyName, T value, TimeSpan timeout)
+      Func<Action<PropertyChanges>,
+      Task<IDisposable>> watchPropertiesAsync,
+      string propertyName,
+      T value,
+      TimeSpan timeout)
     {
       // TODO: Change to Task<bool> versus throwing an error.
       var (watchTask, watcher) = WaitForPropertyValueInternal(watchPropertiesAsync, propertyName, value);
@@ -146,7 +149,7 @@ namespace Linux.Bluetooth.Extensions
     {
       var taskSource = new TaskCompletionSource<bool>();
 
-      IDisposable watcher = null;
+      IDisposable? watcher = null;
       watcher = watchPropertiesAsync(propertyChanges =>
       {
         try
@@ -158,15 +161,15 @@ namespace Linux.Bluetooth.Extensions
             {
               // Console.WriteLine($"[CHG] {propertyName}: {pair.Value}.");
               taskSource.TrySetResult(true);
-              watcher.Dispose();
+              watcher?.Dispose();
             }
           }
         }
         catch (Exception ex)
         {
           Console.WriteLine($"Exception: {ex}");
-          taskSource.SetException(ex);
-          watcher.Dispose();
+          taskSource.TrySetException(ex);
+          watcher?.Dispose();
         }
       });
 
