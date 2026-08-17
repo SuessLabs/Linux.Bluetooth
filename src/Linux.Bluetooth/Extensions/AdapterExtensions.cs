@@ -9,6 +9,11 @@ namespace Linux.Bluetooth.Extensions
   public static class AdapterExtensions
   {
     /// <summary>Get available devices.</summary>
+    /// <remarks>
+    ///   The caller owns the returned devices and must dispose each one. Every <see cref="Device"/>
+    ///   holds a D-Bus match rule; an undisposed device keeps its rule until the connection closes,
+    ///   and a connection is limited to <c>max_match_rules_per_connection</c> (2048 by default).
+    /// </remarks>
     /// <param name="adapter">Adapter object.</param>
     /// <returns>Collection of <seealso cref="Device"/>s.</returns>
     public static async Task<IReadOnlyList<Device>> GetDevicesAsync(this IAdapter1 adapter)
@@ -19,6 +24,7 @@ namespace Linux.Bluetooth.Extensions
     }
 
     /// <summary>Get <seealso cref="Device"/> object from the specifed BLE address.</summary>
+    /// <remarks>The caller owns the returned device and must dispose it. See <see cref="GetDevicesAsync"/>.</remarks>
     /// <param name="adapter">Adapter object.</param>
     /// <param name="deviceAddress">BLE Device Address.</param>
     /// <returns><seealso cref="Device"/> object or NULL if not found.</returns>
@@ -52,6 +58,7 @@ namespace Linux.Bluetooth.Extensions
     }
 
     /// <summary>Disposable object which waits for discovered devices.</summary>
+    /// <remarks>The handler owns each device it receives and must dispose it. See <see cref="GetDevicesAsync"/>.</remarks>
     /// <param name="adapter">Adapter object.</param>
     /// <param name="handler">Action delegate with <seealso cref="Device"/> as a parameter.</param>
     /// <returns>Disposable object.</returns>

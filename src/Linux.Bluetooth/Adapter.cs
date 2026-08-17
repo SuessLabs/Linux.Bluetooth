@@ -73,6 +73,11 @@ namespace Linux.Bluetooth
       }
     }
 
+    /// <summary>
+    ///   Raised for each device found. Subscribing replays the devices already known to BlueZ.
+    ///   The subscriber owns every <see cref="Device"/> it receives and must dispose it; each one
+    ///   holds a D-Bus match rule until disposed.
+    /// </summary>
     public event DeviceChangeEventHandlerAsync DeviceFound
     {
       add
@@ -341,10 +346,11 @@ namespace Linux.Bluetooth
         _connTrackedDevices[objectPath] = null!;
       }
 
+      Device? device = null;
       try
       {
         var proxy = Connection.System.CreateProxy<IDevice1>(BluezConstants.DbusService, objectPath);
-        var device = await Device.CreateAsync(proxy);
+        device = await Device.CreateAsync(proxy);
 
         // Device.Connected can fire twice (add-accessor replay + live change), so relay only
         // on an actual transition.
@@ -380,6 +386,9 @@ namespace Linux.Bluetooth
         {
           _connTrackedDevices.Remove(objectPath);
         }
+
+        // The reserved slot is gone, so nothing else will ever dispose this device.
+        device?.Dispose();
 
         Console.WriteLine($"Error tracking device '{objectPath}' for connection: {ex.Message}");
       }
