@@ -16,6 +16,7 @@ namespace Linux.Bluetooth
   {
     private const string DeviceConnected = "Connected";
     private const string DeviceServicesResolved = "ServicesResolved";
+    private const string DeviceRSSI = "RSSI";
 
     private IDevice1? _proxy;
     private IDisposable? _propertyWatcher;
@@ -58,6 +59,16 @@ namespace Linux.Bluetooth
     }
 
     public event DeviceEventHandlerAsync? Disconnected;
+
+    /// <summary>Raised when the device's RSSI property changes, carrying the new value in dBm.</summary>
+    public event EventHandler<short>? RSSIChanged;
+
+    /// <summary>
+    /// Raised for every Device1 property change, carrying the raw <see cref="PropertyChanges"/>. Covers
+    /// properties without a dedicated typed event (e.g. ManufacturerData, TxPower). Note that changes also
+    /// covered by a typed event (Connected, ServicesResolved, RSSI) are delivered on both.
+    /// </summary>
+    public event EventHandler<PropertyChanges>? PropertyChanged;
 
     public event DeviceEventHandlerAsync ServicesResolved
     {
@@ -228,24 +239,40 @@ namespace Linux.Bluetooth
 
     private void OnPropertyChanges(PropertyChanges changes)
     {
-      foreach (var pair in changes.Changed)
+      // Runs on the DBus receive loop: consumer throws must not escape.
+      try
       {
-        switch (pair.Key)
+        foreach (var pair in changes.Changed)
         {
-          case DeviceConnected:
-            if (true.Equals(pair.Value))
-              OnConnected?.Invoke(this, new BlueZEventArgs());
-            else
-              Disconnected?.Invoke(this, new BlueZEventArgs());
+          switch (pair.Key)
+          {
+            case DeviceConnected:
+              if (true.Equals(pair.Value))
+                OnConnected?.Invoke(this, new BlueZEventArgs());
+              else
+                Disconnected?.Invoke(this, new BlueZEventArgs());
 
-            break;
+              break;
 
-          case DeviceServicesResolved:
-            if (true.Equals(pair.Value))
-              OnResolved?.Invoke(this, new BlueZEventArgs());
+            case DeviceServicesResolved:
+              if (true.Equals(pair.Value))
+                OnResolved?.Invoke(this, new BlueZEventArgs());
 
-            break;
+              break;
+
+            case DeviceRSSI:
+              if (pair.Value is short sRSSI)
+                RSSIChanged?.Invoke(this, sRSSI);
+
+              break;
+          }
         }
+
+        PropertyChanged?.Invoke(this, changes);
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"Device property handler threw: {ex.Message}");
       }
     }
   }
