@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Linux.Bluetooth.Extensions;
 using Tmds.DBus;
@@ -18,10 +19,17 @@ namespace Linux.Bluetooth
   {
     private IAdapter1? _proxy;
     private IDisposable? _interfacesWatcher;
+    private IDisposable? _interfacesRemovedWatcher;
     private IDisposable? _propertyWatcher;
     private DeviceChangeEventHandlerAsync? _deviceFound;
+    private DeviceChangeEventHandlerAsync? _deviceConnected;
+    private DeviceChangeEventHandlerAsync? _deviceDisconnected;
     private AdapterEventHandlerAsync? _poweredOn;
     private IObjectManager? _objectManager;
+
+    // Devices whose Connected/Disconnected we relay to the adapter-level events.
+    private readonly object _connTrackLock = new();
+    private readonly Dictionary<ObjectPath, Device> _connTrackedDevices = new();
 
     private IAdapter1 Proxy => _proxy ?? throw new InvalidOperationException("Adapter has not been initialized.");
 
@@ -43,6 +51,7 @@ namespace Linux.Bluetooth
       var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DbusService, "/");
       adapter._objectManager = objectManager;
       adapter._interfacesWatcher = await objectManager.WatchInterfacesAddedAsync(adapter.OnDeviceAddedAsync);
+      adapter._interfacesRemovedWatcher = await objectManager.WatchInterfacesRemovedAsync(adapter.OnDeviceRemoved);
       adapter._propertyWatcher = await proxy.WatchPropertiesAsync(adapter.OnPropertyChanges);
 
       return adapter;
@@ -52,8 +61,21 @@ namespace Linux.Bluetooth
     {
       _interfacesWatcher?.Dispose();
       _interfacesWatcher = null;
+      _interfacesRemovedWatcher?.Dispose();
+      _interfacesRemovedWatcher = null;
       _propertyWatcher?.Dispose();
       _propertyWatcher = null;
+
+      lock (_connTrackLock)
+      {
+        foreach (var device in _connTrackedDevices.Values)
+        {
+          // Null while TrackDeviceForConnection holds a reserved slot.
+          device?.Dispose();
+        }
+
+        _connTrackedDevices.Clear();
+      }
 
       GC.SuppressFinalize(this);
     }
@@ -68,6 +90,41 @@ namespace Linux.Bluetooth
       remove
       {
         _deviceFound -= value;
+      }
+    }
+
+    /// <summary>
+    ///   Raised when any device transitions to Connected — the connection-side twin of
+    ///   <see cref="DeviceFound"/>. Covers both newly-added and pre-existing device objects
+    ///   (BlueZ reuses an existing object for an inbound connection, so InterfacesAdded does
+    ///   not re-fire). Subscribing replays devices that are already connected.
+    /// </summary>
+    public event DeviceChangeEventHandlerAsync DeviceConnected
+    {
+      add
+      {
+        _deviceConnected += value;
+        TrackExistingDevicesForConnectionAsync();
+      }
+      remove
+      {
+        _deviceConnected -= value;
+      }
+    }
+
+    /// <summary>
+    ///   Raised when any device transitions to Disconnected. See <see cref="DeviceConnected"/>.
+    /// </summary>
+    public event DeviceChangeEventHandlerAsync DeviceDisconnected
+    {
+      add
+      {
+        _deviceDisconnected += value;
+        TrackExistingDevicesForConnectionAsync();
+      }
+      remove
+      {
+        _deviceDisconnected -= value;
       }
     }
 
@@ -225,6 +282,114 @@ namespace Linux.Bluetooth
 
         var dev = await Device.CreateAsync(device);
         _deviceFound?.Invoke(this, new DeviceFoundEventArgs(dev));
+
+        // Relay this device's connection state if anyone is listening to the adapter-level events.
+        TrackDeviceForConnection(args.objectPath);
+      }
+    }
+
+    private void OnDeviceRemoved((ObjectPath objectPath, string[] interfaces) args)
+    {
+      // Runs on the DBus receive loop: consumer throws must not escape.
+      try
+      {
+        lock (_connTrackLock)
+        {
+          // netstandard2.0: no Remove(key, out value) overload.
+          if (_connTrackedDevices.TryGetValue(args.objectPath, out var device))
+          {
+            _connTrackedDevices.Remove(args.objectPath);
+            device?.Dispose();
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"InterfacesRemoved handler threw: {ex.Message}");
+      }
+    }
+
+    /// <summary>
+    ///   Relays a device's Connected/Disconnected to the adapter-level events. The Device's
+    ///   add-accessors replay immediately if the device is already connected, so a pre-existing
+    ///   connection is not missed.
+    /// </summary>
+    private async void TrackDeviceForConnection(ObjectPath objectPath)
+    {
+      if (_deviceConnected is null && _deviceDisconnected is null)
+      {
+        return;
+      }
+
+      lock (_connTrackLock)
+      {
+        if (_connTrackedDevices.ContainsKey(objectPath))
+        {
+          return;
+        }
+
+        // reserve the slot against a concurrent call
+        _connTrackedDevices[objectPath] = null!;
+      }
+
+      try
+      {
+        var proxy = Connection.System.CreateProxy<IDevice1>(BluezConstants.DbusService, objectPath);
+        var device = await Device.CreateAsync(proxy);
+
+        // Device.Connected can fire twice (add-accessor replay + live change), so relay only
+        // on an actual transition.
+        var connected = 0;
+
+        device.Connected += (sender, e) =>
+        {
+          if (Interlocked.Exchange(ref connected, 1) == 0)
+          {
+            _deviceConnected?.Invoke(this, new DeviceFoundEventArgs(sender, e.IsStateChange));
+          }
+
+          return Task.CompletedTask;
+        };
+        device.Disconnected += (sender, e) =>
+        {
+          if (Interlocked.Exchange(ref connected, 0) == 1)
+          {
+            _deviceDisconnected?.Invoke(this, new DeviceFoundEventArgs(sender, e.IsStateChange));
+          }
+
+          return Task.CompletedTask;
+        };
+
+        lock (_connTrackLock)
+        {
+          _connTrackedDevices[objectPath] = device;
+        }
+      }
+      catch (Exception ex)
+      {
+        lock (_connTrackLock)
+        {
+          _connTrackedDevices.Remove(objectPath);
+        }
+
+        Console.WriteLine($"Error tracking device '{objectPath}' for connection: {ex.Message}");
+      }
+    }
+
+    private async void TrackExistingDevicesForConnectionAsync()
+    {
+      // async void: exceptions must not escape.
+      try
+      {
+        var paths = await GetDevicesPathsAsync();
+        foreach (var path in paths)
+        {
+          TrackDeviceForConnection(path);
+        }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"Connection-tracking replay threw: {ex.Message}");
       }
     }
 
