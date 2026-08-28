@@ -131,15 +131,22 @@ namespace Linux.Bluetooth
 
     private void OnPropertyChanges(PropertyChanges changes)
     {
-      // Console.WriteLine("OnPropertyChanges called.");
-      foreach (var pair in changes.Changed)
+      // Runs on the DBus receive loop: consumer throws must not escape.
+      try
       {
-        switch (pair.Key)
+        foreach (var pair in changes.Changed)
         {
-          case "Value":
-            _onValue?.Invoke(this, new GattCharacteristicValueEventArgs((byte[])pair.Value));
-            break;
+          switch (pair.Key)
+          {
+            case "Value":
+              _onValue?.Invoke(this, new GattCharacteristicValueEventArgs((byte[])pair.Value));
+              break;
+          }
         }
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine($"Characteristic value handler threw: {ex.Message}");
       }
     }
   }

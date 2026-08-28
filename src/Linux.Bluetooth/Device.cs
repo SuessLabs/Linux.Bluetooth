@@ -27,11 +27,6 @@ namespace Linux.Bluetooth
 
     private IDevice1 Proxy => _proxy ?? throw new InvalidOperationException("Device has not been initialized.");
 
-    ~Device()
-    {
-      Dispose();
-    }
-
     internal static async Task<Device> CreateAsync(IDevice1 proxy)
     {
       var device = new Device
@@ -48,8 +43,6 @@ namespace Linux.Bluetooth
     {
       _propertyWatcher?.Dispose();
       _propertyWatcher = null;
-
-      GC.SuppressFinalize(this);
     }
 
     public event DeviceEventHandlerAsync Connected

@@ -47,6 +47,14 @@ namespace Linux.Bluetooth
       return await Task.WhenAll(adapters.Select(Adapter.CreateAsync));
     }
 
+    /// <summary>Get the adapter proxies without creating signal watchers.</summary>
+    /// <remarks>Select a proxy, then call <see cref="Adapter.CreateAsync"/> on it.</remarks>
+    /// <returns>The adapter proxies.</returns>
+    public static Task<IReadOnlyList<IAdapter1>> GetAdapterProxiesAsync()
+    {
+      return GetProxiesAsync<IAdapter1>(BluezConstants.AdapterInterface, rootObject: null);
+    }
+
     // Normalize a 16, 32 or 128 bit UUID.
     public static string NormalizeUUID(string uuid)
     {

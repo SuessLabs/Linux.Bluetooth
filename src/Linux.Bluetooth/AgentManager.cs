@@ -14,11 +14,6 @@ public class AgentManager : IAgentManager1, IDisposable
 {
   private readonly IAgentManager1 _proxy;
 
-  ~AgentManager()
-  {
-    Dispose();
-  }
-
   private AgentManager(IAgentManager1 proxy)
   {
     _proxy = proxy;
@@ -47,7 +42,6 @@ public class AgentManager : IAgentManager1, IDisposable
   /// </summary>
   public void Dispose()
   {
-    GC.SuppressFinalize(this);
   }
 
   /// <summary>
